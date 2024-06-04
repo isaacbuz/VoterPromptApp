@@ -5,7 +5,7 @@ const config = {
   entry: path.join(__dirname, './src/index.ts'),
   output: {
     path: path.resolve(__dirname, './docs'),
-    filename: 'simple-calendar.js',
+    filename: 'cb-vote-widget.js',
   },
   devtool: 'source-map',
   resolve: {

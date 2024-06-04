@@ -40,7 +40,7 @@ function attrToObj(attrs: NamedNodeMap) {
 }
 
 function HtmlTagWrapper(Component: (props?: any) => JSX.Element) {
-  const el = document.getElementById('simple-calendar');
+  const el = document.getElementById('cb-vote-widget');
   const attrs = el.attributes;
 
   const props = attrToObj(attrs);

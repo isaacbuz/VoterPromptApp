@@ -1,9 +1,9 @@
 import 'babel-polyfill';
-import { SimpleCalendar } from './simple-calendar';
+import { VoteItem } from './cb-vote-widget';
 import { HtmlTagWrapper } from './html-tag-wrapper';
 
-const WrappedSimpleCalendar = HtmlTagWrapper(SimpleCalendar);
+const WrappedCBVoteWidget = HtmlTagWrapper(VoteItem);
 
 export default {
-  SimpleCalendar: WrappedSimpleCalendar,
+  CBVoteWidget: WrappedCBVoteWidget,
 };
