@@ -2,7 +2,7 @@
 const path = require('path');
 
 const config = {
-  entry: path.join(__dirname, './src/index.ts'),
+  entry: path.join(__dirname, './src/index2.ts'),
   output: {
     path: path.resolve(__dirname, './docs'),
     filename: 'cb-vote-widget.js',

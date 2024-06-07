@@ -41,6 +41,7 @@ function attrToObj(attrs: NamedNodeMap) {
 
 function HtmlTagWrapper(Component: (props?: any) => JSX.Element) {
   const el = document.getElementById('cb-vote-widget');
+  // @ts-ignore: Object is possibly 'null'.
   const attrs = el.attributes;
 
   const props = attrToObj(attrs);
