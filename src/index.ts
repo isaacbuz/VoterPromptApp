@@ -1,9 +1,16 @@
-import 'babel-polyfill';
 import { VoteItem } from './cb-vote-widget';
-import { HtmlTagWrapper } from './html-tag-wrapper';
 
-const WrappedCBVoteWidget = HtmlTagWrapper(VoteItem);
+// import ReactDOM from "react-dom" // if using React 17
 
-export default {
-  CBVoteWidget: WrappedCBVoteWidget,
-};
+import r2wc from "@r2wc/react-to-web-component"
+
+
+
+const WebVoteWidget = r2wc(VoteItem, {
+  props: {
+    partnerid: "string",
+    campaigncode: "string",
+  }
+})
+
+customElements.define("cb-vote", WebVoteWidget)

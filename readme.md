@@ -21,8 +21,13 @@ We will also consider the ability to have the widget exported as an html-tag und
 Grab the cb-vote-widget.js from out hosted location or put it with your local files.
 
 In your index.html or jsx file, include
-<cb-vote/> in the location you will want to show the widget.
+<cb-vote partnerid="PARTNERID" campaigncode="CAMPAIGNCODE"> </cb-vote> in the location you will want to show the widget.
 
 You will also need to include the script under the scripts tags such as <script src="./cb-vote-widget.js"> </script>
 
 See the sample index.html under /docs for an example file.
+
+### Parameters
+
+- partnerid: Optional. The partner id that will be used to track the partner that is using the widget. However, this is need to be able to track the data that is being sent to the voter.org site and is highly recommended.
+- campaigncode: Optional. Campaign code provided if any to track the campaign that is being run.
