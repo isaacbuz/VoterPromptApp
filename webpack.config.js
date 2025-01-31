@@ -1,20 +1,20 @@
-// webpack.base.js
 const path = require('path');
 
-const config = {
-  entry: path.join(__dirname, './src/index.ts'),
+module.exports = {
+  mode: 'development',
+  entry: path.join(__dirname, './src/index.tsx'), // Entry point
   output: {
-    path: path.resolve(__dirname, './docs'),
-    filename: 'cb-vote-widget.js',
+    path: path.resolve(__dirname, './docs'), // Output directory
+    filename: 'cb-vote-widget.js', // Output filename
   },
-  devtool: 'source-map',
+  devtool: 'source-map', // Enable source maps for debugging
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.css', '.txt'],
+    extensions: ['.ts', '.tsx', '.js', '.css', '.txt'], // File extensions to resolve
   },
   module: {
     rules: [
       {
-        test: /\.ts(x?)$/,
+        test: /\.ts(x?)$/, // TypeScript files
         exclude: /node_modules/,
         include: [path.resolve('src')],
         loader: 'ts-loader',
@@ -26,15 +26,21 @@ const config = {
         },
       },
       {
-        test: /\.css$/i,
+        test: /\.css$/i, // CSS files
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.svg$/,
+        test: /\.svg$/, // SVG files
         use: ['@svgr/webpack'],
-      }
+      },
     ],
   },
+  devServer: {
+    port: 8080, // Development server port
+    static: {
+      directory: path.join(__dirname, './docs'), // Serve files from the `docs` directory
+    },
+    compress: true, // Enable Gzip compression
+    historyApiFallback: true, // Redirect 404s to index.html for SPA
+  },
 };
-
-module.exports = config;

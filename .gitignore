@@ -3,6 +3,7 @@ npm_debug.log
 /coverage
 /.idea
 /lib/
+/docs/node_modules
 .nyc_output
 .env
 .idea

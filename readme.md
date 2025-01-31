@@ -1,33 +1,158 @@
 
-# Cb Voter Widget
+# SSO Integration with Multiple IDPs (Auth0, Okta, Azure AD)
 
-A widget for external teams to use to show a sample Voter Widget that redirects to voter .org
+This project supports Single Sign-On (SSO) using multiple Identity Providers (IDPs): **Auth0**, **Okta**, and **Azure AD**. You can dynamically switch between IDPs by updating the configuration.
 
-## How to setup and generate build files.
+## Table of Contents
+1. [Project Overview](#project-overview)
+2. [Supported IDPs](#supported-idps)
+3. [Getting Started](#getting-started)
+4. [Switching IDPs](#switching-idps)
+5. [Configuration Files](#configuration-files)
+6. [Setting Up Each IDP](#setting-up-each-idp)
+   - [Auth0](#auth0-setup)
+   - [Okta](#okta-setup)
+   - [Azure AD](#azure-ad-setup)
+7. [Running the Application](#running-the-application)
+8. [Troubleshooting](#troubleshooting)
 
-Use Node 18+
+---
 
-Run "npm install" to install node modules
+## Project Overview
+This project demonstrates how to integrate multiple IDPs in a React application using a shared structure. Each IDP uses its own library and configuration, allowing you to choose which one to use dynamically.
 
-Use "npm run build" to generate the build files. This will generate a file called cb-vote-widget.js located in /docs of the project.
+---
 
-This file will be is how the widget will be accessed as a web component.
+## Supported IDPs
+- **Auth0**: A cloud-based authentication provider.
+- **Okta**: Enterprise-grade identity management service.
+- **Azure AD**: Microsoft's cloud identity and access management service.
 
-We will also consider the ability to have the widget exported as an html-tag under id as well.
+---
 
+## Getting Started
 
-## How to setup the widget on your own site.
+### Prerequisites
+- **Node.js** installed (v14+ recommended).
+- An account with the respective IDPs: [Auth0](https://auth0.com/), [Okta](https://www.okta.com/), or [Azure AD](https://azure.microsoft.com/).
 
-Grab the cb-vote-widget.js from out hosted location or put it with your local files.
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo.git
+   cd your-repo
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-In your index.html or jsx file, include
-<cb-vote partnerid="PARTNERID" campaigncode="CAMPAIGNCODE"> </cb-vote> in the location you will want to show the widget.
+---
 
-You will also need to include the script under the scripts tags such as <script src="./cb-vote-widget.js"> </script>
+## Switching IDPs
 
-See the sample index.html under /docs for an example file.
+To switch between IDPs:
+1. Open the file `src/index.tsx`.
+2. Update the `provider` variable to one of the supported options:
+   ```typescript
+   const provider: Provider = 'auth0'; // Change to 'okta' or 'azure'
+   ```
 
-### Parameters
+- **Auth0**: `'auth0'`
+- **Okta**: `'okta'`
+- **Azure AD**: `'azure'`
 
-- partnerid: Optional. The partner id that will be used to track the partner that is using the widget. However, this is need to be able to track the data that is being sent to the voter.org site and is highly recommended.
-- campaigncode: Optional. Campaign code provided if any to track the campaign that is being run.
+3. Save the file and restart the application.
+
+---
+
+## Configuration Files
+
+### Key Files to Update:
+1. **`src/auth_config.json`**:
+   - Stores the client ID, tenant ID, and redirect URIs for each IDP.
+
+   Example:
+   ```json
+   {
+     "auth0": {
+       "domain": "your-auth0-domain",
+       "clientId": "your-auth0-client-id",
+       "redirectUri": "http://localhost:3000",
+       "scopes": ["openid", "profile", "email"]
+     },
+     "okta": {
+       "domain": "your-okta-domain",
+       "clientId": "your-okta-client-id"
+     },
+     "azure": {
+       "clientId": "your-azure-client-id",
+       "tenantId": "your-azure-tenant-id",
+       "redirectUri": "http://localhost:3000",
+       "scopes": ["openid", "profile", "email"]
+     }
+   }
+   ```
+
+2. **`src/authConfigHandler.ts`**:
+   - Contains logic to fetch the correct configuration for the selected IDP.
+
+3. **`src/index.tsx`**:
+   - The entry point where the `provider` is set to choose the IDP dynamically.
+
+---
+
+## Setting Up Each IDP
+
+### Auth0 Setup
+1. Go to the [Auth0 Dashboard](https://auth0.com/).
+2. Create an application and note the **Domain** and **Client ID**.
+3. Update the `auth_config.json` file with the details under the `auth0` section.
+
+### Okta Setup
+1. Log in to your [Okta Developer Account](https://developer.okta.com/).
+2. Create an application and note the **Domain** and **Client ID**.
+3. Update the `auth_config.json` file with the details under the `okta` section.
+
+### Azure AD Setup
+1. Log in to the [Azure Portal](https://portal.azure.com/).
+2. Register an application in Azure AD, and note the **Client ID** and **Tenant ID**.
+3. Update the `auth_config.json` file with the details under the `azure` section.
+
+---
+
+## Running the Application
+
+1. Start the development server:
+   ```bash
+   npm start
+   ```
+
+2. Open your browser at `http://localhost:3000`.
+3. Log in using the selected IDP.
+
+---
+
+## Troubleshooting
+
+### Common Issues
+1. **Redirect URI mismatch**:
+   - Ensure the redirect URI in the IDP settings matches the `redirectUri` in `auth_config.json`.
+
+2. **Invalid client credentials**:
+   - Double-check the `clientId`, `tenantId`, and `domain` values in `auth_config.json`.
+
+3. **TypeScript Errors**:
+   - Ensure you’ve set the correct `provider` type in `index.tsx`.
+
+4. **Library Errors**:
+   - Ensure the required libraries for your IDP are installed:
+     ```bash
+     npm install @auth0/auth0-react @okta/okta-auth-js @azure/msal-react @azure/msal-browser
+     ```
+
+---
+
+## Notes
+- This project supports dynamic switching between IDPs. Ensure you test each configuration independently before deployment.
+- For production, use HTTPS and set appropriate environment variables for sensitive data like `clientId` and `tenantId`.

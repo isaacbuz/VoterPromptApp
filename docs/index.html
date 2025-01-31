@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link  rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./style.css" />
   <style>
       body {font-family: "Times New Roman", Georgia, Serif;}
       h1, h2, h3, h4, h5, h6 {
@@ -42,14 +40,16 @@
 <div class="w3-content" style="max-width:1100px;">
 
   <div style="padding-top: 100px; padding-bottom: 100px">
-<!--    <div id="cb-vote-widget"></div>-->
-    <cb-vote partnerid="123456" campaigncode="654321"> </cb-vote>
+    <cb-vote partnerid="partner123" campaigncode="campaign456" provider="okta"></cb-vote>
   </div>
 
+  <!-- React Root Element -->
+  <div id="root"></div>
 
   <!-- End page content -->
 </div>
-<script src="./cb-vote-widget.js"> </script>
+
+<script src="./cb-vote-widget.js"></script>
 
 </body>
 </html>
