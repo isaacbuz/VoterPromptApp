@@ -27,6 +27,7 @@ This project demonstrates how to integrate multiple IDPs in a React application 
 - **Auth0**: A cloud-based authentication provider.
 - **Okta**: Enterprise-grade identity management service.
 - **Azure AD**: Microsoft's cloud identity and access management service.
+**Shibboleth**: TBD.
 
 ---
 
