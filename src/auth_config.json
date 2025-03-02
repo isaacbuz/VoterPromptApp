@@ -1,19 +1,17 @@
 {
-  "domain": "dev-twgam2m5o2pvtj0i.us.auth0.com",
-  "clientId": "FhtLAmGwqlP6CouQm2ZnZs4Gd40jatwd",
+  "auth0": {
+    "domain": "dev-twgam2m5o2pvtj0i.us.auth0.com",
+    "clientId": "FhtLAmGwqlP6CouQm2ZnZs4Gd40jatwd"
+  },
+  "okta": {
+    "domain": "https://dev-40855217.okta.com",
+    "clientId": "0oanhs57lchFwU7v15d7"
+  },
   "azure": {
     "domain": "azure-ad.example.com",
     "clientId": "azure-client-id",
     "redirectUri": "http://localhost:3000",
     "tenantId": "your-azure-tenant-id",
     "scopes": ["openid", "profile", "email"]
-  },
-  "okta": {
-    "domain": "https://dev-00552102.okta.com",
-    "clientId": "0oamlutfehMHMyRxj5d7"
-  },
-  "auth0": {
-    "domain": "dev-dzf31x2lyk46rsnb.us.auth0.com",
-    "clientId": "1obZife0KeQItynNyBqdX1CckA8ynbNs"
   }
 }

@@ -42340,99 +42340,179 @@ ___CSS_LOADER_EXPORT___.push([module.id, `body {
   width: 100vw;
 }
 
+/* General container */
+.app-container {
+  position: relative;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
 
+/* Background page */
+.background-page {
+  padding: 20px;
+  background-color: #f0f0f0;
+  min-height: 100vh;
+  text-align: center;
+}
 
+.background-page h1 {
+  color: #333;
+}
 
+.background-page p {
+  color: #666;
+}
 
-.voter-widget-container{
-  background-color: rgba(0, 0, 0, 0);
+/* Login page */
+.login-page {
   display: flex;
   flex-direction: column;
-  justify-items: center;
-  max-width: 950px;
-  min-height: 200px;
-  min-height: 200px;
-  overflow-x: auto;
-  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, .2);
-  background-color: #fff;
-  border-radius: 8px;
-}
-
-.voter-widget-header{
-  margin-top: 48px;
-  font-weight: bold;
-  margin-bottom: 48px;
-  font-size: 26px;
-  letter-spacing: -0.1px;
-  line-height: 1.23;
-  text-align: center;
-  color: #1e1e1e;
-  font-family: "Roboto";
-  align-self: stretch;
-}
-
-.voter-widget-image{
-  margin:auto
-}
-
-
-.voter-widget-footer{
-  margin: 48px auto;
-  font-family: Roboto;
-  font-size: 18px;
-  text-align: center;
-  color: #000;
-  line-height: 1.5;
-}
-
-
-.voter-button-container{
-  margin: auto;
-  padding-bottom: 48px;
-}
-.voter-button {
-  margin: 0 auto;
-  width: 165px;
-  height: 60px;
-  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-family: "Roboto", sans-serif;
-  font-weight: 700;
-  font-size: 0.875em;
-  line-height: 1.71429em;
-  text-decoration: none;
-  user-select: none;
-  border-width: 1px;
-  border-style: solid;
-  box-sizing: border-box;
-  border-radius: 999px;
-  padding: 11px 23px 11px 23px;
-  transition: all 0.3s ease-in-out;
-  pointer: cursor;
-
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 40px;
 }
 
-
-.voter-button-primary{
-  background-color: #324dc7;
-  color: #ffffff;
-  border-color: #324dc7;
+.login-page h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
 }
 
-.voter-button-primary:focus{
-  border-color: #ffffff;
-  background-color: #324dc7;
-  box-shadow: 0 0 0 2px #324dc7;
-  outline: 0;
-  text-decoration: underline;
+/* Buttons */
+.login-button,
+.popup-container button {
+  padding: 12px 24px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
+.login-button:hover,
+.popup-container button:hover {
+  background-color: #0056b3;
+}
 
-.voter-button-primary:hover{
-  background-color: #192764;
-  border-color: #192764;
-}`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;EACE,aAAa;EACb,YAAY;AACd;;;;;;AAMA;EACE,kCAAkC;EAClC,aAAa;EACb,sBAAsB;EACtB,qBAAqB;EACrB,gBAAgB;EAChB,iBAAiB;EACjB,iBAAiB;EACjB,gBAAgB;EAChB,yCAAyC;EACzC,sBAAsB;EACtB,kBAAkB;AACpB;;AAEA;EACE,gBAAgB;EAChB,iBAAiB;EACjB,mBAAmB;EACnB,eAAe;EACf,sBAAsB;EACtB,iBAAiB;EACjB,kBAAkB;EAClB,cAAc;EACd,qBAAqB;EACrB,mBAAmB;AACrB;;AAEA;EACE;AACF;;;AAGA;EACE,iBAAiB;EACjB,mBAAmB;EACnB,eAAe;EACf,kBAAkB;EAClB,WAAW;EACX,gBAAgB;AAClB;;;AAGA;EACE,YAAY;EACZ,oBAAoB;AACtB;AACA;EACE,cAAc;EACd,YAAY;EACZ,YAAY;EACZ,oBAAoB;EACpB,mBAAmB;EACnB,uBAAuB;EACvB,iCAAiC;EACjC,gBAAgB;EAChB,kBAAkB;EAClB,sBAAsB;EACtB,qBAAqB;EACrB,iBAAiB;EACjB,iBAAiB;EACjB,mBAAmB;EACnB,sBAAsB;EACtB,oBAAoB;EACpB,4BAA4B;EAC5B,gCAAgC;EAChC,eAAe;;AAEjB;;;AAGA;EACE,yBAAyB;EACzB,cAAc;EACd,qBAAqB;AACvB;;AAEA;EACE,qBAAqB;EACrB,yBAAyB;EACzB,6BAA6B;EAC7B,UAAU;EACV,0BAA0B;AAC5B;;;AAGA;EACE,yBAAyB;EACzB,qBAAqB;AACvB","sourcesContent":["body {\r\n  height: 100vh;\r\n  width: 100vw;\r\n}\r\n\r\n\r\n\r\n\r\n\r\n.voter-widget-container{\r\n  background-color: rgba(0, 0, 0, 0);\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-items: center;\r\n  max-width: 950px;\r\n  min-height: 200px;\r\n  min-height: 200px;\r\n  overflow-x: auto;\r\n  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, .2);\r\n  background-color: #fff;\r\n  border-radius: 8px;\r\n}\r\n\r\n.voter-widget-header{\r\n  margin-top: 48px;\r\n  font-weight: bold;\r\n  margin-bottom: 48px;\r\n  font-size: 26px;\r\n  letter-spacing: -0.1px;\r\n  line-height: 1.23;\r\n  text-align: center;\r\n  color: #1e1e1e;\r\n  font-family: \"Roboto\";\r\n  align-self: stretch;\r\n}\r\n\r\n.voter-widget-image{\r\n  margin:auto\r\n}\r\n\r\n\r\n.voter-widget-footer{\r\n  margin: 48px auto;\r\n  font-family: Roboto;\r\n  font-size: 18px;\r\n  text-align: center;\r\n  color: #000;\r\n  line-height: 1.5;\r\n}\r\n\r\n\r\n.voter-button-container{\r\n  margin: auto;\r\n  padding-bottom: 48px;\r\n}\r\n.voter-button {\r\n  margin: 0 auto;\r\n  width: 165px;\r\n  height: 60px;\r\n  display: inline-flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  font-family: \"Roboto\", sans-serif;\r\n  font-weight: 700;\r\n  font-size: 0.875em;\r\n  line-height: 1.71429em;\r\n  text-decoration: none;\r\n  user-select: none;\r\n  border-width: 1px;\r\n  border-style: solid;\r\n  box-sizing: border-box;\r\n  border-radius: 999px;\r\n  padding: 11px 23px 11px 23px;\r\n  transition: all 0.3s ease-in-out;\r\n  pointer: cursor;\r\n\r\n}\r\n\r\n\r\n.voter-button-primary{\r\n  background-color: #324dc7;\r\n  color: #ffffff;\r\n  border-color: #324dc7;\r\n}\r\n\r\n.voter-button-primary:focus{\r\n  border-color: #ffffff;\r\n  background-color: #324dc7;\r\n  box-shadow: 0 0 0 2px #324dc7;\r\n  outline: 0;\r\n  text-decoration: underline;\r\n}\r\n\r\n\r\n.voter-button-primary:hover{\r\n  background-color: #192764;\r\n  border-color: #192764;\r\n}"],"sourceRoot":""}]);
+.logout-button {
+  padding: 8px 16px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+}
+
+.voter-button-primary {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.voter-button-primary:hover {
+  background-color: #218838;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+}
+
+.close-button:hover {
+  color: #ff0000;
+}
+
+/* Popups */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 300px;
+}
+
+.popup-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.voter-popup-container {
+  position: relative;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 350px;
+  text-align: center;
+}
+
+.voter-widget-header {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.voter-widget-image img {
+  max-width: 100px;
+  margin: 10px 0;
+}
+
+.voter-widget-footer {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.voter-button-container {
+  margin-top: 10px;
+}
+
+/* Components */
+.user-info {
+  margin-top: 20px;
+}
+
+/* Loading state */
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #333;
+}
+`, "",{"version":3,"sources":["webpack://./src/style.css"],"names":[],"mappings":"AAAA;EACE,aAAa;EACb,YAAY;AACd;;AAEA,sBAAsB;AACtB;EACE,kBAAkB;EAClB,iBAAiB;EACjB,8BAA8B;AAChC;;AAEA,oBAAoB;AACpB;EACE,aAAa;EACb,yBAAyB;EACzB,iBAAiB;EACjB,kBAAkB;AACpB;;AAEA;EACE,WAAW;AACb;;AAEA;EACE,WAAW;AACb;;AAEA,eAAe;AACf;EACE,aAAa;EACb,sBAAsB;EACtB,mBAAmB;EACnB,uBAAuB;EACvB,iBAAiB;EACjB,yBAAyB;EACzB,aAAa;AACf;;AAEA;EACE,mBAAmB;EACnB,WAAW;EACX,eAAe;AACjB;;AAEA,YAAY;AACZ;;EAEE,kBAAkB;EAClB,eAAe;EACf,yBAAyB;EACzB,YAAY;EACZ,YAAY;EACZ,kBAAkB;EAClB,eAAe;EACf,iCAAiC;AACnC;;AAEA;;EAEE,yBAAyB;AAC3B;;AAEA;EACE,iBAAiB;EACjB,yBAAyB;EACzB,WAAW;EACX,YAAY;EACZ,kBAAkB;EAClB,eAAe;EACf,iCAAiC;AACnC;;AAEA;EACE,yBAAyB;AAC3B;;AAEA;EACE,kBAAkB;EAClB,yBAAyB;EACzB,WAAW;EACX,YAAY;EACZ,kBAAkB;EAClB,eAAe;EACf,iCAAiC;AACnC;;AAEA;EACE,yBAAyB;AAC3B;;AAEA;EACE,kBAAkB;EAClB,SAAS;EACT,WAAW;EACX,gBAAgB;EAChB,YAAY;EACZ,eAAe;EACf,eAAe;EACf,WAAW;AACb;;AAEA;EACE,cAAc;AAChB;;AAEA,WAAW;AACX;EACE,eAAe;EACf,MAAM;EACN,OAAO;EACP,WAAW;EACX,YAAY;EACZ,8BAA8B;EAC9B,aAAa;EACb,uBAAuB;EACvB,mBAAmB;EACnB,aAAa;AACf;;AAEA;EACE,gBAAgB;EAChB,aAAa;EACb,kBAAkB;EAClB,wCAAwC;EACxC,kBAAkB;EAClB,YAAY;AACd;;AAEA;EACE,mBAAmB;EACnB,WAAW;AACb;;AAEA;EACE,kBAAkB;EAClB,gBAAgB;EAChB,aAAa;EACb,kBAAkB;EAClB,wCAAwC;EACxC,YAAY;EACZ,kBAAkB;AACpB;;AAEA;EACE,eAAe;EACf,iBAAiB;EACjB,mBAAmB;EACnB,WAAW;AACb;;AAEA;EACE,gBAAgB;EAChB,cAAc;AAChB;;AAEA;EACE,eAAe;EACf,WAAW;EACX,mBAAmB;AACrB;;AAEA;EACE,gBAAgB;AAClB;;AAEA,eAAe;AACf;EACE,gBAAgB;AAClB;;AAEA,kBAAkB;AAClB;EACE,kBAAkB;EAClB,aAAa;EACb,WAAW;AACb","sourcesContent":["body {\r\n  height: 100vh;\r\n  width: 100vw;\r\n}\r\n\r\n/* General container */\r\n.app-container {\r\n  position: relative;\r\n  min-height: 100vh;\r\n  font-family: Arial, sans-serif;\r\n}\r\n\r\n/* Background page */\r\n.background-page {\r\n  padding: 20px;\r\n  background-color: #f0f0f0;\r\n  min-height: 100vh;\r\n  text-align: center;\r\n}\r\n\r\n.background-page h1 {\r\n  color: #333;\r\n}\r\n\r\n.background-page p {\r\n  color: #666;\r\n}\r\n\r\n/* Login page */\r\n.login-page {\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  justify-content: center;\r\n  min-height: 100vh;\r\n  background-color: #f5f5f5;\r\n  padding: 40px;\r\n}\r\n\r\n.login-page h2 {\r\n  margin-bottom: 20px;\r\n  color: #333;\r\n  font-size: 24px;\r\n}\r\n\r\n/* Buttons */\r\n.login-button,\r\n.popup-container button {\r\n  padding: 12px 24px;\r\n  font-size: 16px;\r\n  background-color: #007bff;\r\n  color: white;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  transition: background-color 0.3s;\r\n}\r\n\r\n.login-button:hover,\r\n.popup-container button:hover {\r\n  background-color: #0056b3;\r\n}\r\n\r\n.logout-button {\r\n  padding: 8px 16px;\r\n  background-color: #dc3545;\r\n  color: #fff;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  transition: background-color 0.3s;\r\n}\r\n\r\n.logout-button:hover {\r\n  background-color: #c82333;\r\n}\r\n\r\n.voter-button-primary {\r\n  padding: 10px 20px;\r\n  background-color: #28a745;\r\n  color: #fff;\r\n  border: none;\r\n  border-radius: 4px;\r\n  cursor: pointer;\r\n  transition: background-color 0.3s;\r\n}\r\n\r\n.voter-button-primary:hover {\r\n  background-color: #218838;\r\n}\r\n\r\n.close-button {\r\n  position: absolute;\r\n  top: 10px;\r\n  right: 10px;\r\n  background: none;\r\n  border: none;\r\n  font-size: 18px;\r\n  cursor: pointer;\r\n  color: #333;\r\n}\r\n\r\n.close-button:hover {\r\n  color: #ff0000;\r\n}\r\n\r\n/* Popups */\r\n.popup-overlay {\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background: rgba(0, 0, 0, 0.5);\r\n  display: flex;\r\n  justify-content: center;\r\n  align-items: center;\r\n  z-index: 1000;\r\n}\r\n\r\n.popup-container {\r\n  background: #fff;\r\n  padding: 20px;\r\n  border-radius: 8px;\r\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);\r\n  text-align: center;\r\n  width: 300px;\r\n}\r\n\r\n.popup-container h2 {\r\n  margin-bottom: 20px;\r\n  color: #333;\r\n}\r\n\r\n.voter-popup-container {\r\n  position: relative;\r\n  background: #fff;\r\n  padding: 20px;\r\n  border-radius: 8px;\r\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);\r\n  width: 350px;\r\n  text-align: center;\r\n}\r\n\r\n.voter-widget-header {\r\n  font-size: 18px;\r\n  font-weight: bold;\r\n  margin-bottom: 10px;\r\n  color: #333;\r\n}\r\n\r\n.voter-widget-image img {\r\n  max-width: 100px;\r\n  margin: 10px 0;\r\n}\r\n\r\n.voter-widget-footer {\r\n  font-size: 14px;\r\n  color: #666;\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.voter-button-container {\r\n  margin-top: 10px;\r\n}\r\n\r\n/* Components */\r\n.user-info {\r\n  margin-top: 20px;\r\n}\r\n\r\n/* Loading state */\r\n.loading {\r\n  text-align: center;\r\n  padding: 20px;\r\n  color: #333;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -89003,6 +89083,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _okta_okta_auth_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @okta/okta-auth-js */ "./node_modules/@okta/okta-auth-js/esm/browser/exports/exports/default.js");
 /* harmony import */ var _auth_config_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth_config.json */ "./src/auth_config.json");
+// src/authConfigHandler.ts
 
 
 var getAuthProvider = function (provider) {
@@ -89018,8 +89099,8 @@ var getAuthProvider = function (provider) {
     if (provider === 'okta') {
         return new _okta_okta_auth_js__WEBPACK_IMPORTED_MODULE_0__["default"]({
             clientId: okta.clientId,
-            issuer: okta.domain,
-            redirectUri: 'http://127.0.0.1:3000',
+            issuer: okta.domain, // Ensure this is your Okta issuer (e.g., https://dev-40855217.okta.com/oauth2/default)
+            redirectUri: 'http://127.0.0.1:3000', // Exact match with Okta
             scopes: ['openid', 'profile', 'email'],
             pkce: true,
         });
@@ -89046,7 +89127,7 @@ var getAuthProvider = function (provider) {
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"domain":"dev-twgam2m5o2pvtj0i.us.auth0.com","clientId":"FhtLAmGwqlP6CouQm2ZnZs4Gd40jatwd","azure":{"domain":"azure-ad.example.com","clientId":"azure-client-id","redirectUri":"http://localhost:3000","tenantId":"your-azure-tenant-id","scopes":["openid","profile","email"]},"okta":{"domain":"https://dev-40855217.okta.com","clientId":"0oanhs57lchFwU7v15d7"},"auth0":{"domain":"dev-dzf31x2lyk46rsnb.us.auth0.com","clientId":"1obZife0KeQItynNyBqdX1CckA8ynbNs"}}');
+module.exports = /*#__PURE__*/JSON.parse('{"auth0":{"domain":"dev-twgam2m5o2pvtj0i.us.auth0.com","clientId":"FhtLAmGwqlP6CouQm2ZnZs4Gd40jatwd"},"okta":{"domain":"https://dev-40855217.okta.com","clientId":"0oanhs57lchFwU7v15d7"},"azure":{"domain":"azure-ad.example.com","clientId":"azure-client-id","redirectUri":"http://localhost:3000","tenantId":"your-azure-tenant-id","scopes":["openid","profile","email"]}}');
 
 /***/ }),
 
@@ -89106,34 +89187,31 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
 
 
 
- // Azure AD
+
 
 var App = function (_a) {
-    var provider = _a.provider, authProvider = _a.authProvider;
+    var provider = _a.provider, authProvider = _a.authProvider, partnerId = _a.partnerId, campaignCode = _a.campaignCode;
     var _b = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false), isAuthenticated = _b[0], setIsAuthenticated = _b[1];
     var _c = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null), userInfo = _c[0], setUserInfo = _c[1];
-    var _d = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true), showLoginPopup = _d[0], setShowLoginPopup = _d[1];
+    var _d = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false), showVoterPopup = _d[0], setShowVoterPopup = _d[1];
     var _e = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false), authChecked = _e[0], setAuthChecked = _e[1];
-    // Auth0 Logic
     var _f = (0,_auth0_auth0_react__WEBPACK_IMPORTED_MODULE_2__.useAuth0)(), auth0IsAuthenticated = _f.isAuthenticated, auth0User = _f.user, loginWithRedirect = _f.loginWithRedirect, auth0Logout = _f.logout;
-    // Azure AD Logic
     var isAzureAuthenticated = (0,_azure_msal_react__WEBPACK_IMPORTED_MODULE_3__.useIsAuthenticated)();
     var accounts = (0,_azure_msal_react__WEBPACK_IMPORTED_MODULE_3__.useMsal)().accounts;
-    // Redirect Function
     var redirect = function () {
-        var partnerId = '123456';
-        var campaignCode = '654321';
+        var effectivePartnerId = partnerId || '123456';
+        var effectiveCampaignCode = campaignCode || '654321';
         var url = 'https://register.vote.org/';
-        if (partnerId || campaignCode) {
+        if (effectivePartnerId || effectiveCampaignCode) {
             url += '?';
-            if (partnerId)
-                url += "partnerId=".concat(partnerId);
-            if (campaignCode)
-                url += "&campaignCode=".concat(campaignCode);
+            if (effectivePartnerId)
+                url += "partnerId=".concat(effectivePartnerId);
+            if (effectiveCampaignCode)
+                url += "&campaignCode=".concat(effectiveCampaignCode);
         }
-        window.location.href = url;
+        window.open(url, '_blank');
+        setShowVoterPopup(false); // Close the modal after clicking
     };
-    // Okta Authentication Check
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
         if (provider === 'okta' && authProvider) {
             var checkOktaAuthentication = function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -89151,7 +89229,7 @@ var App = function (_a) {
                         case 3:
                             isOktaAuthenticated = _a.sent();
                             setIsAuthenticated(isOktaAuthenticated);
-                            setShowLoginPopup(!isOktaAuthenticated);
+                            setShowVoterPopup(isOktaAuthenticated); // Show modal immediately on login
                             if (!isOktaAuthenticated) return [3 /*break*/, 5];
                             return [4 /*yield*/, authProvider.getUser()];
                         case 4:
@@ -89173,35 +89251,38 @@ var App = function (_a) {
             checkOktaAuthentication();
         }
     }, [provider, authProvider]);
-    // Auth0 Authentication Check
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
         if (provider === 'auth0') {
             setAuthChecked(false);
             if (auth0IsAuthenticated) {
                 setIsAuthenticated(true);
                 setUserInfo(auth0User);
-                setShowLoginPopup(false);
+                setShowVoterPopup(true); // Show modal immediately on login
             }
             setAuthChecked(true);
         }
     }, [provider, auth0IsAuthenticated, auth0User]);
-    // Azure AD Authentication Check
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
         if (provider === 'azure') {
             setIsAuthenticated(isAzureAuthenticated);
             setUserInfo(accounts.length ? accounts[0] : null);
-            setShowLoginPopup(!isAzureAuthenticated);
+            setShowVoterPopup(isAzureAuthenticated); // Show modal immediately on login
             setAuthChecked(true);
         }
     }, [provider, isAzureAuthenticated, accounts]);
     var handleLogin = function () { return __awaiter(void 0, void 0, void 0, function () {
-        var instance;
+        var instance, error_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    setShowLoginPopup(false);
+                    _a.trys.push([0, 7, , 8]);
                     if (!(provider === 'auth0')) return [3 /*break*/, 2];
-                    return [4 /*yield*/, loginWithRedirect()];
+                    return [4 /*yield*/, loginWithRedirect({
+                            appState: {
+                                returnTo: window.location.pathname, // Optional: return to current path after login
+                            },
+                            // Do not specify redirectUri here; it’s handled by Auth0Provider
+                        })];
                 case 1:
                     _a.sent();
                     return [3 /*break*/, 6];
@@ -89218,44 +89299,40 @@ var App = function (_a) {
                 case 5:
                     _a.sent();
                     _a.label = 6;
-                case 6: return [2 /*return*/];
+                case 6: return [3 /*break*/, 8];
+                case 7:
+                    error_1 = _a.sent();
+                    console.error('Login error:', error_1);
+                    return [3 /*break*/, 8];
+                case 8: return [2 /*return*/];
             }
         });
     }); };
     var handleLogout = function () { return __awaiter(void 0, void 0, void 0, function () {
-        var authClient, signoutRedirectUrl, instance, error_1;
+        var authClient, signoutRedirectUrl, instance, error_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 8, , 9]);
                     if (!(provider === 'auth0')) return [3 /*break*/, 1];
-                    auth0Logout({ logoutParams: { returnTo: window.location.origin } });
+                    auth0Logout({ logoutParams: { returnTo: 'http://127.0.0.1:3000' } });
                     return [3 /*break*/, 7];
                 case 1:
                     if (!(provider === 'okta' && authProvider)) return [3 /*break*/, 5];
-                    console.log('Starting Okta logout process...');
                     authClient = authProvider;
                     signoutRedirectUrl = authClient.getSignOutRedirectUrl({
-                        postLogoutRedirectUri: window.location.origin,
+                        postLogoutRedirectUri: 'http://127.0.0.1:3000',
                         clientId: authProvider.options.clientId,
                     });
-                    console.log('Okta Sign-Out Redirect URL:', signoutRedirectUrl);
-                    // Step 2: Revoke tokens (optional but recommended)
                     return [4 /*yield*/, authClient.revokeRefreshToken()];
                 case 2:
-                    // Step 2: Revoke tokens (optional but recommended)
-                    _a.sent(); // Revoke refresh token if offline_access scope was granted
+                    _a.sent();
                     return [4 /*yield*/, authClient.revokeAccessToken()];
                 case 3:
-                    _a.sent(); // Revoke access token
-                    console.log('Tokens revoked successfully.');
-                    // Step 3: Clear local session
+                    _a.sent();
                     return [4 /*yield*/, authClient.tokenManager.clear()];
                 case 4:
-                    // Step 3: Clear local session
-                    _a.sent(); // Clear tokens stored locally
-                    console.log('Tokens cleared from Okta tokenManager.');
-                    // Step 4: Redirect the user to the Okta logout endpoint
+                    _a.sent();
                     window.location.href = signoutRedirectUrl;
                     return [3 /*break*/, 7];
                 case 5:
@@ -89266,25 +89343,32 @@ var App = function (_a) {
                     _a.sent();
                     _a.label = 7;
                 case 7:
-                    // Reset application state (common for all providers)
                     setIsAuthenticated(false);
                     setUserInfo(null);
-                    setShowLoginPopup(true);
+                    setShowVoterPopup(false);
                     setAuthChecked(true);
-                    console.log('Application state reset after logout.');
                     return [3 /*break*/, 9];
                 case 8:
-                    error_1 = _a.sent();
-                    console.error('Error during logout:', error_1);
+                    error_2 = _a.sent();
+                    console.error('Error during logout:', error_2);
                     return [3 /*break*/, 9];
                 case 9: return [2 /*return*/];
             }
         });
     }); };
+    var closeVoterPopup = function () {
+        setShowVoterPopup(false);
+    };
     if (!authChecked) {
-        return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { children: "Loading..." });
+        return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "loading", children: "Loading..." });
     }
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "app-container", children: [showLoginPopup && !isAuthenticated && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "popup-container", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "popup-content", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Login to Continue" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { onClick: handleLogin, children: "Login" })] }) })), !showLoginPopup && isAuthenticated && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "voter-widget-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "voter-widget-header", children: "You can register to vote." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "voter-widget-image", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", { src: "/assets/y.svg", alt: "Voter Registration" }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "voter-widget-footer", children: "It only takes two minutes." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "voter-button-container", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "voter-button voter-button-primary", onClick: redirect, "aria-label": "Register to vote", children: "Register to Vote" }) })] })), isAuthenticated && userInfo && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "user-info", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: ["Welcome, ", (userInfo === null || userInfo === void 0 ? void 0 : userInfo.name) || (userInfo === null || userInfo === void 0 ? void 0 : userInfo.nickname) || 'User', "!"] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "logout-button", onClick: handleLogout, children: "Logout" })] }))] }));
+    var titleStyle = {
+        color: 'red',
+    };
+    if (!isAuthenticated) {
+        return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "login-page", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", { children: "Login to continue" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "login-button", onClick: handleLogin, children: "Login" })] }));
+    }
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "app-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "background-page", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h1", { children: ["Welcome to", (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", { style: titleStyle, children: "MyOrgApp" })] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", { children: "This is the main content area!" }), isAuthenticated && userInfo && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "user-info", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: ["Welcome, ", (userInfo === null || userInfo === void 0 ? void 0 : userInfo.name) || (userInfo === null || userInfo === void 0 ? void 0 : userInfo.nickname) || 'User', "!"] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "logout-button", onClick: handleLogout, children: "Logout" })] }))] }), isAuthenticated && showVoterPopup && ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "popup-overlay", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: "voter-popup-container", children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "close-button", onClick: closeVoterPopup, children: "X" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "voter-widget-header", children: "You can register to vote." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "voter-widget-image", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", { src: "/assets/y.svg", alt: "Voter Registration" }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "voter-widget-footer", children: "It only takes two minutes." }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "voter-button-container", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", { className: "voter-button voter-button-primary", onClick: redirect, "aria-label": "Register to vote", children: "Register to Vote" }) })] }) }))] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
@@ -89465,50 +89549,97 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// Define the provider
-var provider = 'okta'; // Change to 'auth0', 'okta', or 'azure'
+// Define getProviderConfig function at the top of the file
+var getProviderConfig = function () {
+    var cbVoteElement = document.querySelector('cb-vote');
+    var provider = ((cbVoteElement === null || cbVoteElement === void 0 ? void 0 : cbVoteElement.getAttribute('provider')) || 'auth0');
+    var partnerId = (cbVoteElement === null || cbVoteElement === void 0 ? void 0 : cbVoteElement.getAttribute('partnerid')) || undefined;
+    var campaignCode = (cbVoteElement === null || cbVoteElement === void 0 ? void 0 : cbVoteElement.getAttribute('campaigncode')) || undefined;
+    console.log('Selected provider:', provider);
+    console.log('Partner ID:', partnerId);
+    console.log('Campaign Code:', campaignCode);
+    return { provider: provider, partnerId: partnerId, campaignCode: campaignCode };
+};
 var rootElement = document.getElementById('root');
 if (!rootElement)
     throw new Error('Root element not found');
 var root = react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot(rootElement);
-// Type guard for narrowing the provider type
-var isAuth0Provider = function (p) { return p === 'auth0'; };
-var isOktaProvider = function (p) { return p === 'okta'; };
-var isAzureProvider = function (p) { return p === 'azure'; };
-// Fetch the authProvider configuration dynamically
-var authProvider = (0,_authConfigHandler__WEBPACK_IMPORTED_MODULE_5__["default"])(provider);
-if (isAuth0Provider(provider)) {
-    var auth0Config = authProvider;
-    root.render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_auth0_auth0_react__WEBPACK_IMPORTED_MODULE_3__.Auth0Provider, { domain: auth0Config.domain, clientId: auth0Config.clientId, authorizationParams: {
-            redirect_uri: auth0Config.redirectUri,
-            scope: auth0Config.scopes.join(' '),
-        }, useRefreshTokens: true, cacheLocation: "localstorage", children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.BrowserRouter, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Routes, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, { path: "/", element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_cb_vote_widget__WEBPACK_IMPORTED_MODULE_2__["default"], { provider: "auth0" }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, { path: "*", element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Navigate, { to: "/" }) })] }) }) }));
-}
-else if (isOktaProvider(provider)) {
-    var oktaAuth = authProvider;
-    root.render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.BrowserRouter, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Routes, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, { path: "/", element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_cb_vote_widget__WEBPACK_IMPORTED_MODULE_2__["default"], { provider: "okta", authProvider: oktaAuth }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, { path: "*", element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Navigate, { to: "/" }) })] }) }));
-}
-else if (isAzureProvider(provider)) {
-    var azureConfig = authProvider;
-    var msalInstance = new _azure_msal_browser__WEBPACK_IMPORTED_MODULE_7__.PublicClientApplication({
-        auth: {
-            clientId: azureConfig.clientId,
-            authority: azureConfig.authority,
-            redirectUri: azureConfig.redirectUri,
-        },
-        cache: {
-            cacheLocation: 'localStorage',
-            storeAuthStateInCookie: true,
-        },
-    });
-    root.render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_azure_msal_react__WEBPACK_IMPORTED_MODULE_4__.MsalProvider, { instance: msalInstance, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.BrowserRouter, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Routes, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, { path: "/", element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_cb_vote_widget__WEBPACK_IMPORTED_MODULE_2__["default"], { provider: "azure", authProvider: { instance: msalInstance } }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, { path: "*", element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Navigate, { to: "/" }) })] }) }) }));
+var renderApp = function () {
+    var _a = getProviderConfig(), provider = _a.provider, partnerId = _a.partnerId, campaignCode = _a.campaignCode;
+    var isAuth0Provider = function (p) { return p === 'auth0'; };
+    var isOktaProvider = function (p) { return p === 'okta'; };
+    var isAzureProvider = function (p) { return p === 'azure'; };
+    var authProvider = (0,_authConfigHandler__WEBPACK_IMPORTED_MODULE_5__["default"])(provider);
+    if (isAuth0Provider(provider)) {
+        var auth0Config = authProvider;
+        root.render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_auth0_auth0_react__WEBPACK_IMPORTED_MODULE_3__.Auth0Provider, { domain: auth0Config.domain, clientId: auth0Config.clientId, authorizationParams: {
+                redirect_uri: auth0Config.redirectUri,
+                scope: auth0Config.scopes.join(' '),
+            }, useRefreshTokens: true, cacheLocation: "localstorage", onRedirectCallback: function (appState) {
+                window.history.replaceState({}, document.title, window.location.pathname);
+                console.log('Auth0 redirect callback completed');
+            }, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.BrowserRouter, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Routes, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, { path: "/", element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_cb_vote_widget__WEBPACK_IMPORTED_MODULE_2__["default"], { provider: provider, partnerId: partnerId, campaignCode: campaignCode }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, { path: "*", element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Navigate, { to: "/" }) })] }) }) }));
+    }
+    else if (isOktaProvider(provider)) {
+        var oktaAuth_1 = authProvider;
+        if (window.location.search.includes('code=')) {
+            oktaAuth_1.token.parseFromUrl().then(function (tokenResponse) {
+                var _a, _b, _c;
+                // Handle TokenResponse and create Token objects
+                var accessToken = (_a = tokenResponse.tokens) === null || _a === void 0 ? void 0 : _a.accessToken;
+                var idToken = (_b = tokenResponse.tokens) === null || _b === void 0 ? void 0 : _b.idToken;
+                var refreshToken = (_c = tokenResponse.tokens) === null || _c === void 0 ? void 0 : _c.refreshToken;
+                // Ensure tokens are valid before adding
+                if (accessToken) {
+                    oktaAuth_1.tokenManager.add('accessToken', accessToken);
+                }
+                if (idToken) {
+                    oktaAuth_1.tokenManager.add('idToken', idToken);
+                }
+                if (refreshToken) {
+                    oktaAuth_1.tokenManager.add('refreshToken', refreshToken);
+                }
+                console.log('Okta redirect callback completed');
+                renderOktaApp(oktaAuth_1, partnerId, campaignCode);
+            }).catch(function (err) {
+                console.error('Okta redirect error:', err);
+            });
+        }
+        else {
+            renderOktaApp(oktaAuth_1, partnerId, campaignCode);
+        }
+    }
+    else if (isAzureProvider(provider)) {
+        var azureConfig = authProvider;
+        var msalInstance = new _azure_msal_browser__WEBPACK_IMPORTED_MODULE_7__.PublicClientApplication({
+            auth: {
+                clientId: azureConfig.clientId,
+                authority: azureConfig.authority,
+                redirectUri: azureConfig.redirectUri,
+            },
+            cache: {
+                cacheLocation: 'localStorage',
+                storeAuthStateInCookie: true,
+            },
+        });
+        root.render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_azure_msal_react__WEBPACK_IMPORTED_MODULE_4__.MsalProvider, { instance: msalInstance, children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.BrowserRouter, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Routes, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, { path: "/", element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_cb_vote_widget__WEBPACK_IMPORTED_MODULE_2__["default"], { provider: provider, authProvider: { instance: msalInstance }, partnerId: partnerId, campaignCode: campaignCode }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, { path: "*", element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Navigate, { to: "/" }) })] }) }) }));
+    }
+    else {
+        throw new Error("Unsupported provider: ".concat(provider));
+    }
+};
+var renderOktaApp = function (oktaAuth, partnerId, campaignCode) {
+    root.render((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.BrowserRouter, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Routes, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, { path: "/", element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_cb_vote_widget__WEBPACK_IMPORTED_MODULE_2__["default"], { provider: "okta", authProvider: oktaAuth, partnerId: partnerId, campaignCode: campaignCode }) }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, { path: "*", element: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Navigate, { to: "/" }) })] }) }));
+};
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    renderApp();
 }
 else {
-    throw new Error("Unsupported provider: ".concat(provider));
+    document.addEventListener('DOMContentLoaded', renderApp); // Fixed typo: 'addEventListener', not 'addEvent'
 }
 
 })();
 
 /******/ })()
 ;
-//# sourceMappingURL=cb-vote-widget.js.map
+//# sourceMappingURL=bundle.js.map
