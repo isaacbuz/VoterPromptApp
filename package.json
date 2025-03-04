@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "live-server docs/ --port=3000",
-    "build": "webpack --config webpack.config.js"
+    "clean": "if exist build rmdir /s /q build",
+    "build": "npm run clean && webpack --config webpack.config.js"
   },
   "keywords": [],
   "author": "",

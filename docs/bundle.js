@@ -89127,7 +89127,7 @@ var getAuthProvider = function (provider) {
 /***/ ((module) => {
 
 "use strict";
-module.exports = /*#__PURE__*/JSON.parse('{"auth0":{"domain":"dev-twgam2m5o2pvtj0i.us.auth0.com","clientId":"FhtLAmGwqlP6CouQm2ZnZs4Gd40jatwd"},"okta":{"domain":"https://dev-40855217.okta.com","clientId":"0oanhs57lchFwU7v15d7"},"azure":{"domain":"azure-ad.example.com","clientId":"azure-client-id","redirectUri":"http://localhost:3000","tenantId":"your-azure-tenant-id","scopes":["openid","profile","email"]}}');
+module.exports = /*#__PURE__*/JSON.parse('{"auth0":{"domain":"dev-cefy84by8ug1nbak.us.auth0.com","clientId":"HcBLokAjQhqIwoKZXtb2by8mxiE9EKMP"},"okta":{"domain":"https://dev-40855217.okta.com","clientId":"0oanhs57lchFwU7v15d7"},"azure":{"domain":"techtide1223gmail.onmicrosoft.com","clientId":"7c41c780-b9db-43df-950d-bf1feabb27a8","redirectUri":"http://localhost:3000","tenantId":"9e0ab446-dd79-4d10-a90d-d405048204c9","scopes":["openid","profile","email"]}}');
 
 /***/ }),
 
