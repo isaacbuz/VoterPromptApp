@@ -13,7 +13,6 @@ type AppProps = {
 // Define AppState type for Auth0
 interface AppState {
   returnTo?: string;
-  // Add other state properties if needed
 }
 
 const App: React.FC<AppProps> = ({ provider, authProvider, partnerId, campaignCode }) => {
@@ -21,6 +20,7 @@ const App: React.FC<AppProps> = ({ provider, authProvider, partnerId, campaignCo
   const [userInfo, setUserInfo] = useState<any>(null);
   const [showVoterPopup, setShowVoterPopup] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
+  const [showFallback, setShowFallback] = useState(false); // State to control fallback visibility
 
   const {
     isAuthenticated: auth0IsAuthenticated,
@@ -42,7 +42,7 @@ const App: React.FC<AppProps> = ({ provider, authProvider, partnerId, campaignCo
       if (effectiveCampaignCode) url += `&campaignCode=${effectiveCampaignCode}`;
     }
     window.open(url, '_blank');
-    setShowVoterPopup(false); // Close the modal after clicking
+    setShowVoterPopup(false);
   };
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const App: React.FC<AppProps> = ({ provider, authProvider, partnerId, campaignCo
           }
           const isOktaAuthenticated = await authProvider.isAuthenticated();
           setIsAuthenticated(isOktaAuthenticated);
-          setShowVoterPopup(isOktaAuthenticated); // Show modal immediately on login
+          setShowVoterPopup(isOktaAuthenticated);
           if (isOktaAuthenticated) {
             const user = await authProvider.getUser();
             setUserInfo(user);
@@ -75,7 +75,7 @@ const App: React.FC<AppProps> = ({ provider, authProvider, partnerId, campaignCo
       if (auth0IsAuthenticated) {
         setIsAuthenticated(true);
         setUserInfo(auth0User);
-        setShowVoterPopup(true); // Show modal immediately on login
+        setShowVoterPopup(true);
       }
       setAuthChecked(true);
     }
@@ -85,7 +85,7 @@ const App: React.FC<AppProps> = ({ provider, authProvider, partnerId, campaignCo
     if (provider === 'azure') {
       setIsAuthenticated(isAzureAuthenticated);
       setUserInfo(accounts.length ? accounts[0] : null);
-      setShowVoterPopup(isAzureAuthenticated); // Show modal immediately on login
+      setShowVoterPopup(isAzureAuthenticated);
       setAuthChecked(true);
     }
   }, [provider, isAzureAuthenticated, accounts]);
@@ -95,9 +95,8 @@ const App: React.FC<AppProps> = ({ provider, authProvider, partnerId, campaignCo
       if (provider === 'auth0') {
         await loginWithRedirect({
           appState: {
-            returnTo: window.location.pathname, // Optional: return to current path after login
+            returnTo: window.location.pathname,
           },
-          // Do not specify redirectUri here; it’s handled by Auth0Provider
         });
       } else if (provider === 'okta' && authProvider) {
         await authProvider.signInWithRedirect();
@@ -169,7 +168,10 @@ const App: React.FC<AppProps> = ({ provider, authProvider, partnerId, campaignCo
         <p>This is the main content area!</p>
         {isAuthenticated && userInfo && (
           <div className="user-info">
-            <p>Welcome, {userInfo?.name || userInfo?.nickname || 'User'}!</p>
+            <p>
+              Welcome,{' '}
+              {userInfo?.name || userInfo?.nickname || userInfo?.email || 'User'}!
+            </p>
             <button className="logout-button" onClick={handleLogout}>
               Logout
             </button>
@@ -180,12 +182,27 @@ const App: React.FC<AppProps> = ({ provider, authProvider, partnerId, campaignCo
       {isAuthenticated && showVoterPopup && (
         <div className="popup-overlay">
           <div className="voter-popup-container">
-            <button className="close-button" onClick={closeVoterPopup}>
-              X
+            <button
+              className="close-button"
+              onClick={closeVoterPopup}
+              aria-label="Close voter registration popup"
+            >
+              ✕
             </button>
             <div className="voter-widget-header">You can register to vote.</div>
             <div className="voter-widget-image">
-              <img src="/assets/y.svg" alt="Voter Registration" />
+              {showFallback ? (
+                <span>OWN YOUR FUTURE VOTE</span>
+              ) : (
+                <img
+                  src="/assets/ownYourFuture.svg"
+                  alt="Own Your Future - Vote"
+                  onError={(e) => {
+                    console.error('Image load error:', e);
+                    setShowFallback(true);
+                  }}
+                />
+              )}
             </div>
             <div className="voter-widget-footer">It only takes two minutes.</div>
             <div className="voter-button-container">

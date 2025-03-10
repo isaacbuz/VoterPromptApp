@@ -5,11 +5,13 @@ module.exports = {
   entry: path.join(__dirname, './src/index.tsx'),
   output: {
     path: path.resolve(__dirname, './docs'),
-    filename: 'bundle.js', // Matches index.html
+    filename: 'bundle.js',
+    assetModuleFilename: 'assets/[name][ext]',
+    publicPath: '/',
   },
   devtool: 'source-map',
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.css', '.txt'],
+    extensions: ['.ts', '.tsx', '.js', '.css'],
   },
   module: {
     rules: [
@@ -19,10 +21,7 @@ module.exports = {
         include: [path.resolve('src')],
         loader: 'ts-loader',
         options: {
-          transpileOnly: false,
-          compilerOptions: {
-            module: 'es2015',
-          },
+          transpileOnly: true,
         },
       },
       {
@@ -30,20 +29,24 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.svg$/,
-        use: ['@svgr/webpack'],
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/[name][ext]',
+        },
+        include: path.resolve(__dirname, 'src/assets'),
       },
     ],
   },
   devServer: {
-    port: 3000, // Matches redirect URI
+    port: 3000,
     static: {
       directory: path.join(__dirname, './docs'),
     },
     compress: true,
     historyApiFallback: true,
     client: {
-      overlay: false, // Disable overlay for errors during dev
+      overlay: false,
     },
   },
 };

@@ -1,44 +1,52 @@
-// src/authConfigHandler.ts
-import OktaAuth from '@okta/okta-auth-js';
 import authConfig from './auth_config.json';
-import { Provider } from './types';
 
-type Auth0Config = { domain: string; clientId: string; redirectUri: string; scopes: string[] };
-type AzureConfig = { clientId: string; authority: string; redirectUri: string; scopes: string[] };
-type OktaConfig = OktaAuth;
+// Define Provider Types
+type OidcProviderType = 'auth0' | 'okta' | 'azure';
+type SamlProviderType = 'auth0' | 'okta' | 'azure' | 'shibboleth';
+type ProviderType = OidcProviderType | SamlProviderType;
 
-const getAuthProvider = (provider: Provider): Auth0Config | AzureConfig | OktaConfig => {
-  const { okta, auth0, azure } = authConfig;
+// Interface for OIDC configuration
+interface OidcConfig {
+  domain: string;
+  clientId: string;
+  redirectUri: string;
+  authority?: string; // Optional, used for Azure
+  scopes?: string[]; // Optional, used for Azure
+}
 
-  if (provider === 'auth0') {
-    return {
-      domain: auth0.domain,
-      clientId: auth0.clientId,
-      redirectUri: 'http://127.0.0.1:3000',
-      scopes: ['openid', 'profile', 'email'],
-    };
+// Get OIDC Provider Configuration
+export const getAuthProvider = (provider: OidcProviderType): OidcConfig => {
+  if (!(provider in authConfig.oidcProviders)) {
+    throw new Error(`Unsupported OIDC provider: ${provider}`);
   }
+  const baseConfig = {
+    domain: authConfig.oidcProviders[provider].domain,
+    clientId: authConfig.oidcProviders[provider].clientId,
+    redirectUri: authConfig.oidcProviders[provider].redirectUri,
+  };
 
-  if (provider === 'okta') {
-    return new OktaAuth({
-      clientId: okta.clientId,
-      issuer: okta.domain, // Ensure this is your Okta issuer (e.g., https://dev-40855217.okta.com/oauth2/default)
-      redirectUri: 'http://127.0.0.1:3000', // Exact match with Okta
-      scopes: ['openid', 'profile', 'email'],
-      pkce: true,
-    });
-  }
-
+  // Add Azure-specific properties
   if (provider === 'azure') {
     return {
-      clientId: azure.clientId,
-      authority: `https://login.microsoftonline.com/${azure.tenantId}`,
-      redirectUri: azure.redirectUri,
-      scopes: ['openid', 'profile', 'email'],
+      ...baseConfig,
+      authority: `https://login.microsoftonline.com/${authConfig.oidcProviders.azure.tenantId}`,
+      scopes: authConfig.oidcProviders.azure.scopes || ['openid', 'profile', 'email'],
     };
   }
 
-  throw new Error(`Unknown provider: ${provider}`);
+  return baseConfig;
 };
 
-export default getAuthProvider;
+// Get SAML Provider Configuration
+export const getSamlProvider = (provider: SamlProviderType) => {
+  if (!(provider in authConfig.samlProviders)) {
+    throw new Error(`SAML provider not configured: ${provider}`);
+  }
+  return {
+    entryPoint: authConfig.samlProviders[provider].entryPoint,
+    issuer: authConfig.samlProviders[provider].issuer,
+    callbackUrl: authConfig.samlProviders[provider].callbackUrl,
+    privateCertPath: authConfig.samlProviders[provider].privateCertPath,
+    idpCertPath: authConfig.samlProviders[provider].idpCertPath,
+  };
+};
