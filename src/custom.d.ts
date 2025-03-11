@@ -1,9 +1,32 @@
-declare module "*.svg" {
-  import React = require('react')
-    export const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>
-    const src: string
-    export default src
-  const content: React.FunctionComponent<React.SVGAttributes<SVGElement>>;
-  export default content;
+// src/auth_config.d.ts
+export interface AuthConfig {
+  provider: string;
+  protocol: string;
+  campaignCode: string;
+  partnerId: string;
+  oidcProviders: {
+    [key: string]: {
+      domain: string;
+      clientId: string;
+      redirectUri: string;
+      tenantId?: string;
+      scopes?: string | string[]; // Allow string due to env substitution
+    };
+  };
+  samlProviders: {
+    [key: string]: {
+      entryPoint: string;
+      issuer: string;
+      callbackUrl: string;
+      idpCertPath: string;
+      privateCertPath: string;
+      spCertPath: string;
+      connectionName: string;
+    };
+  };
+}
 
+declare module './auth_config.json' {
+  const value: AuthConfig;
+  export default value;
 }

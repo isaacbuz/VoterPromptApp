@@ -1,206 +1,120 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import OktaAuth from '@okta/okta-auth-js';
-import { PublicClientApplication } from '@azure/msal-browser';
+import React, { useState, useEffect } from 'react';
+import authConfig from './auth_config.json';
 import './style.css';
+import { PublicClientApplication } from '@azure/msal-browser'; // For Azure MSAL
+import { OktaAuth } from '@okta/okta-auth-js'; // For Okta, if used
 
-// Define AuthProvider type to support OIDC providers
-type AuthProvider = {
-  instance?: PublicClientApplication; // For Azure MSAL
-  oktaAuth?: OktaAuth; // For Okta
-};
-
-type AppProps = {
-  provider: 'auth0' | 'okta' | 'azure' | 'shibboleth';
+interface VoteWidgetProps {
+  provider?: string;
   partnerId?: string;
   campaignCode?: string;
-  authProvider?: AuthProvider; // For OIDC providers
-  onLogin?: () => void; // For SAML providers
-};
+  onLogin?: () => void;
+  authProvider?: PublicClientApplication | OktaAuth; // Add optional authProvider
+}
 
-const App: React.FC<AppProps> = ({ provider, partnerId, campaignCode, authProvider, onLogin }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userInfo, setUserInfo] = useState<any>(null);
-  const [showVoterPopup, setShowVoterPopup] = useState(false);
-  const [authChecked, setAuthChecked] = useState(false);
-  const [showFallback, setShowFallback] = useState(false);
-
-  const { isAuthenticated: auth0IsAuthenticated, user: auth0User, loginWithRedirect, logout: auth0Logout } = useAuth0();
-
-  const redirect = () => {
-    const effectivePartnerId = partnerId || '123456';
-    const effectiveCampaignCode = campaignCode || '654321';
-    let url = 'https://register.vote.org/';
-    if (effectivePartnerId || effectiveCampaignCode) {
-      url += '?';
-      if (effectivePartnerId) url += `partnerId=${effectivePartnerId}`;
-      if (effectiveCampaignCode) url += `&campaignCode=${effectiveCampaignCode}`;
-    }
-    window.open(url, '_blank');
-    setShowVoterPopup(false);
-  };
+const VoteWidget: React.FC<VoteWidgetProps> = ({
+  provider = authConfig.provider || 'azure',
+  partnerId = authConfig.partnerId || 'partner123',
+  campaignCode = authConfig.campaignCode || 'campaign456',
+  onLogin,
+  authProvider, // Accept authProvider
+}) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showVoterPrompt, setShowVoterPrompt] = useState(false);
+  const [user, setUser] = useState<{ email: string; name: string } | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const checkAuthentication = async () => {
+    console.log('VoteWidget mounted, checking login status');
+    const checkLoginStatus = async () => {
       try {
-        if (provider === 'auth0' || provider === 'okta' || provider === 'azure') {
-          // Handle OIDC authentication
-          if (provider === 'auth0' && auth0IsAuthenticated) {
-            setUserInfo(auth0User);
-            setIsAuthenticated(true);
-            setShowVoterPopup(true);
-          } else if (provider === 'okta' && authProvider?.oktaAuth) {
-            const isAuthenticatedOkta = await authProvider.oktaAuth.isAuthenticated();
-            if (isAuthenticatedOkta) {
-              const user = await authProvider.oktaAuth.getUser();
-              setUserInfo(user);
-              setIsAuthenticated(true);
-              setShowVoterPopup(true);
-            }
-          } else if (provider === 'azure' && authProvider?.instance) {
-            const accounts = authProvider.instance.getAllAccounts();
-            if (accounts.length > 0) {
-              const response = await authProvider.instance.acquireTokenSilent({
-                scopes: ['openid', 'profile', 'email'],
-                account: accounts[0],
-              });
-              setUserInfo(response.account);
-              setIsAuthenticated(true);
-              setShowVoterPopup(true);
-            }
+        const response = await fetch('/profile', { credentials: 'include' });
+        if (!response.ok) throw new Error('Failed to fetch profile');
+        const data = await response.json();
+        console.log('Profile data:', data);
+        if (data.loggedIn) {
+          setIsLoggedIn(true);
+          setUser(data.user);
+          const urlParams = new URLSearchParams(window.location.search);
+          if (urlParams.get('voterPrompt') === 'true') {
+            console.log('Voter prompt triggered via query param');
+            setShowVoterPrompt(true);
+            window.history.replaceState({}, document.title, window.location.pathname);
           }
-        } else if (isSamlProvider(provider as any)) {
-          // Handle SAML authentication via proxy
-          const response = await fetch('http://localhost:3001/auth/status');
-          const data = await response.json();
-          if (data.token) {
-            setIsAuthenticated(true);
-            setUserInfo({ email: data.email, name: data.name });
-            setShowVoterPopup(true);
-          } else {
-            console.warn('No authentication token received from SAML proxy');
-          }
+        } else {
+          setIsLoggedIn(false);
+          setUser(null);
+          setShowVoterPrompt(false);
         }
       } catch (err) {
-        console.error(`Authentication check error for provider ${provider}:`, err);
-      } finally {
-        setAuthChecked(true);
+        console.error('Profile fetch error:', err);
+        setError('Unable to check login status');
       }
     };
-
-    checkAuthentication();
-  }, [provider, auth0IsAuthenticated, auth0User, authProvider]);
+    checkLoginStatus();
+  }, []);
 
   const handleLogin = () => {
-    if (provider === 'auth0') {
-      loginWithRedirect({ appState: { returnTo: window.location.pathname } });
-    } else if (provider === 'okta' && authProvider?.oktaAuth) {
-      authProvider.oktaAuth.signInWithRedirect();
-    } else if (provider === 'azure' && authProvider?.instance) {
-      authProvider.instance.loginRedirect({
-        scopes: ['openid', 'profile', 'email'],
-      });
-    } else if (onLogin) {
-      onLogin();
+    console.log(`Initiating login with provider: ${provider}, redirecting to /login/${provider}`);
+    if (onLogin) return onLogin();
+    if (authProvider) {
+      // Handle OIDC login if authProvider is provided (e.g., MSAL or Okta)
+      if (provider === 'azure' && authProvider instanceof PublicClientApplication) {
+        authProvider.loginPopup().catch((err) => console.error('Login error:', err));
+      } else if (provider === 'okta' && authProvider instanceof OktaAuth) {
+        authProvider.signInWithRedirect().catch((err) => console.error('Login error:', err));
+      }
     } else {
-      console.error('No login handler defined for provider:', provider);
+      window.location.href = `/login/${provider}`;
     }
   };
 
   const handleLogout = () => {
-    if (provider === 'auth0') {
-      auth0Logout({ logoutParams: { returnTo: 'http://127.0.0.1:3000' } });
-    } else if (provider === 'okta' && authProvider?.oktaAuth) {
-      authProvider.oktaAuth.signOut();
-    } else if (provider === 'azure' && authProvider?.instance) {
-      authProvider.instance.logout();
-    }
-    setIsAuthenticated(false);
-    setUserInfo(null);
-    setShowVoterPopup(false);
-    setAuthChecked(true);
+    console.log('Logging out user');
+    window.location.href = '/logout';
   };
 
-  if (!authChecked) {
-    return <div className="loading">Loading...</div>;
-  }
+  const handleRegister = () => {
+    console.log('Opening voter registration URL');
+    window.open(`https://register.vote.org/?partnerId=${partnerId}&campaignCode=${campaignCode}`, '_blank');
+  };
 
-  if (!isAuthenticated) {
-    return (
-      <div className="login-page">
-        <h2>Login to continue</h2>
-        <button className="login-button" onClick={handleLogin}>
-          Login
-        </button>
-      </div>
-    );
-  }
+  const closeVoterPrompt = () => {
+    console.log('Closing voter prompt');
+    setShowVoterPrompt(false);
+  };
 
   return (
-    <div className="app-container">
-      <div className="background-page">
-        <h1>
-          Welcome to<span style={{ color: 'red' }}>MyOrgApp</span>
-        </h1>
-        <p>This is the main content area!</p>
-        {isAuthenticated && userInfo && (
-          <div className="user-info">
-            <p>Welcome, {userInfo.email || userInfo.name || (userInfo.idTokenClaims?.name) || 'User'}!</p>
-            <button className="logout-button" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        )}
-      </div>
-
-      {isAuthenticated && showVoterPopup && (
-        <div className="popup-overlay">
-          <div className="voter-popup-container">
-            <button className="close-button" onClick={() => setShowVoterPopup(false)} aria-label="Close voter registration popup">
-              ✕
-            </button>
-            <div className="voter-widget-header">You can register to vote.</div>
-            <div className="voter-widget-image">
-              {showFallback ? (
-                <span>OWN YOUR FUTURE VOTE</span>
-              ) : (
-                <img
-                  src="/assets/ownYourFuture.svg"
-                  alt="Own Your Future - Vote"
-                  onError={(e) => {
-                    console.error('Image load error:', e);
-                    setShowFallback(true);
-                    console.log('Fallback triggered, showFallback:', true);
-                  }}
-                  onLoad={() => console.log('Image loaded successfully')}
-                />
-              )}
-              {showFallback && (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 40" width="100" height="40">
-                  <rect width="100" height="40" fill="#B22234"/>
-                  <path d="M0 0h30v20H0z" fill="#FFFFFF"/>
-                  <path d="M0 20h30v20H0z" fill="#3C3B6E"/>
-                  <g fill="#FFFFFF">
-                    <circle cx="10" cy="10" r="2"/>
-                    <circle cx="14" cy="10" r="2"/>
-                    <circle cx="18" cy="10" r="2"/>
-                  </g>
-                </svg>
-              )}
+    <div className="background-page">
+      {error && <p className="error">{error}</p>}
+      {!isLoggedIn ? (
+        <button className="login-button" onClick={handleLogin}>
+          Login with {provider.charAt(0).toUpperCase() + provider.slice(1)}
+        </button>
+      ) : (
+        <div className="user-info">
+          <p className="voter-widget-header">Welcome, {user?.name || user?.email}!</p>
+          <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
+          {showVoterPrompt && (
+            <div className="popup-overlay">
+              <div className="voter-popup-container">
+                <h2>Voter Registration</h2>
+                <p>Are you registered to vote?</p>
+                <button className="voter-button-primary" onClick={handleRegister}>
+                  Register to Vote
+                </button>
+                <button className="close-button" onClick={closeVoterPrompt}>
+                  Close
+                </button>
+              </div>
             </div>
-            <div className="voter-widget-footer">It only takes two minutes.</div>
-            <div className="voter-button-container">
-              <button className="voter-button voter-button-primary" onClick={redirect} aria-label="Register to vote">
-                Register to Vote
-              </button>
-            </div>
-          </div>
+          )}
         </div>
       )}
     </div>
   );
 };
 
-const { isSamlProvider } = require('./authConfigHandler');
-
-export default App;
+export default VoteWidget;

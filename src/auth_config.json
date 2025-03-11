@@ -1,59 +1,63 @@
 {
-  "provider": "shibboleth", 
-  "protocol": "SAML",      
+  "provider": "azure",
+  "protocol": "SAML",
   "campaignCode": "campaign456",
   "partnerId": "partner123",
   "oidcProviders": {
     "auth0": {
-      "domain": "dev-cefy84by8ug1nbak.us.auth0.com",
-      "clientId": "YOUR_AUTH0_CLIENT_ID",
-      "redirectUri": "http://127.0.0.1:3000/login/callback"
+      "domain": "${AUTH0_OIDC_DOMAIN}",
+      "clientId": "${AUTH0_OIDC_CLIENT_ID}",
+      "redirectUri": "${AUTH0_OIDC_REDIRECT_URI}"
     },
     "okta": {
-      "domain": "https://dev-40855217.okta.com",
-      "clientId": "0oanhs57lchFwU7v15d7",
-      "redirectUri": "http://127.0.0.1:3000/login/callback"
+      "domain": "${OKTA_OIDC_DOMAIN}",
+      "clientId": "${OKTA_OIDC_CLIENT_ID}",
+      "redirectUri": "${OKTA_OIDC_REDIRECT_URI}"
     },
     "azure": {
-      "domain": "techtide1223gmail.onmicrosoft.com",
-      "clientId": "7c41c780-b9db-43df-950d-bf1feabb27a8",
-      "redirectUri": "http://localhost:3000/login/callback",
-      "tenantId": "9e0ab446-dd79-4d10-a90d-d405048204c9",
-      "scopes": ["openid", "profile", "email"]
+      "domain": "${AZURE_OIDC_DOMAIN}",
+      "clientId": "${AZURE_OIDC_CLIENT_ID}",
+      "redirectUri": "${AZURE_OIDC_REDIRECT_URI}",
+      "tenantId": "${AZURE_OIDC_TENANT_ID}",
+      "scopes": "${AZURE_OIDC_SCOPES}"
     }
   },
   "samlProviders": {
+    "shibboleth": {
+      "entryPoint": "${SHIBBOLETH_ENTRY_POINT}",
+      "issuer": "${SHIBBOLETH_ISSUER}",
+      "callbackUrl": "${SHIBBOLETH_CALLBACK_URL}",
+      "privateCertPath": "${SHIBBOLETH_PRIVATE_KEY_PATH}",
+      "idpCertPath": "${SHIBBOLETH_IDP_CERT_PATH}",
+      "spCertPath": "${SHIBBOLETH_SP_CERT_PATH}",
+      "connectionName": "Shibboleth-SAML"
+    },
+    "azure": {
+      "entryPoint": "${AZURE_ENTRY_POINT}",
+      "issuer": "${AZURE_ISSUER}",
+      "callbackUrl": "${AZURE_CALLBACK_URL}",
+      "idpCertPath": "${AZURE_IDP_CERT_PATH}",
+      "privateCertPath": "${AZURE_PRIVATE_KEY_PATH}",
+      "spCertPath": "${AZURE_SP_CERT_PATH}",
+      "connectionName": "Azure-SAML"
+    },
     "auth0": {
-      "entryPoint": "https://auth0-saml-idp.com/sso",
-      "issuer": "auth0-app",
-      "callbackUrl": "http://localhost:3001/login/callback/auth0",
-      "privateCertPath": "./cert/auth0-key.pem",
-      "idpCertPath": "./cert/auth0-idp-cert.pem",
+      "entryPoint": "${AUTH0_SAML_ENTRY_POINT}",
+      "issuer": "${AUTH0_SAML_ISSUER}",
+      "callbackUrl": "${AUTH0_SAML_CALLBACK_URL}",
+      "privateCertPath": "${AUTH0_SAML_PRIVATE_KEY_PATH}",
+      "idpCertPath": "${AUTH0_SAML_IDP_CERT_PATH}",
+      "spCertPath": "${AUTH0_SAML_SP_CERT_PATH}",
       "connectionName": "Auth0-SAML"
     },
     "okta": {
-      "entryPoint": "https://okta-saml-idp.com/sso",
-      "issuer": "okta-app",
-      "callbackUrl": "http://localhost:3001/login/callback/okta",
-      "privateCertPath": "./cert/okta-key.pem",
-      "idpCertPath": "./cert/okta-idp-cert.pem",
+      "entryPoint": "${OKTA_SAML_ENTRY_POINT}",
+      "issuer": "${OKTA_SAML_ISSUER}",
+      "callbackUrl": "${OKTA_SAML_CALLBACK_URL}",
+      "privateCertPath": "${OKTA_SAML_PRIVATE_KEY_PATH}",
+      "idpCertPath": "${OKTA_SAML_IDP_CERT_PATH}",
+      "spCertPath": "${OKTA_SAML_SP_CERT_PATH}",
       "connectionName": "Okta-SAML"
-    },
-    "azure": {
-      "entryPoint": "https://login.microsoftonline.com/{tenantId}/saml2",
-      "issuer": "urn:com:voterpromptapp",
-      "callbackUrl": "http://localhost:3001/login/callback/azure",
-      "privateCertPath": "./cert/azure-key.pem",
-      "idpCertPath": "./cert/azure-idp-cert.pem",
-      "connectionName": "Azure-SAML"
-    },
-    "shibboleth": {
-      "entryPoint": "https://10.153.168.81/idp/profile/SAML2/Redirect/SSO",
-      "issuer": "https://ip-10-153-168-78/shibboleth",
-      "callbackUrl": "http://localhost:3001/login/callback/shibboleth",
-      "privateCertPath": "./cert/key.pem",
-      "idpCertPath": "./cert/idp_cert.pem",
-      "connectionName": "Shibboleth-SAML"
     }
   }
 }

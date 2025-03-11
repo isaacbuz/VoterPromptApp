@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" entityID="urn:com:voterpromptapp" ID="urn_com_voterpromptapp">
+  <SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol" WantAssertionsSigned="true">
+    <KeyDescriptor use="encryption">
+      <ds:KeyInfo>
+        <ds:X509Data>
+          <ds:X509Certificate>MIIDdDCCAlwCCQCjUVdQZEQEITANBgkqhkiG9w0BAQsFADB8MQswCQYDVQQGEwJV
+UzETMBEGA1UECAwKQ2FsaWZvcm5pYTEVMBMGA1UEBwwMU2FuRnJhbmNpc2NvMRAw
+DgYDVQQKDAdZb3VyT3JnMREwDwYDVQQLDAhZb3VyVW5pdDEcMBoGA1UEAwwTeW91
+ci12b3RlcnByb21wdGFwcDAeFw0yNTAzMTEwMzMzMjNaFw0yNjAzMTEwMzMzMjNa
+MHwxCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApDYWxpZm9ybmlhMRUwEwYDVQQHDAxT
+YW5GcmFuY2lzY28xEDAOBgNVBAoMB1lvdXJPcmcxETAPBgNVBAsMCFlvdXJVbml0
+MRwwGgYDVQQDDBN5b3VyLXZvdGVycHJvbXB0YXBwMIIBIjANBgkqhkiG9w0BAQEF
+AAOCAQ8AMIIBCgKCAQEAuFbYEQSNwLfyerdBqvz/o3Tfh0nHaSw5/1KaCltNJ5ZJ
+2kgdyXqdnKCDtjPWzrQFx7p5saCYcZ3INNp8OW6sxqSOoHYFvqTexElD1XHeEOTm
+TuoRQllrUzstiFrUyHUX+g7TU0UJl8+ezUo7LUN6VL00WKPPafNJO46gNYgBRU7O
+Fug/Kpv34j+sn6124pgoPMU/SX2Y/9sU7oHjaT6djSBCUoAxDzMVmiHiyuR5Qjrw
+4uXeWS7mSZ98iTLTpAj0+hhY5Aw60rb6J6CKutzosW8Abq3Ma6s2OFmq6q+to0xf
+0umGoZ3nfYq+bM05cC1xBu3iRML5ziG5C7pjnGkUrwIDAQABMA0GCSqGSIb3DQEB
+CwUAA4IBAQCuAR7YHvzTosQEG2Gou1PaLbIAY75Cl8JINO6Z+UlVGWLod4Zf8gq0
+psDR3dzcr78wBjiTqT//MCqGhGRTeHUucnDOICUUOCAai3EwdWdBKE5k+r4Tw+vn
+D2B/NO6truMXb+7Jdi5Zhu5bVeglz20/XXugISPgEgtVDf7OaJxtebMphUKixwkE
+4NSQqKl+Cc/STNMQg2e1zsv73gfiDCQcYMtQFx1Y7sItuTOTQJk4GdEH1nkEla2A
+QDM2c9JR4GPc6HscvwhwNCD8Z/6/qef9kN/2CnWQozmt5fWTVKQCdySdA2G93X67
+QUSMUx4XJXUfX+l1JizAnlxV3R2fILYd
+</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+      <EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#aes256-gcm"/>
+      <EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#aes128-gcm"/>
+      <EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc"/>
+      <EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes128-cbc"/>
+    </KeyDescriptor>
+    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+    <AssertionConsumerService index="1" isDefault="true" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://localhost:3001/login/callback/azure"/>
+  </SPSSODescriptor>
+</EntityDescriptor>
