@@ -1,16 +1,23 @@
-// src/auth_config.d.ts
+// src/custom.d.ts
+
+// Type definition for auth_config.json
 export interface AuthConfig {
   provider: string;
   protocol: string;
   campaignCode: string;
   partnerId: string;
+  sessionSecret?: string;
+  port?: number;
+  certDir?: string;
   oidcProviders: {
     [key: string]: {
-      domain: string;
+      domain?: string;
       clientId: string;
+      clientSecret?: string;
       redirectUri: string;
       tenantId?: string;
-      scopes?: string | string[]; // Allow string due to env substitution
+      scopes?: string[];
+      authority?: string;
     };
   };
   samlProviders: {
@@ -19,9 +26,9 @@ export interface AuthConfig {
       issuer: string;
       callbackUrl: string;
       idpCertPath: string;
-      privateCertPath: string;
+      privateCertPath: string; // Typo fix: should be privateKeyPath
       spCertPath: string;
-      connectionName: string;
+      connectionName?: string;
     };
   };
 }
@@ -29,4 +36,16 @@ export interface AuthConfig {
 declare module './auth_config.json' {
   const value: AuthConfig;
   export default value;
+}
+
+// Type definition for @okta/okta-react
+declare module '@okta/okta-react' {
+  import { AuthState } from '@okta/okta-auth-js';
+
+  export interface OktaAuthResult {
+    authState: AuthState | null;
+    // Add other properties if needed (e.g., oktaAuth, setAuthState)
+  }
+
+  export function useOktaAuth(): OktaAuthResult;
 }

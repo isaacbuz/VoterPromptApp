@@ -1,56 +1,107 @@
-import authConfig from './auth_config.json';
+import authConfig from '@config';
+import { Provider } from './types';
+import OktaAuth from '@okta/okta-auth-js';
+import { PublicClientApplication, Configuration } from '@azure/msal-browser';
 
-// Define Provider Types
-type OidcProviderType = 'auth0' | 'okta' | 'azure';
-type SamlProviderType = 'auth0' | 'okta' | 'azure' | 'shibboleth';
-type ProviderType = OidcProviderType | SamlProviderType;
-
-// Interface for OIDC configuration
-interface OidcConfig {
-  domain: string;
-  clientId: string;
-  redirectUri: string;
-  authority?: string; // Optional, used for Azure
-  scopes?: string[]; // Optional, used for Azure
+interface SamlProviderConfig {
+  entryPoint: string;
+  issuer: string;
+  callbackUrl: string;
+  idpCertPath: string;
+  privateKeyPath: string;
+  spCertPath: string;
 }
 
-// Get OIDC Provider Configuration
-export const getAuthProvider = (provider: OidcProviderType): OidcConfig => {
-  if (!(provider in authConfig.oidcProviders)) {
-    throw new Error(`Unsupported OIDC provider: ${provider}`);
+interface OidcProviderConfig {
+  domain?: string;
+  clientId: string;
+  clientSecret?: string;
+  redirectUri: string;
+  tenantId?: string;
+  scopes?: string[];
+  authority?: string;
+}
+
+const getAuthProvider = (provider: Provider): SamlProviderConfig | OidcProviderConfig | OktaAuth | PublicClientApplication => {
+  const { samlProviders, oidcProviders } = authConfig;
+
+  switch (provider) {
+    case 'auth0':
+      if (samlProviders.auth0) return samlProviders.auth0;
+      if (oidcProviders.auth0) {
+        const config = oidcProviders.auth0 as OidcProviderConfig;
+        console.log('Auth0 config:', config);
+        if (!config.clientId || !config.redirectUri) {
+          throw new Error('Auth0 OIDC configuration missing required fields: clientId or redirectUri');
+        }
+        return {
+          domain: config.domain || '',
+          clientId: config.clientId,
+          clientSecret: config.clientSecret,
+          redirectUri: config.redirectUri,
+          scopes: config.scopes || [],
+          authority: config.authority || '',
+        } as OidcProviderConfig;
+      }
+      throw new Error('Auth0 configuration not found in auth_config.json');
+    case 'okta':
+      if (samlProviders.okta) return samlProviders.okta;
+      if (oidcProviders.okta) {
+        const config = oidcProviders.okta as OidcProviderConfig;
+        console.log('Okta config:', config);
+        if (!config.clientId || !config.redirectUri) {
+          throw new Error('Okta OIDC configuration missing required fields: clientId or redirectUri');
+        }
+        return new OktaAuth({
+          issuer: `https://${config.domain || ''}/oauth2/default`,
+          clientId: config.clientId,
+          clientSecret: config.clientSecret || '',
+          redirectUri: config.redirectUri,
+          scopes: config.scopes || ['openid', 'profile', 'email'],
+        });
+      }
+      throw new Error('Okta configuration not found in auth_config.json');
+    case 'azure':
+      if (samlProviders.azure) return samlProviders.azure;
+      if (oidcProviders.azure) {
+        const config = oidcProviders.azure as OidcProviderConfig;
+        console.log('Azure config:', config);
+        if (!config.clientId || !config.redirectUri) {
+          throw new Error('Azure OIDC configuration missing required fields: clientId or redirectUri');
+        }
+        if (!config.tenantId) {
+          throw new Error('Azure OIDC configuration missing required field: tenantId');
+        }
+        try {
+          const msalConfig: Configuration = {
+            auth: {
+              clientId: config.clientId,
+              authority: config.authority || `https://login.microsoftonline.com/${config.tenantId}`,
+              redirectUri: config.redirectUri,
+            },
+            cache: {
+              cacheLocation: 'localStorage',
+            },
+          };
+          console.log('MSAL config:', msalConfig);
+          const msalInstance = new PublicClientApplication(msalConfig);
+          console.log('MSAL instance created:', msalInstance);
+          return msalInstance;
+        } catch (error) {
+          if (error instanceof Error) {
+            throw new Error(`Azure OIDC initialization failed: ${error.message}`);
+          } else {
+            throw new Error('Azure OIDC initialization failed: Unknown error');
+          }
+        }
+      }
+      throw new Error('Azure configuration not found in auth_config.json');
+    case 'shibboleth':
+      if (samlProviders.shibboleth) return samlProviders.shibboleth;
+      throw new Error('Shibboleth configuration not found in auth_config.json');
+    default:
+      throw new Error(`Unsupported provider: ${provider}`);
   }
-  const baseConfig = {
-    domain: authConfig.oidcProviders[provider].domain,
-    clientId: authConfig.oidcProviders[provider].clientId,
-    redirectUri: authConfig.oidcProviders[provider].redirectUri,
-  };
-
-  // Add Azure-specific properties
-  if (provider === 'azure') {
-    // Handle scopes: Convert string to array if necessary
-    const scopes = authConfig.oidcProviders.azure.scopes;
-    const scopeArray = typeof scopes === 'string' ? scopes.split(',') : scopes || ['openid', 'profile', 'email'];
-
-    return {
-      ...baseConfig,
-      authority: `https://login.microsoftonline.com/${authConfig.oidcProviders.azure.tenantId}`,
-      scopes: scopeArray, // Now guaranteed to be string[]
-    };
-  }
-
-  return baseConfig;
 };
 
-// Get SAML Provider Configuration
-export const getSamlProvider = (provider: SamlProviderType) => {
-  if (!(provider in authConfig.samlProviders)) {
-    throw new Error(`SAML provider not configured: ${provider}`);
-  }
-  return {
-    entryPoint: authConfig.samlProviders[provider].entryPoint,
-    issuer: authConfig.samlProviders[provider].issuer,
-    callbackUrl: authConfig.samlProviders[provider].callbackUrl,
-    privateCertPath: authConfig.samlProviders[provider].privateCertPath,
-    idpCertPath: authConfig.samlProviders[provider].idpCertPath,
-  };
-};
+export default getAuthProvider;

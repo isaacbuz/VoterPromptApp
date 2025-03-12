@@ -3,61 +3,64 @@
   "protocol": "SAML",
   "campaignCode": "campaign456",
   "partnerId": "partner123",
-  "oidcProviders": {
-    "auth0": {
-      "domain": "${AUTH0_OIDC_DOMAIN}",
-      "clientId": "${AUTH0_OIDC_CLIENT_ID}",
-      "redirectUri": "${AUTH0_OIDC_REDIRECT_URI}"
-    },
-    "okta": {
-      "domain": "${OKTA_OIDC_DOMAIN}",
-      "clientId": "${OKTA_OIDC_CLIENT_ID}",
-      "redirectUri": "${OKTA_OIDC_REDIRECT_URI}"
-    },
-    "azure": {
-      "domain": "${AZURE_OIDC_DOMAIN}",
-      "clientId": "${AZURE_OIDC_CLIENT_ID}",
-      "redirectUri": "${AZURE_OIDC_REDIRECT_URI}",
-      "tenantId": "${AZURE_OIDC_TENANT_ID}",
-      "scopes": "${AZURE_OIDC_SCOPES}"
-    }
-  },
+  "sessionSecret": "123",
+  "port": 3001,
+  "certDir": "backend/cert",
   "samlProviders": {
     "shibboleth": {
-      "entryPoint": "${SHIBBOLETH_ENTRY_POINT}",
-      "issuer": "${SHIBBOLETH_ISSUER}",
-      "callbackUrl": "${SHIBBOLETH_CALLBACK_URL}",
-      "privateCertPath": "${SHIBBOLETH_PRIVATE_KEY_PATH}",
-      "idpCertPath": "${SHIBBOLETH_IDP_CERT_PATH}",
-      "spCertPath": "${SHIBBOLETH_SP_CERT_PATH}",
-      "connectionName": "Shibboleth-SAML"
+      "entryPoint": "https://10.153.168.81/idp/profile/SAML2/Redirect/SSO",
+      "issuer": "https://ip-10-153-168-78/shibboleth",
+      "callbackUrl": "http://localhost:3001/login/callback/shibboleth",
+      "idpCertPath": "backend/cert/shibboleth/shibboleth-idp-cert.pem",
+      "privateKeyPath": "backend/cert/shibboleth/shibboleth-key.pem",
+      "spCertPath": "backend/cert/shibboleth/shibboleth-sp-cert.pem"
     },
     "azure": {
-      "entryPoint": "${AZURE_ENTRY_POINT}",
-      "issuer": "${AZURE_ISSUER}",
-      "callbackUrl": "${AZURE_CALLBACK_URL}",
-      "idpCertPath": "${AZURE_IDP_CERT_PATH}",
-      "privateCertPath": "${AZURE_PRIVATE_KEY_PATH}",
-      "spCertPath": "${AZURE_SP_CERT_PATH}",
-      "connectionName": "Azure-SAML"
+      "entryPoint": "https://login.microsoftonline.com/9e0ab446-dd79-4d10-a90d-d405048204c9/saml2",
+      "issuer": "urn:com:voterpromptapp",
+      "callbackUrl": "http://localhost:3001/login/callback/azure",
+      "idpCertPath": "backend/cert/azure/azure-ad-idp-cert.pem",
+      "privateKeyPath": "backend/cert/azure/azure-key.pem",
+      "spCertPath": "backend/cert/azure/azure-sp-cert.pem"
     },
     "auth0": {
-      "entryPoint": "${AUTH0_SAML_ENTRY_POINT}",
-      "issuer": "${AUTH0_SAML_ISSUER}",
-      "callbackUrl": "${AUTH0_SAML_CALLBACK_URL}",
-      "privateCertPath": "${AUTH0_SAML_PRIVATE_KEY_PATH}",
-      "idpCertPath": "${AUTH0_SAML_IDP_CERT_PATH}",
-      "spCertPath": "${AUTH0_SAML_SP_CERT_PATH}",
-      "connectionName": "Auth0-SAML"
+      "entryPoint": "https://auth0-saml-idp.com/sso",
+      "issuer": "auth0-app",
+      "callbackUrl": "http://localhost:3001/login/callback/auth0",
+      "idpCertPath": "backend/cert/auth0/auth0-idp-cert.pem",
+      "privateKeyPath": "backend/cert/auth0/auth0-key.pem",
+      "spCertPath": "backend/cert/auth0/auth0-sp-cert.pem"
     },
     "okta": {
-      "entryPoint": "${OKTA_SAML_ENTRY_POINT}",
-      "issuer": "${OKTA_SAML_ISSUER}",
-      "callbackUrl": "${OKTA_SAML_CALLBACK_URL}",
-      "privateCertPath": "${OKTA_SAML_PRIVATE_KEY_PATH}",
-      "idpCertPath": "${OKTA_SAML_IDP_CERT_PATH}",
-      "spCertPath": "${OKTA_SAML_SP_CERT_PATH}",
-      "connectionName": "Okta-SAML"
+      "entryPoint": "https://okta-saml-idp.com/sso",
+      "issuer": "okta-app",
+      "callbackUrl": "http://localhost:3001/login/callback/okta",
+      "idpCertPath": "backend/cert/okta/okta-idp-cert.pem",
+      "privateKeyPath": "backend/cert/okta/okta-key.pem",
+      "spCertPath": "backend/cert/okta/okta-sp-cert.pem"
+    }
+  },
+  "oidcProviders": {
+    "auth0": {
+      "domain": "dev-cefy84by8ug1nbak.us.auth0.com",
+      "clientId": "YOUR_AUTH0_CLIENT_ID",
+      "clientSecret": "YOUR_AUTH0_CLIENT_SECRET",
+      "redirectUri": "http://localhost:3001/login/callback",
+      "scopes": ["openid", "profile", "email"]
+    },
+    "okta": {
+      "domain": "https://dev-40855217.okta.com",
+      "clientId": "0oanhs57lchFwU7v15d7",
+      "clientSecret": "YOUR_OKTA_CLIENT_SECRET",
+      "redirectUri": "http://localhost:3001/login/callback",
+      "scopes": ["openid", "profile", "email"]
+    },
+    "azure": {
+      "domain": "techtide1223gmail.onmicrosoft.com",
+      "clientId": "7c41c780-b9db-43df-950d-bf1feabb27a8", 
+      "redirectUri": "http://localhost:3001/login/callback", 
+      "tenantId": "9e0ab446-dd79-4d10-a90d-d405048204c9", 
+      "scopes": ["openid", "profile", "email"]
     }
   }
 }

@@ -3,14 +3,12 @@ body {
   width: 100vw;
 }
 
-/* General container */
 .app-container {
   position: relative;
   min-height: 100vh;
   font-family: Arial, sans-serif;
 }
 
-/* Background page */
 .background-page {
   padding: 20px;
   background-color: #f0f0f0;
@@ -26,7 +24,6 @@ body {
   color: #666;
 }
 
-/* Login page */
 .login-page {
   display: flex;
   flex-direction: column;
@@ -43,7 +40,6 @@ body {
   font-size: 24px;
 }
 
-/* Buttons */
 .login-button,
 .popup-container button {
   padding: 12px 24px;
@@ -104,7 +100,6 @@ body {
   color: #ff0000;
 }
 
-/* Popups */
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -135,16 +130,11 @@ body {
 .voter-popup-container {
   position: relative;
   background: #fff;
-  padding: 30px; /* From inline style */
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Adjusted from 0 4px 8px */
-  width: 90%; /* From inline style */
-  max-width: 400px; /* From inline style */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 350px;
   text-align: center;
-  transform: translate(-50%, -50%); /* From inline style */
-  top: 50%; /* From inline style */
-  left: 50%; /* From inline style */
-  position: fixed; /* Moved from inline to align with overlay */
 }
 
 .voter-widget-header {
@@ -169,12 +159,10 @@ body {
   margin-top: 10px;
 }
 
-/* Components */
 .user-info {
   margin-top: 20px;
 }
 
-/* Loading state */
 .loading {
   text-align: center;
   padding: 20px;
