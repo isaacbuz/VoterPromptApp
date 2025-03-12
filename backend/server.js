@@ -70,7 +70,7 @@ const configureSaml = async () => {
       entryPoint: providerConfig.entryPoint,
       issuer: providerConfig.issuer,
       callbackUrl: providerConfig.callbackUrl,
-      logoutUrl: 'https://login.microsoftonline.com/9e0ab446-dd79-4d10-a90d-d405048204c9/saml2', // Azure AD logout URL
+      logoutUrl: `https://login.microsoftonline.com/common/wsfederation?wa=wsignout1.0`, // Azure AD SLO endpoint
       cert: idpCert,
       privateKey,
       decryptionPvk: privateKey,
@@ -99,7 +99,6 @@ app.get('/login/:provider', (req, res, next) => {
     return res.status(400).json({ error: `Unsupported provider: ${provider}` });
   }
   console.log(`Initiating SAML request for ${provider} to ${config.samlProviders[provider].entryPoint}`);
-  // Force re-authentication on login
   passport.authenticate(provider, { failureRedirect: '/', failureFlash: true, prompt: 'login' })(req, res, next);
 });
 
@@ -138,23 +137,24 @@ app.get('/logout', (req, res, next) => {
         console.error('Session destroy error:', err);
         return res.status(500).json({ error: 'Session destruction failed' });
       }
-      // Explicitly clear the session cookie with matching attributes
+      // Explicitly expire the session cookie
       res.clearCookie('connect.sid', {
         path: '/',
         domain: 'localhost',
         sameSite: 'lax',
         httpOnly: true,
-        secure: false // Match the session cookie settings
+        secure: false,
+        expires: new Date(0) // Expire immediately
       });
-      console.log('Session destroyed and cookie cleared');
-      // Redirect to Azure AD logout to terminate SSO session
+      console.log('Session destroyed and cookie expired');
+      // Initiate SAML single logout
       const provider = config.provider;
       const samlStrategy = passport._strategies[provider];
       if (samlStrategy && samlStrategy.logout) {
         samlStrategy.logout(req, (err, logoutUrl) => {
           if (err) {
             console.error('SAML logout error:', err);
-            return res.redirect('/'); // Fallback to redirect if SLO fails
+            return res.redirect('/'); // Fallback to app root if SLO fails
           }
           console.log('Redirecting to Azure AD logout URL:', logoutUrl);
           res.redirect(logoutUrl);
