@@ -1,0 +1,93 @@
+:root {
+  --primary-color: #007bff;
+  --text-color: #333;
+  --background-color: #fff;
+  --overlay-color: rgba(0, 0, 0, 0.5);
+}
+
+.app-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.background-page {
+  text-align: center;
+}
+
+.user-info {
+  margin: 10px 0;
+}
+
+.login-page {
+  text-align: center;
+  padding: 50px;
+}
+
+.login-button,
+.logout-button,
+.voter-button {
+  padding: 10px 20px;
+  margin: 5px;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--overlay-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.voter-popup-container {
+  background: var(--background-color);
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+  max-width: 400px;
+  width: 90%;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.voter-widget-header,
+.voter-widget-footer {
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+
+.voter-widget-title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.vote-icon img {
+  width: 20px;
+  vertical-align: middle;
+}
+
+.voter-button-container {
+  text-align: center;
+}
+
+.voter-widget-info {
+  margin-top: 10px;
+  font-size: 0.9em;
+}
