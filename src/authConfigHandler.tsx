@@ -1,9 +1,10 @@
 import { OktaAuth } from '@okta/okta-auth-js';
 import { PublicClientApplication } from '@azure/msal-browser';
 import config from './auth_config.json';
-import { AuthConfig } from './custom.d';
-import { AuthProviderConfig } from '../authProviders/authProvider'; // Adjust path if needed
+import { AuthConfig } from './custom';
+import { AuthProviderConfig } from './authProviders/authProvider';
 
+// Define Auth0 configuration structure
 interface Auth0Config {
   domain: string;
   clientId: string;
@@ -13,6 +14,7 @@ interface Auth0Config {
   authority: string;
 }
 
+// Define Okta configuration structure
 interface OktaConfig {
   issuer: string;
   clientId: string;
@@ -22,14 +24,19 @@ interface OktaConfig {
   [key: string]: any;
 }
 
+// ✅ Get the authentication provider
 export const getAuthProvider = (provider: string): Auth0Config | OktaAuth | PublicClientApplication | any => {
-  const { samlProviders, oidcProviders } = config as AuthConfig;
+  const { protocol, samlProviders, oidcProviders } = config as AuthConfig;
+
+  // Determine if using SAML or OIDC
+  const useSaml = protocol === 'SAML' && samlProviders?.[provider];
+  const useOidc = protocol === 'OIDC' && oidcProviders?.[provider];
+
   switch (provider) {
     case 'auth0':
-      if (samlProviders?.auth0) return samlProviders.auth0;
-      if (oidcProviders?.auth0) {
-        const auth0Config = oidcProviders.auth0 as AuthProviderConfig;
-        console.log('Auth0 config:', auth0Config);
+      if (useSaml) return samlProviders?.auth0;
+      if (useOidc || (!useSaml && oidcProviders?.auth0)) {
+        const auth0Config = oidcProviders?.auth0 as AuthProviderConfig;
         if (!auth0Config.clientId || !auth0Config.redirectUri) {
           throw new Error('Auth0 OIDC configuration missing required fields: clientId or redirectUri');
         }
@@ -43,37 +50,33 @@ export const getAuthProvider = (provider: string): Auth0Config | OktaAuth | Publ
         } as Auth0Config;
       }
       throw new Error('Auth0 configuration not found in auth_config.json');
+
     case 'okta':
-      if (samlProviders?.okta) return samlProviders.okta;
-      if (oidcProviders?.okta) {
-        const oktaConfig = oidcProviders.okta as AuthProviderConfig;
-        console.log('Okta config:', oktaConfig);
+      if (useSaml) return samlProviders?.okta;
+      if (useOidc || (!useSaml && oidcProviders?.okta)) {
+        const oktaConfig = oidcProviders?.okta as AuthProviderConfig;
         if (!oktaConfig.clientId || !oktaConfig.redirectUri) {
           throw new Error('Okta OIDC configuration missing required fields: clientId or redirectUri');
         }
-        const configObj: OktaConfig = {
+        return new OktaAuth({
           issuer: `https://${oktaConfig.domain || ''}/oauth2/default`,
           clientId: oktaConfig.clientId,
           clientSecret: oktaConfig.clientSecret || '',
           redirectUri: oktaConfig.redirectUri,
           scopes: oktaConfig.scopes || ['openid', 'profile', 'email'],
-        };
-        return new OktaAuth(configObj);
+        });
       }
       throw new Error('Okta configuration not found in auth_config.json');
+
     case 'azure':
-      if (samlProviders?.azure) return samlProviders.azure;
-      if (oidcProviders?.azure) {
-        const azureConfig = oidcProviders.azure as AuthProviderConfig;
-        console.log('Azure config:', azureConfig);
-        if (!azureConfig.clientId || !azureConfig.redirectUri) {
-          throw new Error('Azure OIDC configuration missing required fields: clientId or redirectUri');
-        }
-        if (!azureConfig.tenantId) {
-          throw new Error('Azure OIDC configuration missing required field: tenantId');
+      if (useSaml) return samlProviders?.azure;
+      if (useOidc || (!useSaml && oidcProviders?.azure)) {
+        const azureConfig = oidcProviders?.azure as AuthProviderConfig;
+        if (!azureConfig.clientId || !azureConfig.redirectUri || !azureConfig.tenantId) {
+          throw new Error('Azure OIDC configuration missing required fields: clientId, redirectUri, or tenantId');
         }
         try {
-          const msalConfig = {
+          return new PublicClientApplication({
             auth: {
               clientId: azureConfig.clientId,
               authority: azureConfig.authority || `https://login.microsoftonline.com/${azureConfig.tenantId}`,
@@ -82,29 +85,26 @@ export const getAuthProvider = (provider: string): Auth0Config | OktaAuth | Publ
             cache: {
               cacheLocation: 'localStorage',
             },
-          };
-          console.log('MSAL config:', msalConfig);
-          const msalInstance = new PublicClientApplication(msalConfig);
-          return msalInstance;
+          });
         } catch (error) {
-          if (error instanceof Error) {
-            throw new Error(`Azure OIDC initialization failed: ${error.message}`);
-          } else {
-            throw new Error('Azure OIDC initialization failed: Unknown error');
-          }
+          throw new Error(`Azure OIDC initialization failed: ${(error as Error).message}`);
         }
       }
       throw new Error('Azure configuration not found in auth_config.json');
+
     case 'shibboleth':
-      if (samlProviders?.shibboleth) return samlProviders.shibboleth;
+      if (useSaml) return samlProviders?.shibboleth;
       throw new Error('Shibboleth configuration not found in auth_config.json');
+
     default:
       throw new Error(`Unsupported provider: ${provider}`);
   }
 };
 
+// ✅ Get all authentication configurations
 export const getAllConfig = (): AuthConfig => config as AuthConfig;
 
+// ✅ Get provider-specific configuration
 export const getProviderConfig = (provider: string): any => {
   const { samlProviders, oidcProviders } = config as AuthConfig;
   return samlProviders?.[provider] || oidcProviders?.[provider];

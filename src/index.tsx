@@ -4,14 +4,13 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import VoteWidget from './vote-widget';
 import { Auth0Provider } from '@auth0/auth0-react';
 import { MsalProvider } from '@azure/msal-react';
-import { OktaAuth } from '@okta/okta-auth-js'; // Use named import
+import { OktaAuth, TokenResponse } from '@okta/okta-auth-js';
 import { PublicClientApplication } from '@azure/msal-browser';
 import authConfigHandler from './authConfigHandler';
-import { Provider, VoteWidgetProps } from './types';
-import './custom.d';
+import { Provider, VoteWidgetProps, CustomAuthProvider } from './types';
 import './style.css';
 
-// Define interfaces for auth provider results
+// Type definitions
 interface SamlProviderConfig {
   entryPoint: string;
   issuer: string;
@@ -28,26 +27,6 @@ interface Auth0Config {
   redirectUri: string;
   scopes?: string[];
   authority?: string;
-}
-
-interface OktaConfig {
-  issuer: string;
-  clientId: string;
-  clientSecret?: string;
-  redirectUri: string;
-  scopes?: string[];
-  [key: string]: any;
-}
-
-interface AzureMsalConfig {
-  auth: {
-    clientId: string;
-    authority: string;
-    redirectUri: string;
-  };
-  cache: {
-    cacheLocation: string;
-  };
 }
 
 // Type guards
@@ -85,177 +64,90 @@ const getProviderConfig = () => {
   return { provider, partnerId, campaignCode };
 };
 
-const rootElement = document.getElementById('root');
-if (!rootElement) throw new Error('Root element not found');
-const root = createRoot(rootElement);
+const App: React.FC = () => {
+  const { provider, partnerId, campaignCode } = getProviderConfig();
+  let authProviderResult: SamlProviderConfig | Auth0Config | OktaAuth | PublicClientApplication | null = null;
 
-const renderApp = (
-  authProviderResult: SamlProviderConfig | Auth0Config | OktaAuth | PublicClientApplication | null,
-  provider: Provider,
-  partnerId?: string,
-  campaignCode?: string
-) => {
   try {
-    console.log('Rendering app with:', { provider, authProviderResult, partnerId, campaignCode });
-    const isAuth0Provider = (p: string): p is 'auth0' => p === 'auth0';
-    const isOktaProvider = (p: string): p is 'okta' => p === 'okta';
-    const isAzureProvider = (p: string): p is 'azure' => p === 'azure';
-    const isShibbolethProvider = (p: string): p is 'shibboleth' => p === 'shibboleth';
+    authProviderResult = authConfigHandler(provider) || null;
+  } catch (error) {
+    console.error(`Failed to initialize auth provider for ${provider}:`, error);
+  }
 
-    const widgetProps: VoteWidgetProps = {
-      provider,
-      partnerId,
-      campaignCode,
+  let authProvider: OktaAuth | PublicClientApplication | CustomAuthProvider | undefined = undefined;
+  let auth0Config: Auth0Config | undefined = undefined;
+
+  if (isSamlProviderConfig(authProviderResult)) {
+    console.log('SAML provider selected, configuration:', authProviderResult);
+    authProvider = {
+      login: () => { window.location.href = `/login/${provider}`; },
+      logout: () => { window.location.href = '/logout'; },
+      getUser: async () => ({ email: undefined, name: undefined }),
+      isAuthenticated: async () => false,
     };
+  } else if (isOktaAuth(authProviderResult)) {
+    authProvider = authProviderResult;
+    console.log('Okta provider selected:', authProvider);
 
-    if (isAuth0Provider(provider)) {
-      if (!isAuth0Config(authProviderResult)) {
-        console.warn('Invalid Auth0 configuration, falling back to login');
-        root.render(
-          <BrowserRouter>
-            <AppLayout>
-              <Routes>
-                <Route path="/" element={<VoteWidget {...widgetProps} />} />
-                <Route path="*" element={<Navigate to="/" />} />
-              </Routes>
-            </AppLayout>
-          </BrowserRouter>
-        );
-        return;
-      }
-      const authConfig = authProviderResult as Auth0Config;
-      console.log('Auth0 configuration:', authConfig);
-      root.render(
+    if (window.location.search.includes('code=')) {
+      authProvider.token.parseFromUrl()
+        .then((tokenResponse: TokenResponse) => {
+          if (authProvider && 'tokenManager' in authProvider) {
+            if (tokenResponse.tokens.accessToken) {
+              authProvider.tokenManager.add('accessToken', tokenResponse.tokens.accessToken);
+            }
+            if (tokenResponse.tokens.idToken) {
+              authProvider.tokenManager.add('idToken', tokenResponse.tokens.idToken);
+            }
+            if (tokenResponse.tokens.refreshToken) {
+              authProvider.tokenManager.add('refreshToken', tokenResponse.tokens.refreshToken);
+            }
+          }
+          window.location.replace(window.location.origin);
+        })
+        .catch((err: Error) => console.error('Okta redirect error:', err));
+    }
+  } else if (isMsalInstance(authProviderResult)) {
+    authProvider = authProviderResult;
+    console.log('Azure provider selected:', authProvider);
+  } else if (isAuth0Config(authProviderResult)) {
+    auth0Config = authProviderResult;
+    console.log('Auth0 provider selected:', auth0Config);
+  }
+
+  const widgetProps: VoteWidgetProps = {
+    provider,
+    authProvider,
+    partnerId,
+    campaignCode,
+  };
+
+  const renderProvider = (children: React.ReactNode) => {
+    if (auth0Config) {
+      return (
         <Auth0Provider
-          domain={authConfig.domain || ''}
-          clientId={authConfig.clientId}
-          authorizationParams={{ redirect_uri: authConfig.redirectUri, scope: authConfig.scopes?.join(' ') || 'openid profile email' }}
+          domain={auth0Config.domain || ''}
+          clientId={auth0Config.clientId}
+          authorizationParams={{ redirect_uri: auth0Config.redirectUri, scope: auth0Config.scopes?.join(' ') || 'openid profile email' }}
           useRefreshTokens
           cacheLocation="localstorage"
           onRedirectCallback={() => (window.location.href = 'http://localhost:3000/')}
         >
-          <BrowserRouter>
-            <AppLayout>
-              <Routes>
-                <Route path="/" element={<VoteWidget {...widgetProps} />} />
-                <Route path="*" element={<Navigate to="/" />} />
-              </Routes>
-            </AppLayout>
-          </BrowserRouter>
+          {children}
         </Auth0Provider>
       );
-    } else if (isOktaProvider(provider)) {
-      if (!isOktaAuth(authProviderResult)) {
-        console.warn('Invalid Okta configuration, falling back to login');
-        root.render(
-          <BrowserRouter>
-            <AppLayout>
-              <Routes>
-                <Route path="/" element={<VoteWidget {...widgetProps} />} />
-                <Route path="*" element={<Navigate to="/" />} />
-              </Routes>
-            </AppLayout>
-          </BrowserRouter>
-        );
-        return;
-      }
-      const oktaAuthInstance = authProviderResult as OktaAuth;
-      widgetProps.authProvider = oktaAuthInstance;
-      console.log('Okta configuration:', oktaAuthInstance);
-      if (window.location.search.includes('code=')) {
-        oktaAuthInstance.token.parseFromUrl().then((tokenResponse) => {
-          if (tokenResponse.tokens.accessToken) oktaAuthInstance.tokenManager.add('accessToken', tokenResponse.tokens.accessToken);
-          if (tokenResponse.tokens.idToken) oktaAuthInstance.tokenManager.add('idToken', tokenResponse.tokens.idToken);
-          if (tokenResponse.tokens.refreshToken) oktaAuthInstance.tokenManager.add('refreshToken', tokenResponse.tokens.refreshToken);
-          console.log('Okta redirect callback completed');
-          renderOktaApp(oktaAuthInstance, partnerId, campaignCode);
-        }).catch((err) => console.error('Okta redirect error:', err));
-      } else {
-        renderOktaApp(oktaAuthInstance, partnerId, campaignCode);
-      }
-    } else if (isAzureProvider(provider)) {
-      if (!isMsalInstance(authProviderResult) && !isSamlProviderConfig(authProviderResult)) {
-        console.warn('Invalid Azure configuration, falling back to login');
-        root.render(
-          <BrowserRouter>
-            <AppLayout>
-              <Routes>
-                <Route path="/" element={<VoteWidget {...widgetProps} />} />
-                <Route path="*" element={<Navigate to="/" />} />
-              </Routes>
-            </AppLayout>
-          </BrowserRouter>
-        );
-        return;
-      }
-      if (isMsalInstance(authProviderResult)) {
-        const msalInstance = authProviderResult as PublicClientApplication;
-        widgetProps.authProvider = msalInstance;
-        console.log('MSAL configuration:', msalInstance);
-        root.render(
-          <MsalProvider instance={msalInstance}>
-            <BrowserRouter>
-              <AppLayout>
-                <Routes>
-                  <Route path="/" element={<VoteWidget {...widgetProps} />} />
-                  <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
-              </AppLayout>
-            </BrowserRouter>
-          </MsalProvider>
-        );
-      } else if (isSamlProviderConfig(authProviderResult)) {
-        console.log('SAML configuration:', authProviderResult);
-        root.render(
-          <BrowserRouter>
-            <AppLayout>
-              <Routes>
-                <Route path="/" element={<VoteWidget {...widgetProps} />} />
-                <Route path="*" element={<Navigate to="/" />} />
-              </Routes>
-            </AppLayout>
-          </BrowserRouter>
-        );
-      }
-    } else if (isShibbolethProvider(provider)) {
-      console.log('Shibboleth (SAML) provider selected');
-      root.render(
-        <BrowserRouter>
-          <AppLayout>
-            <Routes>
-              <Route path="/" element={<VoteWidget {...widgetProps} />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-          </AppLayout>
-        </BrowserRouter>
-      );
+    } else if (isMsalInstance(authProvider)) {
+      return <MsalProvider instance={authProvider}>{children}</MsalProvider>;
     } else {
-      throw new Error(`Unsupported provider: ${provider}`);
+      return <>{children}</>;
     }
-  } catch (err) {
-    console.error('Render error:', {
-      message: (err as Error).message,
-      stack: (err as Error).stack,
-      provider,
-      authProviderResult,
-    });
-    root.render(<div>Error initializing app: {(err as Error).message}</div>);
-  }
-};
-
-const renderOktaApp = (oktaAuth: OktaAuth, partnerId?: string, campaignCode?: string) => {
-  console.log('Rendering Okta app with:', { oktaAuth, partnerId, campaignCode });
-  const widgetProps: VoteWidgetProps = {
-    provider: 'okta',
-    authProvider: oktaAuth,
-    partnerId,
-    campaignCode,
   };
-  root.render(
+
+  return (
     <BrowserRouter>
       <AppLayout>
         <Routes>
-          <Route path="/" element={<VoteWidget {...widgetProps} />} />
+          <Route path="/" element={renderProvider(<VoteWidget {...widgetProps} />)} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </AppLayout>
@@ -263,24 +155,12 @@ const renderOktaApp = (oktaAuth: OktaAuth, partnerId?: string, campaignCode?: st
   );
 };
 
-const renderWithDelay = () => {
-  setTimeout(() => {
-    const { provider, partnerId, campaignCode } = getProviderConfig();
-    console.log('Selected provider:', provider);
-    let authProviderResult: SamlProviderConfig | Auth0Config | OktaAuth | PublicClientApplication | null;
-    try {
-      authProviderResult = authConfigHandler(provider);
-      if (!authProviderResult) throw new Error(`No auth config for ${provider}`);
-    } catch (error) {
-      console.error(`Failed to initialize auth provider for ${provider}:`, error);
-      authProviderResult = null;
-    }
-    renderApp(authProviderResult, provider, partnerId, campaignCode);
-  }, 100);
-};
-
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  renderWithDelay();
-} else {
-  document.addEventListener('DOMContentLoaded', renderWithDelay);
-}
+// Render the app
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Root element not found');
+const root = createRoot(rootElement);
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);

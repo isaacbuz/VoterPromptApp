@@ -9,13 +9,32 @@ module.exports = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    modules: ["node_modules", "src"],
+    mainFiles: ["index"],
+    // Prevent Webpack from resolving .d.ts files
+    extensions: [".tsx", ".ts", ".js"], // Restrict to these extensions
+    // Add a condition to ignore .d.ts files
+    conditionNames: ["source"],
+    // Explicitly ignore .d.ts files
+    alias: {
+      "\\.d\\.ts$": false,
+    },
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
-        exclude: [/node_modules/, /\.d\.ts$/], // ✅ Exclude `.d.ts` files
+        use: [
+          {
+            loader: "ts-loader",
+            options: {
+              configFile: path.resolve(__dirname, "tsconfig.json"),
+              onlyCompileBundledFiles: true, // Only compile files that will be bundled
+              transpileOnly: true, // Skip type checking during bundling (handled by tsc --noEmit)
+            },
+          },
+        ],
+        exclude: [/node_modules/, /\.d\.ts$/], // Explicitly exclude .d.ts files
       },
       {
         test: /\.css$/,

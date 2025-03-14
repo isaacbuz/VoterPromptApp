@@ -13,8 +13,12 @@
     "skipLibCheck": true,
     "outDir": "./dist",
     "noEmit": false,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "paths": {
+      "*": ["*"]
+    }
   },
-  "include": ["src/**/*", "custom.d.ts"],
+  "include": ["src/**/*", "custom.d.ts", "src/types/okta-auth.d.ts"],
   "exclude": ["node_modules", "dist", "backend"]
 }

@@ -1,4 +1,4 @@
-import { AuthConfig } from '../custom.d'; // Adjust path if needed
+import { AuthConfig } from '../custom';
 
 export interface AuthProvider {
   login(): void;
