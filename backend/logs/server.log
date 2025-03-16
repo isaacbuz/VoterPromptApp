@@ -1,730 +1,212 @@
-2025-03-13T12:01:26.673Z [INFO] Attempting to configure SAML for provider: shibboleth {
+2025-03-16T22:41:56.598Z [[32minfo[39m]: Successfully imported connect-redis
+    Metadata: {
+  "type": "function",
+  "export": [
+    "RedisStore"
+  ]
+}
+2025-03-16T22:41:56.599Z [[32minfo[39m]: Redis session store initialized successfully
+2025-03-16T22:41:56.599Z [[34mdebug[39m]: SAML providers configuration loaded
+    Metadata: {
+  "providers": [
+    "shibboleth",
+    "azure",
+    "auth0",
+    "okta"
+  ]
+}
+2025-03-16T22:41:56.600Z [[32minfo[39m]: Attempting to configure SAML for provider: shibboleth
+    Metadata: {
   "entryPoint": "https://10.153.168.81/idp/profile/SAML2/Redirect/SSO"
 }
-2025-03-13T12:01:26.675Z [DEBUG] Read IDP certificate for shibboleth {
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-idp-cert.pem",
-  "contentSnippet": "-----BEGIN CERTIFICATE-----\nMIIEJzCCAo+gAwIBAgIUDirNHa8mXFPTsv6W/d8itId8ppIwDQYJKoZIhvcNAQELBQAwGjEY..."
-}
-2025-03-13T12:01:26.675Z [DEBUG] Read private key for shibboleth {
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-key.pem",
-  "contentSnippet": "-----BEGIN PRIVATE KEY-----\nMIIJQgIBADANBgkqhkiG9w0BAQEFAASCCSwwggkoAgEAAoICAQCoMkkQE/7GoV+M\nUwIEU3z..."
-}
-2025-03-13T12:01:26.675Z [WARN] Invalid private key content {
-  "provider": "shibboleth",
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-key.pem",
-  "contentSnippet": "-----BEGIN PRIVATE KEY-----\nMIIJQgIBADANBgkqhkiG9w0BAQEFAASCCSwwggkoAgEAAoICAQCoMkkQE/7GoV+M\nUwIEU3z...",
-  "action": "Skipping configuration"
-}
-2025-03-13T12:01:26.675Z [DEBUG] Read SP certificate for shibboleth {
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-sp-cert.pem",
-  "contentSnippet": "..."
-}
-2025-03-13T12:01:26.675Z [WARN] Certificate validation failed {
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-sp-cert.pem",
-  "contentSnippet": "...",
-  "reason": "Missing PEM headers or empty content"
-}
-2025-03-13T12:01:26.675Z [WARN] Skipping SAML configuration for shibboleth due to missing or invalid certificate files {
-  "provider": "shibboleth",
-  "idpCertPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-idp-cert.pem",
+2025-03-16T22:41:56.600Z [[34mdebug[39m]: Checking existence of certificate files for shibboleth
+    Metadata: {
+  "certPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-idp-cert.pem",
   "privateKeyPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-key.pem",
-  "spCertPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-sp-cert.pem",
-  "action": "Configuration skipped"
+  "spCertPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-sp-cert.pem"
 }
-2025-03-13T12:01:26.675Z [INFO] Attempting to configure SAML for provider: azure {
+2025-03-16T22:41:56.600Z [[34mdebug[39m]: Read IDP certificate for shibboleth
+    Metadata: {
+  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-idp-cert.pem",
+  "contentLength": 1496,
+  "contentSnippet": "-----BEGIN CERTIFICATE-----\nMIIEJzCCAo+gAwIBAgIUDi"
+}
+2025-03-16T22:41:56.600Z [[34mdebug[39m]: Read private key for shibboleth
+    Metadata: {
+  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-key.pem",
+  "contentLength": 3271,
+  "contentSnippet": "-----BEGIN PRIVATE KEY-----\nMIIJQgIBADANBgkqhkiG9w"
+}
+2025-03-16T22:41:56.600Z [[34mdebug[39m]: Read SP certificate for shibboleth
+    Metadata: {
+  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-sp-cert.pem",
+  "contentLength": 0,
+  "contentSnippet": ""
+}
+2025-03-16T22:41:56.600Z [[34mdebug[39m]: Validating certificate PEM
+    Metadata: {
+  "isValid": true,
+  "contentSnippet": "-----BEGIN CERTIFICATE-----\nMIIEJzCCAo+gAwIBAgIUDi"
+}
+2025-03-16T22:41:56.600Z [[34mdebug[39m]: Validating private key PEM
+    Metadata: {
+  "isValid": true,
+  "contentSnippet": "-----BEGIN PRIVATE KEY-----\nMIIJQgIBADANBgkqhkiG9w"
+}
+2025-03-16T22:41:56.600Z [[34mdebug[39m]: Validating certificate PEM
+    Metadata: {
+  "isValid": false,
+  "contentSnippet": ""
+}
+2025-03-16T22:41:56.601Z [[33mwarn[39m]: Skipping SAML provider shibboleth due to invalid certificate configuration
+    Error: Invalid SP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-sp-cert.pem
+    Metadata: {
+  "certPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-idp-cert.pem",
+  "privateKeyPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-key.pem",
+  "spCertPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-sp-cert.pem"
+}
+2025-03-16T22:41:56.601Z [[32minfo[39m]: Attempting to configure SAML for provider: azure
+    Metadata: {
   "entryPoint": "https://login.microsoftonline.com/9e0ab446-dd79-4d10-a90d-d405048204c9/saml2"
 }
-2025-03-13T12:01:26.675Z [DEBUG] Read IDP certificate for azure {
+2025-03-16T22:41:56.601Z [[34mdebug[39m]: Checking existence of certificate files for azure
+    Metadata: {
+  "certPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-ad-idp-cert.pem",
+  "privateKeyPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-key.pem",
+  "spCertPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-sp-cert.pem"
+}
+2025-03-16T22:41:56.601Z [[34mdebug[39m]: Read IDP certificate for azure
+    Metadata: {
   "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-ad-idp-cert.pem",
-  "contentSnippet": "-----BEGIN CERTIFICATE-----\nMIIC8DCCAdigAwIBAgIQWXY+rlMUwpdKMk/bM4G4MTANBgkqhkiG9w0BAQsFADA0\nMTIwMAY..."
+  "contentLength": 1078,
+  "contentSnippet": "-----BEGIN CERTIFICATE-----\nMIIC8DCCAdigAwIBAgIQWX"
 }
-2025-03-13T12:01:26.676Z [DEBUG] Read private key for azure {
+2025-03-16T22:41:56.601Z [[34mdebug[39m]: Read private key for azure
+    Metadata: {
   "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-key.pem",
-  "contentSnippet": "-----BEGIN RSA PRIVATE KEY-----\nMIIEpgIBAAKCAQEAuFbYEQSNwLfyerdBqvz/o3Tfh0nHaSw5/1KaCltNJ5ZJ2kgd\nyXq..."
+  "contentLength": 1679,
+  "contentSnippet": "-----BEGIN RSA PRIVATE KEY-----\nMIIEpgIBAAKCAQEAuF"
 }
-2025-03-13T12:01:26.676Z [DEBUG] Read SP certificate for azure {
+2025-03-16T22:41:56.601Z [[34mdebug[39m]: Read SP certificate for azure
+    Metadata: {
   "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-sp-cert.pem",
-  "contentSnippet": "-----BEGIN CERTIFICATE-----\nMIIDdDCCAlwCCQCjUVdQZEQEITANBgkqhkiG9w0BAQsFADB8MQswCQYDVQQGEwJV\nUzETMBE..."
+  "contentLength": 1257,
+  "contentSnippet": "-----BEGIN CERTIFICATE-----\nMIIDdDCCAlwCCQCjUVdQZE"
 }
-2025-03-13T12:01:26.676Z [INFO] Successfully validated certificates for azure, initializing SAML strategy {
-  "provider": "azure"
+2025-03-16T22:41:56.601Z [[34mdebug[39m]: Validating certificate PEM
+    Metadata: {
+  "isValid": true,
+  "contentSnippet": "-----BEGIN CERTIFICATE-----\nMIIC8DCCAdigAwIBAgIQWX"
 }
-2025-03-13T12:01:26.676Z [INFO] Attempting to configure SAML for provider: auth0 {
+2025-03-16T22:41:56.601Z [[34mdebug[39m]: Validating private key PEM
+    Metadata: {
+  "isValid": true,
+  "contentSnippet": "-----BEGIN RSA PRIVATE KEY-----\nMIIEpgIBAAKCAQEAuF"
+}
+2025-03-16T22:41:56.601Z [[34mdebug[39m]: Validating certificate PEM
+    Metadata: {
+  "isValid": true,
+  "contentSnippet": "-----BEGIN CERTIFICATE-----\nMIIDdDCCAlwCCQCjUVdQZE"
+}
+2025-03-16T22:41:56.601Z [[32minfo[39m]: Successfully validated certificates for azure, initializing SAML strategy
+2025-03-16T22:41:56.601Z [[34mdebug[39m]: SAML strategy options for azure
+    Metadata: {
+  "samlOptions": {
+    "entryPoint": "https://login.microsoftonline.com/9e0ab446-dd79-4d10-a90d-d405048204c9/saml2",
+    "issuer": "urn:com:voterpromptapp",
+    "callbackUrl": "http://localhost:3001/login/callback/azure",
+    "cert": "[REDACTED]",
+    "privateKey": "[REDACTED]",
+    "decryptionPvk": "[REDACTED]",
+    "signatureAlgorithm": "sha256",
+    "wantAssertionsSigned": false
+  }
+}
+2025-03-16T22:41:56.602Z [[33mwarn[39m]: Skipping SAML provider azure due to invalid certificate configuration
+    Error: idpCert is required
+    Metadata: {
+  "certPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-ad-idp-cert.pem",
+  "privateKeyPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-key.pem",
+  "spCertPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-sp-cert.pem"
+}
+2025-03-16T22:41:56.602Z [[32minfo[39m]: Attempting to configure SAML for provider: auth0
+    Metadata: {
   "entryPoint": "https://auth0-saml-idp.com/sso"
 }
-2025-03-13T12:01:26.676Z [DEBUG] Read IDP certificate for auth0 {
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-idp-cert.pem",
-  "contentSnippet": "..."
-}
-2025-03-13T12:01:26.676Z [WARN] Certificate validation failed {
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-idp-cert.pem",
-  "contentSnippet": "...",
-  "reason": "Missing PEM headers or empty content"
-}
-2025-03-13T12:01:26.676Z [DEBUG] Read private key for auth0 {
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-key.pem",
-  "contentSnippet": "..."
-}
-2025-03-13T12:01:26.676Z [WARN] Invalid private key content {
-  "provider": "auth0",
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-key.pem",
-  "contentSnippet": "...",
-  "action": "Skipping configuration"
-}
-2025-03-13T12:01:26.677Z [DEBUG] Read SP certificate for auth0 {
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-sp-cert.pem",
-  "contentSnippet": "..."
-}
-2025-03-13T12:01:26.677Z [WARN] Certificate validation failed {
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-sp-cert.pem",
-  "contentSnippet": "...",
-  "reason": "Missing PEM headers or empty content"
-}
-2025-03-13T12:01:26.677Z [WARN] Skipping SAML configuration for auth0 due to missing or invalid certificate files {
-  "provider": "auth0",
-  "idpCertPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-idp-cert.pem",
+2025-03-16T22:41:56.602Z [[34mdebug[39m]: Checking existence of certificate files for auth0
+    Metadata: {
+  "certPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-idp-cert.pem",
   "privateKeyPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-key.pem",
-  "spCertPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-sp-cert.pem",
-  "action": "Configuration skipped"
+  "spCertPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-sp-cert.pem"
 }
-2025-03-13T12:01:26.677Z [INFO] Attempting to configure SAML for provider: okta {
+2025-03-16T22:41:56.602Z [[34mdebug[39m]: Read IDP certificate for auth0
+    Metadata: {
+  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-idp-cert.pem",
+  "contentLength": 0,
+  "contentSnippet": ""
+}
+2025-03-16T22:41:56.602Z [[34mdebug[39m]: Read private key for auth0
+    Metadata: {
+  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-key.pem",
+  "contentLength": 0,
+  "contentSnippet": ""
+}
+2025-03-16T22:41:56.602Z [[34mdebug[39m]: Read SP certificate for auth0
+    Metadata: {
+  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-sp-cert.pem",
+  "contentLength": 0,
+  "contentSnippet": ""
+}
+2025-03-16T22:41:56.602Z [[34mdebug[39m]: Validating certificate PEM
+    Metadata: {
+  "isValid": false,
+  "contentSnippet": ""
+}
+2025-03-16T22:41:56.602Z [[33mwarn[39m]: Skipping SAML provider auth0 due to invalid certificate configuration
+    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-idp-cert.pem
+    Metadata: {
+  "certPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-idp-cert.pem",
+  "privateKeyPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-key.pem",
+  "spCertPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-sp-cert.pem"
+}
+2025-03-16T22:41:56.602Z [[32minfo[39m]: Attempting to configure SAML for provider: okta
+    Metadata: {
   "entryPoint": "https://okta-saml-idp.com/sso"
 }
-2025-03-13T12:01:26.677Z [DEBUG] Read IDP certificate for okta {
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-idp-cert.pem",
-  "contentSnippet": "..."
-}
-2025-03-13T12:01:26.677Z [WARN] Certificate validation failed {
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-idp-cert.pem",
-  "contentSnippet": "...",
-  "reason": "Missing PEM headers or empty content"
-}
-2025-03-13T12:01:26.677Z [DEBUG] Read private key for okta {
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-key.pem",
-  "contentSnippet": "..."
-}
-2025-03-13T12:01:26.677Z [WARN] Invalid private key content {
-  "provider": "okta",
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-key.pem",
-  "contentSnippet": "...",
-  "action": "Skipping configuration"
-}
-2025-03-13T12:01:26.677Z [DEBUG] Read SP certificate for okta {
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-sp-cert.pem",
-  "contentSnippet": "..."
-}
-2025-03-13T12:01:26.677Z [WARN] Certificate validation failed {
-  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-sp-cert.pem",
-  "contentSnippet": "...",
-  "reason": "Missing PEM headers or empty content"
-}
-2025-03-13T12:01:26.677Z [WARN] Skipping SAML configuration for okta due to missing or invalid certificate files {
-  "provider": "okta",
-  "idpCertPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-idp-cert.pem",
+2025-03-16T22:41:56.602Z [[34mdebug[39m]: Checking existence of certificate files for okta
+    Metadata: {
+  "certPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-idp-cert.pem",
   "privateKeyPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-key.pem",
-  "spCertPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-sp-cert.pem",
-  "action": "Configuration skipped"
-}
-2025-03-13T12:01:26.679Z [INFO] Server started successfully on port 3001 {
-  "action": "Server is running"
-}
-2025-03-13T12:02:28.632Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.638Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.640Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.642Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.643Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.644Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.645Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.647Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.649Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.651Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.652Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.653Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.655Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.656Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.656Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.658Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.658Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.660Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.661Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.662Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.662Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.663Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.664Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.665Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.666Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.667Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.668Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.668Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.669Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.670Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.671Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.672Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.673Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.673Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.674Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.675Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.676Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.676Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.677Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.678Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.679Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.680Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.680Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.681Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.682Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.682Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.683Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.684Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.684Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.685Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.686Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.686Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.687Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.688Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.688Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.689Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.690Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.690Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.691Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.692Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.692Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.693Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.694Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.695Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.696Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.697Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.698Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.698Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.699Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.700Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.701Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.701Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.702Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.703Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.703Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.704Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.705Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.706Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.706Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.707Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.708Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.708Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.709Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.710Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.710Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.711Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.712Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.713Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.714Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.714Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.715Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.716Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.716Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.717Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.718Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.719Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.719Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.720Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.721Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:02:28.721Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.906Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.910Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.911Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.913Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.915Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.916Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.918Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.920Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.921Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.922Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.924Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.926Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.927Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.928Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.929Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.932Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.934Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.935Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.936Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.938Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.939Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.940Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.941Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.944Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.945Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.946Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.948Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.950Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.951Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.952Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.953Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.954Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.954Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.956Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.958Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.959Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.959Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.964Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.966Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.968Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.970Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.972Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.974Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.976Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.977Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.980Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.983Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.985Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.987Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.988Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.989Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.990Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.991Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.992Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.993Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.993Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.994Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.996Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.998Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:14.999Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.001Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.003Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.005Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.006Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.008Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.010Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.011Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.013Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.014Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.016Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.018Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.020Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.021Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.023Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.025Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.027Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.028Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.032Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.040Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.042Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.044Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.047Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.049Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.053Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.057Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.059Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.062Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.065Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.068Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.072Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.075Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.077Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.078Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.081Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.082Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.085Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.086Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.089Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.090Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
-2025-03-13T12:22:15.092Z [WARN] Profile access denied due to lack of authentication {
-  "action": "Returned 401 error"
-}
+  "spCertPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-sp-cert.pem"
+}
+2025-03-16T22:41:56.602Z [[34mdebug[39m]: Read IDP certificate for okta
+    Metadata: {
+  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-idp-cert.pem",
+  "contentLength": 0,
+  "contentSnippet": ""
+}
+2025-03-16T22:41:56.602Z [[34mdebug[39m]: Read private key for okta
+    Metadata: {
+  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-key.pem",
+  "contentLength": 0,
+  "contentSnippet": ""
+}
+2025-03-16T22:41:56.602Z [[34mdebug[39m]: Read SP certificate for okta
+    Metadata: {
+  "filePath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-sp-cert.pem",
+  "contentLength": 0,
+  "contentSnippet": ""
+}
+2025-03-16T22:41:56.602Z [[34mdebug[39m]: Validating certificate PEM
+    Metadata: {
+  "isValid": false,
+  "contentSnippet": ""
+}
+2025-03-16T22:41:56.602Z [[33mwarn[39m]: Skipping SAML provider okta due to invalid certificate configuration
+    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-idp-cert.pem
+    Metadata: {
+  "certPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-idp-cert.pem",
+  "privateKeyPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-key.pem",
+  "spCertPath": "/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-sp-cert.pem"
+}
+2025-03-16T22:41:56.603Z [[32minfo[39m]: Server running on port 3001

@@ -7,10 +7,10 @@ import { MsalProvider } from '@azure/msal-react';
 import { OktaAuth, TokenResponse } from '@okta/okta-auth-js';
 import { PublicClientApplication } from '@azure/msal-browser';
 import authConfigHandler from './authConfigHandler';
-import { Provider, VoteWidgetProps, CustomAuthProvider } from './types';
+import { Provider, VoteWidgetProps, CustomAuthProvider } from './types/types';
 import './style.css';
 
-// Type definitions
+// Define interfaces for auth provider results
 interface SamlProviderConfig {
   entryPoint: string;
   issuer: string;
@@ -27,6 +27,26 @@ interface Auth0Config {
   redirectUri: string;
   scopes?: string[];
   authority?: string;
+}
+
+interface OktaConfig {
+  issuer: string;
+  clientId: string;
+  clientSecret?: string;
+  redirectUri: string;
+  scopes?: string[];
+  [key: string]: any;
+}
+
+interface AzureMsalConfig {
+  auth: {
+    clientId: string;
+    authority: string;
+    redirectUri: string;
+  };
+  cache: {
+    cacheLocation: string;
+  };
 }
 
 // Type guards
@@ -86,26 +106,16 @@ const App: React.FC = () => {
       isAuthenticated: async () => false,
     };
   } else if (isOktaAuth(authProviderResult)) {
-    authProvider = authProviderResult;
-    console.log('Okta provider selected:', authProvider);
-
+    const oktaAuthProvider = authProviderResult;
+    console.log('Okta provider selected:', oktaAuthProvider);
+    authProvider = oktaAuthProvider;
     if (window.location.search.includes('code=')) {
-      authProvider.token.parseFromUrl()
-        .then((tokenResponse: TokenResponse) => {
-          if (authProvider && 'tokenManager' in authProvider) {
-            if (tokenResponse.tokens.accessToken) {
-              authProvider.tokenManager.add('accessToken', tokenResponse.tokens.accessToken);
-            }
-            if (tokenResponse.tokens.idToken) {
-              authProvider.tokenManager.add('idToken', tokenResponse.tokens.idToken);
-            }
-            if (tokenResponse.tokens.refreshToken) {
-              authProvider.tokenManager.add('refreshToken', tokenResponse.tokens.refreshToken);
-            }
-          }
-          window.location.replace(window.location.origin);
-        })
-        .catch((err: Error) => console.error('Okta redirect error:', err));
+      oktaAuthProvider.token.parseFromUrl().then((tokenResponse: TokenResponse) => {
+        if (tokenResponse.tokens.accessToken) oktaAuthProvider.tokenManager.add('accessToken', tokenResponse.tokens.accessToken);
+        if (tokenResponse.tokens.idToken) oktaAuthProvider.tokenManager.add('idToken', tokenResponse.tokens.idToken);
+        if (tokenResponse.tokens.refreshToken) oktaAuthProvider.tokenManager.add('refreshToken', tokenResponse.tokens.refreshToken);
+        window.location.replace(window.location.origin);
+      }).catch((err: Error) => console.error('Okta redirect error:', err));
     }
   } else if (isMsalInstance(authProviderResult)) {
     authProvider = authProviderResult;

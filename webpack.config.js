@@ -1,24 +1,15 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: "./src/index.tsx",
+  entry: './src/index.tsx',
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
-    modules: ["node_modules", "src"],
-    mainFiles: ["index"],
-    // Prevent Webpack from resolving .d.ts files
-    extensions: [".tsx", ".ts", ".js"], // Restrict to these extensions
-    // Add a condition to ignore .d.ts files
-    conditionNames: ["source"],
-    // Explicitly ignore .d.ts files
-    alias: {
-      "\\.d\\.ts$": false,
-    },
+    extensions: ['.tsx', '.ts', '.js'],
+    modules: [path.resolve(__dirname, 'node_modules'), 'node_modules'],
   },
   module: {
     rules: [
@@ -26,33 +17,32 @@ module.exports = {
         test: /\.tsx?$/,
         use: [
           {
-            loader: "ts-loader",
+            loader: 'ts-loader',
             options: {
-              configFile: path.resolve(__dirname, "tsconfig.json"),
-              onlyCompileBundledFiles: true, // Only compile files that will be bundled
-              transpileOnly: true, // Skip type checking during bundling (handled by tsc --noEmit)
+              configFile: path.resolve(__dirname, 'tsconfig.json'),
+              transpileOnly: true, // Speed up compilation, type checking via tsc
             },
           },
         ],
-        exclude: [/node_modules/, /\.d\.ts$/], // Explicitly exclude .d.ts files
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: "asset/resource",
+        type: 'asset/resource',
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html",
+      template: './public/index.html',
     }),
   ],
   devServer: {
-    static: path.join(__dirname, "public"),
+    static: path.join(__dirname, 'public'),
     compress: true,
     port: 3000,
   },

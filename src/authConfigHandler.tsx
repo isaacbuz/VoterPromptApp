@@ -1,5 +1,5 @@
 import { OktaAuth } from '@okta/okta-auth-js';
-import { PublicClientApplication } from '@azure/msal-browser';
+import { PublicClientApplication } from '@azure/msal-browser'; // Correct root import for v3.x
 import config from './auth_config.json';
 import { AuthConfig } from './custom';
 import { AuthProviderConfig } from './authProviders/authProvider';
@@ -24,19 +24,32 @@ interface OktaConfig {
   [key: string]: any;
 }
 
-// ✅ Get the authentication provider
-export const getAuthProvider = (provider: string): Auth0Config | OktaAuth | PublicClientApplication | any => {
+// Define SAML configuration structure
+interface SamlConfig {
+  entryPoint: string;
+  issuer: string;
+  callbackUrl: string;
+  idpCertPath: string;
+  privateKeyPath: string;
+  spCertPath: string;
+}
+
+// Union type for return values
+type AuthProviderResult = Auth0Config | OktaAuth | PublicClientApplication | SamlConfig;
+
+// Get the authentication provider
+export const getAuthProvider = (provider: string): AuthProviderResult => {
   const { protocol, samlProviders, oidcProviders } = config as AuthConfig;
 
-  // Determine if using SAML or OIDC
   const useSaml = protocol === 'SAML' && samlProviders?.[provider];
   const useOidc = protocol === 'OIDC' && oidcProviders?.[provider];
+  console.log(`Configuring ${provider}: useSaml=${useSaml}, useOidc=${useOidc}`);
 
   switch (provider) {
     case 'auth0':
-      if (useSaml) return samlProviders?.auth0;
+      if (useSaml) return samlProviders!.auth0;
       if (useOidc || (!useSaml && oidcProviders?.auth0)) {
-        const auth0Config = oidcProviders?.auth0 as AuthProviderConfig;
+        const auth0Config = oidcProviders!.auth0 as AuthProviderConfig;
         if (!auth0Config.clientId || !auth0Config.redirectUri) {
           throw new Error('Auth0 OIDC configuration missing required fields: clientId or redirectUri');
         }
@@ -52,9 +65,9 @@ export const getAuthProvider = (provider: string): Auth0Config | OktaAuth | Publ
       throw new Error('Auth0 configuration not found in auth_config.json');
 
     case 'okta':
-      if (useSaml) return samlProviders?.okta;
+      if (useSaml) return samlProviders!.okta;
       if (useOidc || (!useSaml && oidcProviders?.okta)) {
-        const oktaConfig = oidcProviders?.okta as AuthProviderConfig;
+        const oktaConfig = oidcProviders!.okta as AuthProviderConfig;
         if (!oktaConfig.clientId || !oktaConfig.redirectUri) {
           throw new Error('Okta OIDC configuration missing required fields: clientId or redirectUri');
         }
@@ -69,9 +82,9 @@ export const getAuthProvider = (provider: string): Auth0Config | OktaAuth | Publ
       throw new Error('Okta configuration not found in auth_config.json');
 
     case 'azure':
-      if (useSaml) return samlProviders?.azure;
+      if (useSaml) return samlProviders!.azure;
       if (useOidc || (!useSaml && oidcProviders?.azure)) {
-        const azureConfig = oidcProviders?.azure as AuthProviderConfig;
+        const azureConfig = oidcProviders!.azure as AuthProviderConfig;
         if (!azureConfig.clientId || !azureConfig.redirectUri || !azureConfig.tenantId) {
           throw new Error('Azure OIDC configuration missing required fields: clientId, redirectUri, or tenantId');
         }
@@ -93,7 +106,7 @@ export const getAuthProvider = (provider: string): Auth0Config | OktaAuth | Publ
       throw new Error('Azure configuration not found in auth_config.json');
 
     case 'shibboleth':
-      if (useSaml) return samlProviders?.shibboleth;
+      if (useSaml) return samlProviders!.shibboleth;
       throw new Error('Shibboleth configuration not found in auth_config.json');
 
     default:
@@ -101,11 +114,11 @@ export const getAuthProvider = (provider: string): Auth0Config | OktaAuth | Publ
   }
 };
 
-// ✅ Get all authentication configurations
+// Get all authentication configurations
 export const getAllConfig = (): AuthConfig => config as AuthConfig;
 
-// ✅ Get provider-specific configuration
-export const getProviderConfig = (provider: string): any => {
+// Get provider-specific configuration
+export const getProviderConfig = (provider: string): SamlConfig | AuthProviderConfig | undefined => {
   const { samlProviders, oidcProviders } = config as AuthConfig;
   return samlProviders?.[provider] || oidcProviders?.[provider];
 };

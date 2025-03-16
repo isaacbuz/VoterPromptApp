@@ -3,7 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { useMsal, useIsAuthenticated } from '@azure/msal-react';
 import { OktaAuth } from '@okta/okta-auth-js';
 import { PublicClientApplication } from '@azure/msal-browser';
-import { VoteWidgetProps, Provider } from './types';
+import { VoteWidgetProps, Provider } from './types/types';
 
 interface UserInfo {
   email?: string;
@@ -77,7 +77,7 @@ const VoteWidget: React.FC<VoteWidgetProps> = ({ provider, authProvider, partner
           const res = await fetch('http://localhost:3001/profile', {
             method: 'GET',
             credentials: 'include',
-            headers: { 'Accept': 'application/json' },
+            headers: { Accept: 'application/json' },
           });
           if (res.ok) {
             const data = await res.json();
@@ -115,7 +115,7 @@ const VoteWidget: React.FC<VoteWidgetProps> = ({ provider, authProvider, partner
       setShowVoterPopup(false);
       setForceLogin(false);
     };
-  }, [provider]);
+  }, [provider, authProvider]); // Fixed dependency array, removed corrupted '薦'
 
   const handleLogin = () => {
     if (provider === 'auth0' && auth0Login) {
@@ -172,7 +172,9 @@ const VoteWidget: React.FC<VoteWidgetProps> = ({ provider, authProvider, partner
     return (
       <div className="login-page">
         <h2>Login to continue</h2>
-        <button className="login-button" onClick={handleLogin}>Login</button>
+        <button className="login-button" onClick={handleLogin}>
+          Login
+        </button>
       </div>
     );
   }
@@ -184,24 +186,35 @@ const VoteWidget: React.FC<VoteWidgetProps> = ({ provider, authProvider, partner
         {userInfo && (
           <div className="user-info">
             <p>Welcome, {userInfo.email || 'User'}!</p>
-            <button className="logout-button" onClick={handleLogout}>Logout</button>
+            <button className="logout-button" onClick={handleLogout}>
+              Logout
+            </button>
           </div>
         )}
       </div>
       {showVoterPopup && (
         <div className="popup-overlay">
           <div className="voter-popup-container">
-            <button className="close-button" onClick={() => setShowVoterPopup(false)}>X</button>
+            <button className="close-button" onClick={() => setShowVoterPopup(false)}>
+              X
+            </button>
             <div className="voter-widget-header">You can register to vote.</div>
             <div className="voter-widget-title">
               <span>OWN YOUR FUTURE</span>
               <div className="vote-text">
-                V<span className="vote-icon"><img src="/assets/y.svg" alt="Vote Icon" /></span>TE
+                V<span className="vote-icon">
+                  <img src="/assets/y.svg" alt="Vote Icon" />
+                </span>
+                TE
               </div>
             </div>
             <div className="voter-widget-footer">It only takes two minutes.</div>
             <div className="voter-button-container">
-              <button className="voter-button voter-button-primary" onClick={redirect} aria-label="Register to vote">
+              <button
+                className="voter-button voter-button-primary"
+                onClick={redirect}
+                aria-label="Register to vote"
+              >
                 Register to Vote
               </button>
             </div>

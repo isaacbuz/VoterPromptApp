@@ -4,7 +4,7 @@ import { AzureProvider } from './azure';
 import { ShibbolethProvider } from './shibboleth';
 import { AuthProvider } from './authProvider';
 import { getProviderConfig } from '../authConfigHandler';
-import { Provider } from '../types';
+import { Provider } from '../types/types';
 
 export const createAuthProvider = (provider: Provider): AuthProvider => {
   const config = getProviderConfig(provider);

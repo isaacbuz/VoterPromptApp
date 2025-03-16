@@ -16,9 +16,11 @@
     "jsx": "react-jsx",
     "baseUrl": "src",
     "paths": {
+      "@azure/msal-browser": ["../node_modules/@azure/msal-browser/dist/index.js"],
+      "@azure/msal-react": ["../node_modules/@azure/msal-react/dist/index.js"],
       "*": ["*"]
     }
   },
-  "include": ["src/**/*", "custom.d.ts", "src/types/okta-auth.d.ts"],
+  "include": ["src/**/*", "custom.d.ts", "src/types/okta-auth.d.ts", "src/types/azure-msal-react.d.ts"],
   "exclude": ["node_modules", "dist", "backend"]
 }
