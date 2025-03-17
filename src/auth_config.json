@@ -3,7 +3,7 @@
   "protocol": "SAML",
   "campaignCode": "campaign456",
   "partnerId": "partner123",
-  "sessionSecret": "123",
+  "sessionSecret": "a-very-strong-secret-1234567890abcdef", 
   "port": 3001,
   "certDir": "backend/cert",
   "samlProviders": {
@@ -17,11 +17,13 @@
     },
     "azure": {
       "entryPoint": "https://login.microsoftonline.com/9e0ab446-dd79-4d10-a90d-d405048204c9/saml2",
-      "issuer": "urn:com:voterpromptapp",
+      "issuer": "urn:com:voterpromptapp", 
       "callbackUrl": "http://localhost:3001/login/callback/azure",
       "idpCertPath": "backend/cert/azure/azure-ad-idp-cert.pem",
       "privateKeyPath": "backend/cert/azure/azure-key.pem",
-      "spCertPath": "backend/cert/azure/azure-sp-cert.pem"
+      "spCertPath": "backend/cert/azure/azure-sp-cert.pem",
+      "wantAssertionsSigned": true,
+      "wantAuthnResponseSigned": false
     },
     "auth0": {
       "entryPoint": "https://auth0-saml-idp.com/sso",

@@ -32,6 +32,19 @@ const VoteWidget: React.FC<VoteWidgetProps> = ({ provider, authProvider, partner
 
   useEffect(() => {
     const checkAuthentication = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const loggedOut = urlParams.get('loggedOut') === 'true' || localStorage.getItem('loggedOut') === 'true';
+      if (loggedOut) {
+        setIsAuthenticated(false);
+        setUserInfo(null);
+        setShowVoterPopup(false);
+        setForceLogin(true);
+        setAuthChecked(true);
+        localStorage.removeItem('loggedOut');
+        window.history.replaceState({}, document.title, window.location.pathname);
+        return;
+      }
+
       try {
         if (provider === 'auth0' && auth0) {
           if (auth0IsAuthenticated) {
@@ -77,7 +90,7 @@ const VoteWidget: React.FC<VoteWidgetProps> = ({ provider, authProvider, partner
           const res = await fetch('http://localhost:3001/profile', {
             method: 'GET',
             credentials: 'include',
-            headers: { Accept: 'application/json' },
+            headers: { Accept: 'application/json', 'Cache-Control': 'no-cache' },
           });
           if (res.ok) {
             const data = await res.json();
@@ -92,6 +105,11 @@ const VoteWidget: React.FC<VoteWidgetProps> = ({ provider, authProvider, partner
               setShowVoterPopup(false);
               setForceLogin(true);
             }
+          } else if (res.status === 401) {
+            setIsAuthenticated(false);
+            setUserInfo(null);
+            setShowVoterPopup(false);
+            setForceLogin(true);
           } else {
             setIsAuthenticated(false);
             setUserInfo(null);
@@ -115,7 +133,7 @@ const VoteWidget: React.FC<VoteWidgetProps> = ({ provider, authProvider, partner
       setShowVoterPopup(false);
       setForceLogin(false);
     };
-  }, [provider, authProvider]); // Fixed dependency array, removed corrupted '薦'
+  }, [provider, authProvider]);
 
   const handleLogin = () => {
     if (provider === 'auth0' && auth0Login) {
@@ -140,15 +158,19 @@ const VoteWidget: React.FC<VoteWidgetProps> = ({ provider, authProvider, partner
       fetch('http://localhost:3001/logout', {
         method: 'GET',
         credentials: 'include',
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
       })
         .then((res) => {
           if (res.headers.get('X-Logout') === 'true') {
             console.log('Client received logout notification, resetting state');
+            localStorage.setItem('loggedOut', 'true');
             setIsAuthenticated(false);
             setUserInfo(null);
             setShowVoterPopup(false);
             setForceLogin(true);
-            window.location.href = 'http://localhost:3000/';
+            window.location.href = 'http://localhost:3000/?loggedOut=true&nocache=' + Date.now();
           } else if (!res.ok) {
             console.error('Logout failed with status:', res.status);
           }
@@ -201,11 +223,8 @@ const VoteWidget: React.FC<VoteWidgetProps> = ({ provider, authProvider, partner
             <div className="voter-widget-header">You can register to vote.</div>
             <div className="voter-widget-title">
               <span>OWN YOUR FUTURE</span>
-              <div className="vote-text">
-                V<span className="vote-icon">
-                  <img src="/assets/y.svg" alt="Vote Icon" />
-                </span>
-                TE
+              <div className="vote-image">
+                <img src="/assets/y.svg" alt="VOTE Icon" />
               </div>
             </div>
             <div className="voter-widget-footer">It only takes two minutes.</div>

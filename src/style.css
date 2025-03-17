@@ -32,8 +32,9 @@
   background: var(--primary-color);
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 25px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .popup-overlay {
@@ -50,11 +51,12 @@
 
 .voter-popup-container {
   background: var(--background-color);
-  padding: 20px;
-  border-radius: 5px;
+  padding: 30px;
+  border-radius: 8px;
   position: relative;
   max-width: 400px;
   width: 90%;
+  text-align: center;
 }
 
 .close-button {
@@ -63,24 +65,36 @@
   right: 10px;
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
 }
 
-.voter-widget-header,
-.voter-widget-footer {
-  margin: 10px 0;
-  font-size: 1.1em;
+.voter-widget-header {
+  margin: 0 0 20px;
+  font-size: 1.3em;
+  font-weight: normal;
 }
 
 .voter-widget-title {
-  font-size: 1.5em;
+  font-size: 2em;
   font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 10px;
 }
 
-.vote-icon img {
-  width: 20px;
-  vertical-align: middle;
+.vote-image {
+  margin-bottom: 20px;
+}
+
+.vote-image img {
+  width: 100px; /* Adjust based on the actual size of y.svg */
+  height: auto;
+}
+
+.voter-widget-footer {
+  margin: 20px 0;
+  font-size: 1em;
+  color: #666;
 }
 
 .voter-button-container {
@@ -88,6 +102,7 @@
 }
 
 .voter-widget-info {
-  margin-top: 10px;
+  margin-top: 20px;
   font-size: 0.9em;
+  color: #333;
 }

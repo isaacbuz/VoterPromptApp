@@ -1,177 +1,218 @@
-2025-03-17T12:57:17.729Z [[32minfo[39m]: Successfully imported connect-redis
-2025-03-17T12:57:17.731Z [[33mwarn[39m]: Skipping SAML provider shibboleth due to invalid certificate configuration
-    Error: Invalid SP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-sp-cert.pem
-2025-03-17T12:57:17.732Z [[32minfo[39m]: Configuring SAML for azure
-2025-03-17T12:57:17.732Z [[33mwarn[39m]: Skipping SAML provider auth0 due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-idp-cert.pem
-2025-03-17T12:57:17.732Z [[33mwarn[39m]: Skipping SAML provider okta due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-idp-cert.pem
-2025-03-17T12:57:17.732Z [[32minfo[39m]: Attempting to start Redis server...
-2025-03-17T12:57:17.744Z [[32minfo[39m]: Redis server started successfully in daemon mode
-2025-03-17T12:57:17.749Z [[32minfo[39m]: Redis client connected successfully
-2025-03-17T12:57:17.750Z [[32minfo[39m]: Redis client ready for operations
-2025-03-17T12:57:17.751Z [[32minfo[39m]: Redis ping successful
-2025-03-17T12:57:17.751Z [[31merror[39m]: Failed to initialize Redis session store
-    Error: RedisStore is not a function
-    Stack: TypeError: RedisStore is not a function
-    at initializeSessionStore (/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/server.js:139:22)
-    at startServer (/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/server.js:383:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-2025-03-17T12:57:17.751Z [[33mwarn[39m]: Falling back to memory store due to Redis store failure
-2025-03-17T12:57:17.752Z [[32minfo[39m]: Server running on port 3001
-2025-03-17T12:57:47.062Z [[32minfo[39m]: Successfully imported connect-redis
-2025-03-17T12:57:47.064Z [[33mwarn[39m]: Skipping SAML provider shibboleth due to invalid certificate configuration
-    Error: Invalid SP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-sp-cert.pem
-2025-03-17T12:57:47.065Z [[32minfo[39m]: Configuring SAML for azure
-2025-03-17T12:57:47.065Z [[33mwarn[39m]: Skipping SAML provider auth0 due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-idp-cert.pem
-2025-03-17T12:57:47.065Z [[33mwarn[39m]: Skipping SAML provider okta due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-idp-cert.pem
-2025-03-17T12:57:47.065Z [[32minfo[39m]: Attempting to start Redis server...
-2025-03-17T12:57:47.078Z [[32minfo[39m]: Redis server started successfully in daemon mode
-2025-03-17T12:57:47.083Z [[32minfo[39m]: Redis client connected successfully
-2025-03-17T12:57:47.084Z [[32minfo[39m]: Redis client ready for operations
-2025-03-17T12:57:47.084Z [[32minfo[39m]: Redis ping successful
-2025-03-17T12:58:04.397Z [[32minfo[39m]: Successfully imported connect-redis
-2025-03-17T12:58:04.399Z [[33mwarn[39m]: Skipping SAML provider shibboleth due to invalid certificate configuration
-    Error: Invalid SP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-sp-cert.pem
-2025-03-17T12:58:04.399Z [[32minfo[39m]: Configuring SAML for azure
-2025-03-17T12:58:04.400Z [[33mwarn[39m]: Skipping SAML provider auth0 due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-idp-cert.pem
-2025-03-17T12:58:04.400Z [[33mwarn[39m]: Skipping SAML provider okta due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-idp-cert.pem
-2025-03-17T12:58:04.400Z [[32minfo[39m]: Attempting to start Redis server...
-2025-03-17T12:58:04.423Z [[32minfo[39m]: Redis server started successfully in daemon mode
-2025-03-17T12:58:04.428Z [[32minfo[39m]: Redis client connected successfully
-2025-03-17T12:58:04.429Z [[32minfo[39m]: Redis client ready for operations
-2025-03-17T12:58:04.430Z [[32minfo[39m]: Redis ping successful
-2025-03-17T12:58:04.430Z [[31merror[39m]: Failed to initialize Redis session store
-    Error: RedisStore is not a function
-    Stack: TypeError: RedisStore is not a function
-    at initializeSessionStore (/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/server.js:139:22)
-    at startServer (/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/server.js:383:11)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-2025-03-17T12:58:04.430Z [[33mwarn[39m]: Falling back to memory store due to Redis store failure
-2025-03-17T12:58:04.431Z [[32minfo[39m]: Server running on port 3001
-2025-03-17T13:01:52.357Z [[31merror[39m]: Failed to import connect-redis
-    Error: RedisStoreModule is not a function
-    Stack: TypeError: RedisStoreModule is not a function
-    at Object.<anonymous> (/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/server.js:127:16)
-    at Module._compile (node:internal/modules/cjs/loader:1469:14)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)
-    at Module.load (node:internal/modules/cjs/loader:1288:32)
-    at Module._load (node:internal/modules/cjs/loader:1104:12)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:173:12)
-    at node:internal/main/run_main_module:28:49
-2025-03-17T13:01:52.359Z [[33mwarn[39m]: Skipping SAML provider shibboleth due to invalid certificate configuration
-    Error: Invalid SP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-sp-cert.pem
-2025-03-17T13:01:52.359Z [[32minfo[39m]: Configuring SAML for azure
-2025-03-17T13:01:52.360Z [[33mwarn[39m]: Skipping SAML provider auth0 due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-idp-cert.pem
-2025-03-17T13:01:52.360Z [[33mwarn[39m]: Skipping SAML provider okta due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-idp-cert.pem
-2025-03-17T13:01:52.360Z [[32minfo[39m]: Attempting to start Redis server...
-2025-03-17T13:01:52.374Z [[32minfo[39m]: Redis server started successfully in daemon mode
-2025-03-17T13:01:52.379Z [[32minfo[39m]: Redis client connected successfully
-2025-03-17T13:01:52.380Z [[32minfo[39m]: Redis client ready for operations
-2025-03-17T13:01:52.381Z [[32minfo[39m]: Redis ping successful
-2025-03-17T13:02:08.468Z [[31merror[39m]: Failed to import connect-redis
-    Error: RedisStoreModule is not a function
-    Stack: TypeError: RedisStoreModule is not a function
-    at Object.<anonymous> (/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/server.js:127:16)
-    at Module._compile (node:internal/modules/cjs/loader:1469:14)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)
-    at Module.load (node:internal/modules/cjs/loader:1288:32)
-    at Module._load (node:internal/modules/cjs/loader:1104:12)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:173:12)
-    at node:internal/main/run_main_module:28:49
-2025-03-17T13:02:08.469Z [[33mwarn[39m]: Skipping SAML provider shibboleth due to invalid certificate configuration
-    Error: Invalid SP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-sp-cert.pem
-2025-03-17T13:02:08.470Z [[32minfo[39m]: Configuring SAML for azure
-2025-03-17T13:02:08.470Z [[33mwarn[39m]: Skipping SAML provider auth0 due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-idp-cert.pem
-2025-03-17T13:02:08.470Z [[33mwarn[39m]: Skipping SAML provider okta due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-idp-cert.pem
-2025-03-17T13:02:08.470Z [[32minfo[39m]: Attempting to start Redis server...
-2025-03-17T13:02:08.478Z [[32minfo[39m]: Redis server started successfully in daemon mode
-2025-03-17T13:02:08.483Z [[32minfo[39m]: Redis client connected successfully
-2025-03-17T13:02:08.484Z [[32minfo[39m]: Redis client ready for operations
-2025-03-17T13:02:08.484Z [[32minfo[39m]: Redis ping successful
-2025-03-17T13:02:08.485Z [[33mwarn[39m]: Using memory store as Redis is unavailable or connect-redis import failed
-2025-03-17T13:02:08.485Z [[32minfo[39m]: Server running on port 3001
-2025-03-17T13:02:48.268Z [[32minfo[39m]: SAML callback received
-2025-03-17T13:02:48.279Z [[31merror[39m]: Server error occurred
-    Error: Invalid document signature
-    Stack: Error: Invalid document signature
-    at SAML.validatePostResponseAsync (/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/node_modules/@node-saml/node-saml/lib/saml.js:510:23)
-    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-2025-03-17T13:06:29.229Z [[31merror[39m]: Failed to import connect-redis
-    Error: RedisStoreModule is not a function
-    Stack: TypeError: RedisStoreModule is not a function
-    at Object.<anonymous> (/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/server.js:127:16)
-    at Module._compile (node:internal/modules/cjs/loader:1469:14)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)
-    at Module.load (node:internal/modules/cjs/loader:1288:32)
-    at Module._load (node:internal/modules/cjs/loader:1104:12)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:173:12)
-    at node:internal/main/run_main_module:28:49
-2025-03-17T13:06:29.231Z [[33mwarn[39m]: Skipping SAML provider shibboleth due to invalid certificate configuration
-    Error: Invalid SP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-sp-cert.pem
-2025-03-17T13:06:29.232Z [[32minfo[39m]: Configuring SAML for azure
-2025-03-17T13:06:29.232Z [[33mwarn[39m]: Skipping SAML provider auth0 due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-idp-cert.pem
-2025-03-17T13:06:29.232Z [[33mwarn[39m]: Skipping SAML provider okta due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-idp-cert.pem
-2025-03-17T13:06:29.232Z [[32minfo[39m]: Attempting to start Redis server...
-2025-03-17T13:06:29.246Z [[32minfo[39m]: Redis server started successfully in daemon mode
-2025-03-17T13:06:29.251Z [[32minfo[39m]: Redis client connected successfully
-2025-03-17T13:06:29.252Z [[32minfo[39m]: Redis client ready for operations
-2025-03-17T13:06:29.253Z [[32minfo[39m]: Redis ping successful
-2025-03-17T13:06:29.253Z [[33mwarn[39m]: Using memory store as Redis is unavailable or connect-redis import failed
-2025-03-17T13:06:29.254Z [[32minfo[39m]: Server running on port 3001
-2025-03-17T13:07:05.061Z [[31merror[39m]: Failed to import connect-redis
-    Error: connectRedis is not a function
-    Stack: TypeError: connectRedis is not a function
-    at Object.<anonymous> (/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/server.js:127:16)
-    at Module._compile (node:internal/modules/cjs/loader:1469:14)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)
-    at Module.load (node:internal/modules/cjs/loader:1288:32)
-    at Module._load (node:internal/modules/cjs/loader:1104:12)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:173:12)
-    at node:internal/main/run_main_module:28:49
-2025-03-17T13:07:05.062Z [[33mwarn[39m]: Skipping SAML provider shibboleth due to invalid certificate configuration
-    Error: Invalid SP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-sp-cert.pem
-2025-03-17T13:07:05.063Z [[32minfo[39m]: Configuring SAML for azure
-2025-03-17T13:07:05.063Z [[33mwarn[39m]: Skipping SAML provider auth0 due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-idp-cert.pem
-2025-03-17T13:07:05.063Z [[33mwarn[39m]: Skipping SAML provider okta due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-idp-cert.pem
-2025-03-17T13:07:05.063Z [[32minfo[39m]: Attempting to start Redis server...
-2025-03-17T13:07:05.074Z [[32minfo[39m]: Redis server started successfully in daemon mode
-2025-03-17T13:07:05.080Z [[32minfo[39m]: Redis client connected successfully
-2025-03-17T13:07:05.081Z [[32minfo[39m]: Redis client ready for operations
-2025-03-17T13:07:05.082Z [[32minfo[39m]: Redis ping successful
-2025-03-17T13:07:27.076Z [[31merror[39m]: Failed to import connect-redis
-    Error: connectRedis is not a function
-    Stack: TypeError: connectRedis is not a function
-    at Object.<anonymous> (/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/server.js:127:16)
-    at Module._compile (node:internal/modules/cjs/loader:1469:14)
-    at Module._extensions..js (node:internal/modules/cjs/loader:1548:10)
-    at Module.load (node:internal/modules/cjs/loader:1288:32)
-    at Module._load (node:internal/modules/cjs/loader:1104:12)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:173:12)
-    at node:internal/main/run_main_module:28:49
-2025-03-17T13:07:27.078Z [[33mwarn[39m]: Skipping SAML provider shibboleth due to invalid certificate configuration
-    Error: Invalid SP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/shibboleth/shibboleth-sp-cert.pem
-2025-03-17T13:07:27.078Z [[32minfo[39m]: Configuring SAML for azure
-2025-03-17T13:07:27.078Z [[33mwarn[39m]: Skipping SAML provider auth0 due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/auth0/auth0-idp-cert.pem
-2025-03-17T13:07:27.079Z [[33mwarn[39m]: Skipping SAML provider okta due to invalid certificate configuration
-    Error: Invalid IdP certificate format in /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/okta/okta-idp-cert.pem
-2025-03-17T13:07:27.079Z [[32minfo[39m]: Attempting to start Redis server...
-2025-03-17T13:07:27.086Z [[32minfo[39m]: Redis server started successfully in daemon mode
-2025-03-17T13:07:27.091Z [[32minfo[39m]: Redis client connected successfully
-2025-03-17T13:07:27.092Z [[32minfo[39m]: Redis client ready for operations
-2025-03-17T13:07:27.093Z [[32minfo[39m]: Redis ping successful
-2025-03-17T13:07:27.093Z [[33mwarn[39m]: Using memory store as Redis is unavailable or connect-redis import failed
-2025-03-17T13:07:27.094Z [[32minfo[39m]: Server running on port 3001
+import('chalk').then((chalk) => {
+  const express = require('express');
+  const session = require('express-session');
+  const passport = require('passport');
+  const SamlStrategy = require('@node-saml/passport-saml').Strategy;
+  const path = require('path');
+  const fs = require('fs');
+  const cors = require('cors');
+  const helmet = require('helmet');
+  const winston = require('winston');
+
+  const authConfig = require('../src/auth_config.json');
+
+  const app = express();
+
+  // ✅ Force colors in Winston (for Docker, older terminals)
+  process.env.FORCE_COLOR = '1';
+
+  // 🔥 Define Log Levels & Colors
+  const logLevels = {
+    levels: { error: 0, warn: 1, info: 2, debug: 3, success: 4 },
+    colors: { error: 'red', warn: 'yellow', info: 'cyan', debug: 'blue', success: 'green' }
+  };
+  winston.addColors(logLevels.colors);
+
+  // 🚀 Logger Setup with Colors & Icons
+  const logger = winston.createLogger({
+    levels: logLevels.levels,
+    level: 'debug',
+    format: winston.format.combine(
+      winston.format.timestamp(),
+      winston.format.printf(({ level, message, timestamp }) => {
+        const icons = {
+          error: chalk.default.red('❌'),
+          warn: chalk.default.yellow('⚠️'),
+          info: chalk.default.cyan('ℹ️'),
+          debug: chalk.default.blue('🔍'),
+          success: chalk.default.green('✅')
+        };
+        return `${timestamp} ${icons[level] || ''} [${chalk.default.bold(level)}]: ${message}`;
+      })
+    ),
+    transports: [
+      new winston.transports.Console(),
+      new winston.transports.File({
+        filename: path.join(__dirname, 'logs/server.log'),
+        format: winston.format.combine(winston.format.timestamp(), winston.format.json())
+      })
+    ]
+  });
+
+  // 🛠 Certificate Paths
+  const certPaths = {
+    idpCertPath: path.resolve(__dirname, 'cert/azure/azure-ad-idp-cert.pem'),
+    privateKeyPath: path.resolve(__dirname, 'cert/azure/azure-key.pem'),
+    spCertPath: path.resolve(__dirname, 'cert/azure/azure-sp-cert.pem')
+  };
+
+  // 🔍 Validate and Load Certificates
+  const readCertFile = (filePath, type) => {
+    try {
+      logger.info(`📄 Reading ${type}: ${chalk.default.yellow(filePath)}`);
+      if (!fs.existsSync(filePath)) throw new Error(`${type} file not found`);
+      const content = fs.readFileSync(filePath, 'utf8').trim();
+      if (!content) throw new Error(`${type} is empty`);
+      if (type.includes('Certificate') && !content.includes('-----BEGIN CERTIFICATE-----')) {
+        throw new Error(`${type} is not in valid PEM format`);
+      }
+      if (type.includes('Private Key') && !content.match(/-----BEGIN (RSA )?PRIVATE KEY-----/)) {
+        throw new Error(`${type} is not in valid PEM format`);
+      }
+      logger.log('success', `✅ ${type} loaded successfully`);
+      logger.debug(`🔍 ${type} content sample: ${chalk.default.magenta(content.substring(0, 100))}...`);
+      return content;
+    } catch (error) {
+      logger.error(`❌ Error loading ${type}: ${error.message}`);
+      throw error;
+    }
+  };
+
+  // 🔑 Load Certificates
+  let certs;
+  try {
+    certs = {
+      idpCert: readCertFile(certPaths.idpCertPath, 'Azure IdP Certificate'),
+      privateKey: readCertFile(certPaths.privateKeyPath, 'Azure Private Key'),
+      spCert: readCertFile(certPaths.spCertPath, 'Azure SP Certificate')
+    };
+    logger.log('success', `🎉 All certificates loaded successfully`);
+  } catch (error) {
+    logger.error(`❌ Certificate loading failed, exiting...`);
+    process.exit(1);
+  }
+
+  // 🔐 Debug Certificate Before SAML Setup
+  logger.debug(`🔍 Passing IdP Cert to SAML: ${chalk.default.blue(certs.idpCert.substring(0, 100))}...`);
+
+  // 🔑 Configure SAML Strategy
+  logger.info(`🔑 Configuring SAML for Azure...`);
+  try {
+    passport.use(
+      'azure',
+      new SamlStrategy(
+        {
+          entryPoint: authConfig.samlProviders.azure.entryPoint,
+          issuer: authConfig.samlProviders.azure.issuer,
+          callbackUrl: authConfig.samlProviders.azure.callbackUrl,
+          cert: certs.idpCert, // Ensure this is the IdP cert from Azure AD
+          privateKey: certs.privateKey,
+          decryptionPvk: certs.privateKey,
+          signatureAlgorithm: 'sha256',
+          wantAssertionsSigned: true,
+          validateInResponseTo: false,
+          acceptedClockSkewMs: 5000
+        },
+        (profile, done) => {
+          logger.info(`👤 SAML profile received for Azure`, { profile });
+          const user = {
+            email: profile.email || profile['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'],
+            name: profile.name || profile['http://schemas.microsoft.com/identity/claims/displayname'],
+            provider: 'azure'
+          };
+          return done(null, user);
+        }
+      )
+    );
+    logger.log('success', `🎉 SAML strategy configured successfully`);
+  } catch (error) {
+    logger.error(`❌ SAML configuration failed`, { error: error.message, stack: error.stack });
+    process.exit(1);
+  }
+
+  // 🛠 Passport Serialization
+  passport.serializeUser((user, done) => done(null, user));
+  passport.deserializeUser((user, done) => done(null, user));
+
+  // 🌐 Middleware
+  app.use(helmet());
+  app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET || authConfig.sessionSecret || 'super-secret-key',
+      resave: false,
+      saveUninitialized: false,
+      cookie: { secure: process.env.NODE_ENV === 'production', httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }
+    })
+  );
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  // 🚪 Routes
+  app.get('/login/azure', passport.authenticate('azure', { session: true }));
+  app.post(
+    '/login/callback/azure',
+    passport.authenticate('azure', { failureRedirect: '/login/azure' }),
+    (req, res) => {
+      logger.log('success', `✅ User authenticated`);
+      res.redirect('http://localhost:3000/');
+    }
+  );
+  app.get('/profile', (req, res) => {
+    if (req.isAuthenticated()) res.json({ user: req.user });
+    else res.status(401).json({ error: 'Unauthorized' });
+  });
+  app.get('/logout', (req, res) => {
+    req.logout((err) => {
+      if (err) return res.status(500).json({ error: 'Logout failed' });
+      req.session.destroy(() => res.redirect('http://localhost:3000/'));
+    });
+  });
+
+  // 🚀 Start Server
+  const PORT = authConfig.port || 3001;
+  app.listen(PORT, () => {
+    logger.log('success', `🚀 Server running on port ${chalk.default.green(PORT)}`);
+  });
+}).catch((error) => {
+  console.error(`❌ Failed to load chalk:`, error);
+  process.exit(1);
+});
+{"level":"\u001b[36minfo\u001b[39m","message":"Reading Azure IdP Certificate: /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-ad-idp-cert.pem","timestamp":"2025-03-17T18:42:06.312Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"Azure IdP Certificate content sample: -----BEGIN CERTIFICATE-----\nMIIC8DCCAdigAwIBAgIQWXY+rlMUwpdKMk/bM4G4MTANBgkqhkiG9w0BAQsFADA0\nMTIwMAY...","timestamp":"2025-03-17T18:42:06.314Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"Reading Azure Private Key: /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-key.pem","timestamp":"2025-03-17T18:42:06.314Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"Azure Private Key content sample: -----BEGIN RSA PRIVATE KEY-----\nMIIEpgIBAAKCAQEAuFbYEQSNwLfyerdBqvz/o3Tfh0nHaSw5/1KaCltNJ5ZJ2kgd\nyXq...","timestamp":"2025-03-17T18:42:06.314Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"Reading Azure SP Certificate: /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-sp-cert.pem","timestamp":"2025-03-17T18:42:06.314Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"Azure SP Certificate content sample: -----BEGIN CERTIFICATE-----\nMIIDdDCCAlwCCQCjUVdQZEQEITANBgkqhkiG9w0BAQsFADB8MQswCQYDVQQGEwJV\nUzETMBE...","timestamp":"2025-03-17T18:42:06.315Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"Passing IdP Cert to SAML: -----BEGIN CERTIFICATE-----\nMIIC8DCCAdigAwIBAgIQWXY+rlMUwpdKMk/bM4G4MTANBgkqhkiG9w0BAQsFADA0\nMTIwMAY...","timestamp":"2025-03-17T18:42:06.315Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"Configuring SAML for Azure...","timestamp":"2025-03-17T18:42:06.315Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"Reading Azure IdP Certificate: /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-ad-idp-cert.pem","timestamp":"2025-03-17T18:46:44.944Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"Azure IdP Certificate loaded successfully","timestamp":"2025-03-17T18:46:44.946Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"Azure IdP Certificate content sample: -----BEGIN CERTIFICATE-----\nMIIC8DCCAdigAwIBAgIQWXY+rlMUwpdKMk/bM4G4MTANBgkqhkiG9w0BAQsFADA0\nMTIwMAY...","timestamp":"2025-03-17T18:46:44.946Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"Reading Azure Private Key: /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-key.pem","timestamp":"2025-03-17T18:46:44.946Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"Azure Private Key loaded successfully","timestamp":"2025-03-17T18:46:44.946Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"Azure Private Key content sample: -----BEGIN RSA PRIVATE KEY-----\nMIIEpgIBAAKCAQEAuFbYEQSNwLfyerdBqvz/o3Tfh0nHaSw5/1KaCltNJ5ZJ2kgd\nyXq...","timestamp":"2025-03-17T18:46:44.946Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"Reading Azure SP Certificate: /Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-sp-cert.pem","timestamp":"2025-03-17T18:46:44.947Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"Azure SP Certificate loaded successfully","timestamp":"2025-03-17T18:46:44.947Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"Azure SP Certificate content sample: -----BEGIN CERTIFICATE-----\nMIIDdDCCAlwCCQCjUVdQZEQEITANBgkqhkiG9w0BAQsFADB8MQswCQYDVQQGEwJV\nUzETMBE...","timestamp":"2025-03-17T18:46:44.947Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"ℹ️ All certificates loaded successfully","timestamp":"2025-03-17T18:46:44.947Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"🔍 Passing IdP Cert to SAML: -----BEGIN CERTIFICATE-----\nMIIC8DCCAdigAwIBAgIQWXY+rlMUwpdKMk/bM4G4MTANBgkqhkiG9w0BAQsFADA0\nMTIwMAY...","timestamp":"2025-03-17T18:46:44.947Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"ℹ️ Configuring SAML for Azure...","timestamp":"2025-03-17T18:46:44.947Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"ℹ️ SAML strategy configured successfully","timestamp":"2025-03-17T18:46:44.948Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"ℹ️ Server running on port 3001","timestamp":"2025-03-17T18:46:44.950Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"📄 Reading Azure IdP Certificate: \u001b[33m/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-ad-idp-cert.pem\u001b[39m","timestamp":"2025-03-17T18:47:52.520Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"🔍 Azure IdP Certificate content sample: \u001b[35m-----BEGIN CERTIFICATE-----\u001b[39m\n\u001b[35mMIIC8DCCAdigAwIBAgIQWXY+rlMUwpdKMk/bM4G4MTANBgkqhkiG9w0BAQsFADA0\u001b[39m\n\u001b[35mMTIwMAY\u001b[39m...","timestamp":"2025-03-17T18:47:52.522Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"📄 Reading Azure Private Key: \u001b[33m/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-key.pem\u001b[39m","timestamp":"2025-03-17T18:47:52.522Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"🔍 Azure Private Key content sample: \u001b[35m-----BEGIN RSA PRIVATE KEY-----\u001b[39m\n\u001b[35mMIIEpgIBAAKCAQEAuFbYEQSNwLfyerdBqvz/o3Tfh0nHaSw5/1KaCltNJ5ZJ2kgd\u001b[39m\n\u001b[35myXq\u001b[39m...","timestamp":"2025-03-17T18:47:52.522Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"📄 Reading Azure SP Certificate: \u001b[33m/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-sp-cert.pem\u001b[39m","timestamp":"2025-03-17T18:47:52.522Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"🔍 Azure SP Certificate content sample: \u001b[35m-----BEGIN CERTIFICATE-----\u001b[39m\n\u001b[35mMIIDdDCCAlwCCQCjUVdQZEQEITANBgkqhkiG9w0BAQsFADB8MQswCQYDVQQGEwJV\u001b[39m\n\u001b[35mUzETMBE\u001b[39m...","timestamp":"2025-03-17T18:47:52.522Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"🔍 Passing IdP Cert to SAML: \u001b[35m-----BEGIN CERTIFICATE-----\u001b[39m\n\u001b[35mMIIC8DCCAdigAwIBAgIQWXY+rlMUwpdKMk/bM4G4MTANBgkqhkiG9w0BAQsFADA0\u001b[39m\n\u001b[35mMTIwMAY\u001b[39m...","timestamp":"2025-03-17T18:47:52.522Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"📄 Reading Azure IdP Certificate: \u001b[33m/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-ad-idp-cert.pem\u001b[39m","timestamp":"2025-03-17T18:53:42.207Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"✅ Azure IdP Certificate content sample: \u001b[35m-----BEGIN CERTIFICATE-----\u001b[39m\n\u001b[35mMIIC8DCCAdigAwIBAgIQWXY+rlMUwpdKMk/bM4G4MTANBgkqhkiG9w0BAQsFADA0\u001b[39m\n\u001b[35mMTIwMAY\u001b[39m...","timestamp":"2025-03-17T18:53:42.209Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"📄 Reading Azure Private Key: \u001b[33m/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-key.pem\u001b[39m","timestamp":"2025-03-17T18:53:42.209Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"✅ Azure Private Key content sample: \u001b[35m-----BEGIN RSA PRIVATE KEY-----\u001b[39m\n\u001b[35mMIIEpgIBAAKCAQEAuFbYEQSNwLfyerdBqvz/o3Tfh0nHaSw5/1KaCltNJ5ZJ2kgd\u001b[39m\n\u001b[35myXq\u001b[39m...","timestamp":"2025-03-17T18:53:42.209Z"}
+{"level":"\u001b[36minfo\u001b[39m","message":"📄 Reading Azure SP Certificate: \u001b[33m/Users/isaacbuz/Documents/VoterPromptApp_Frontend_Only_Final_Fixed-2-2-7-2/backend/cert/azure/azure-sp-cert.pem\u001b[39m","timestamp":"2025-03-17T18:53:42.210Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"✅ Azure SP Certificate content sample: \u001b[35m-----BEGIN CERTIFICATE-----\u001b[39m\n\u001b[35mMIIDdDCCAlwCCQCjUVdQZEQEITANBgkqhkiG9w0BAQsFADB8MQswCQYDVQQGEwJV\u001b[39m\n\u001b[35mUzETMBE\u001b[39m...","timestamp":"2025-03-17T18:53:42.210Z"}
+{"level":"\u001b[34mdebug\u001b[39m","message":"✅ Passing IdP Cert to SAML: \u001b[35m-----BEGIN CERTIFICATE-----\u001b[39m\n\u001b[35mMIIC8DCCAdigAwIBAgIQWXY+rlMUwpdKMk/bM4G4MTANBgkqhkiG9w0BAQsFADA0\u001b[39m\n\u001b[35mMTIwMAY\u001b[39m...","timestamp":"2025-03-17T18:53:42.210Z"}
