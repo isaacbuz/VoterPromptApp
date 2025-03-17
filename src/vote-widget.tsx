@@ -1,189 +1,112 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
-import { useMsal, useIsAuthenticated } from '@azure/msal-react';
-import { OktaAuth } from '@okta/okta-auth-js';
-import { PublicClientApplication } from '@azure/msal-browser';
-import { VoteWidgetProps, Provider } from './types/types';
+import React, { useEffect, useState } from 'react';
+import { Provider } from './types/types';
+import './style.css';
 
-interface UserInfo {
-  email?: string;
-  name?: string;
-  [key: string]: any;
+interface VoteWidgetProps {
+  provider: Provider;
+  partnerId?: string;
+  campaignCode?: string;
 }
 
-const VoteWidget: React.FC<VoteWidgetProps> = ({ provider, authProvider, partnerId, campaignCode }) => {
+const VoteWidget: React.FC<VoteWidgetProps> = ({ provider, partnerId, campaignCode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  const [showVoterPopup, setShowVoterPopup] = useState(false);
+  const [userInfo, setUserInfo] = useState<any>(null);
   const [authChecked, setAuthChecked] = useState(false);
-  const [forceLogin, setForceLogin] = useState(false);
+  const [forceLogin, setForceLogin] = useState(false); // Only force login after explicit logout
 
-  const auth0 = provider === 'auth0' ? useAuth0() : null;
-  const auth0IsAuthenticated = auth0?.isAuthenticated ?? false;
-  const auth0User = auth0?.user;
-  const auth0Login = auth0?.loginWithRedirect;
-  const auth0Logout = auth0?.logout;
-
-  const msal = provider === 'azure' && authProvider instanceof PublicClientApplication ? useMsal() : null;
-  const msalIsAuthenticated = provider === 'azure' && authProvider instanceof PublicClientApplication ? useIsAuthenticated() : false;
-  const msalAccounts = msal?.accounts ?? [];
-
-  const oktaAuth = provider === 'okta' && authProvider instanceof OktaAuth ? authProvider : null;
+  const redirect = () => {
+    const effectivePartnerId = partnerId || '123456';
+    const effectiveCampaignCode = campaignCode || '654321';
+    const url = `https://register.vote.org/?partnerId=${effectivePartnerId}&campaignCode=${effectiveCampaignCode}`;
+    console.log('Redirecting to vote.org:', url);
+    try {
+      const newWindow = window.open(url, '_blank');
+      if (!newWindow || newWindow.closed) {
+        console.error('Popup blocked: Please allow popups for this site');
+        alert('Popup blocked. Please allow popups to redirect to the voter registration page.');
+      }
+    } catch (error) {
+      console.error('Failed to open voter prompt:', error);
+      alert('Unable to redirect to voter prompt. Please allow popups.');
+    }
+  };
 
   useEffect(() => {
     const checkAuthentication = async () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const loggedOut = urlParams.get('loggedOut') === 'true' || localStorage.getItem('loggedOut') === 'true';
-      if (loggedOut) {
-        setIsAuthenticated(false);
-        setUserInfo(null);
-        setShowVoterPopup(false);
-        setForceLogin(true);
-        setAuthChecked(true);
-        localStorage.removeItem('loggedOut');
-        window.history.replaceState({}, document.title, window.location.pathname);
-        return;
-      }
-
+      setAuthChecked(false); // Reset authChecked during re-check
       try {
-        if (provider === 'auth0' && auth0) {
-          if (auth0IsAuthenticated) {
+        console.log('Checking authentication with /profile');
+        const res = await fetch('http://localhost:3001/profile', { 
+          credentials: 'include',
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        console.log('Response status:', res.status);
+        if (res.ok) {
+          const data = await res.json();
+          console.log('Response data:', data);
+          if (data.user && data.user.email) {
+            console.log('User authenticated:', data.user);
             setIsAuthenticated(true);
-            setUserInfo({ email: auth0User?.email, name: auth0User?.name });
-            setShowVoterPopup(true);
-            setForceLogin(false);
+            setUserInfo(data.user);
+            setForceLogin(false); // Allow login screen only if forced
           } else {
+            console.log('Invalid user data, prompting login if forced');
             setIsAuthenticated(false);
             setUserInfo(null);
-            setShowVoterPopup(false);
-            setForceLogin(true);
+            // Keep forceLogin as is unless explicitly set
           }
-        } else if (provider === 'okta' && oktaAuth) {
-          const accessToken = await oktaAuth.tokenManager.get('accessToken');
-          const idToken = await oktaAuth.tokenManager.get('idToken');
-          if (accessToken && idToken) {
-            const user = await oktaAuth.token.getUserInfo(accessToken, idToken);
-            setIsAuthenticated(true);
-            setUserInfo({ email: user.email, name: user.name });
-            setShowVoterPopup(true);
-            setForceLogin(false);
-          } else {
-            setIsAuthenticated(false);
-            setUserInfo(null);
-            setShowVoterPopup(false);
-            setForceLogin(true);
-          }
-        } else if (provider === 'azure' && msal && authProvider instanceof PublicClientApplication) {
-          if (msalIsAuthenticated && msalAccounts.length > 0) {
-            const account = msalAccounts[0];
-            setIsAuthenticated(true);
-            setUserInfo({ email: account.username, name: account.name });
-            setShowVoterPopup(true);
-            setForceLogin(false);
-          } else {
-            setIsAuthenticated(false);
-            setUserInfo(null);
-            setShowVoterPopup(false);
-            setForceLogin(true);
-          }
-        } else if (provider === 'shibboleth' || provider === 'azure') {
-          const res = await fetch('http://localhost:3001/profile', {
-            method: 'GET',
-            credentials: 'include',
-            headers: { Accept: 'application/json', 'Cache-Control': 'no-cache' },
-          });
-          if (res.ok) {
-            const data = await res.json();
-            if (data.user && data.user.email) {
-              setIsAuthenticated(true);
-              setUserInfo(data.user);
-              setShowVoterPopup(true);
-              setForceLogin(false);
-            } else {
-              setIsAuthenticated(false);
-              setUserInfo(null);
-              setShowVoterPopup(false);
-              setForceLogin(true);
-            }
-          } else if (res.status === 401) {
-            setIsAuthenticated(false);
-            setUserInfo(null);
-            setShowVoterPopup(false);
-            setForceLogin(true);
-          } else {
-            setIsAuthenticated(false);
-            setUserInfo(null);
-            setShowVoterPopup(false);
-            setForceLogin(true);
-          }
+        } else {
+          console.log('User not authenticated or server error, prompting login if forced');
+          setIsAuthenticated(false);
+          setUserInfo(null);
+          // Keep forceLogin as is unless explicitly set
         }
       } catch (error) {
         console.error('Error checking authentication:', error);
-        setForceLogin(true);
+        // Only force login if initial check fails and no prior authentication
+        if (!isAuthenticated) setForceLogin(true);
       } finally {
         setAuthChecked(true);
       }
     };
-
     checkAuthentication();
-
-    return () => {
-      setIsAuthenticated(false);
-      setUserInfo(null);
-      setShowVoterPopup(false);
-      setForceLogin(false);
-    };
-  }, [provider, authProvider]);
+  }, [provider, window.location.search]); // Re-run on provider change or redirect
 
   const handleLogin = () => {
-    if (provider === 'auth0' && auth0Login) {
-      auth0Login({ authorizationParams: { redirect_uri: 'http://localhost:3000/' } });
-    } else if (provider === 'okta' && oktaAuth) {
-      oktaAuth.signInWithRedirect({ originalUri: 'http://localhost:3000/' });
-    } else if (provider === 'azure' && msal && authProvider instanceof PublicClientApplication) {
-      msal.instance.loginRedirect({ scopes: ['User.Read'], redirectUri: 'http://localhost:3000/' });
-    } else {
-      window.location.href = `http://localhost:3001/login/${provider}`;
+    console.log('Login button clicked');
+    console.log(`Attempting redirect to login with provider: ${provider}`);
+    const loginUrl = `http://localhost:3001/login/${provider}`;
+    console.log('Redirect URL:', loginUrl);
+    try {
+      window.location.href = loginUrl;
+      console.log('Redirect initiated');
+    } catch (error) {
+      console.error('Redirect failed:', error);
+      // Fallback redirect
+      setTimeout(() => {
+        if (window.location.href !== loginUrl) {
+          console.log('Fallback redirect attempt');
+          window.location.href = loginUrl;
+        }
+      }, 100);
     }
   };
 
   const handleLogout = () => {
-    if (provider === 'auth0' && auth0Logout) {
-      auth0Logout({ logoutParams: { returnTo: 'http://localhost:3000/' } });
-    } else if (provider === 'okta' && oktaAuth) {
-      oktaAuth.signOut({ postLogoutRedirectUri: 'http://localhost:3000/' });
-    } else if (provider === 'azure' && msal && authProvider instanceof PublicClientApplication) {
-      msal.instance.logoutRedirect({ postLogoutRedirectUri: 'http://localhost:3000/' });
-    } else {
-      fetch('http://localhost:3001/logout', {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Cache-Control': 'no-cache',
-        },
+    console.log('Logging out');
+    fetch('http://localhost:3001/logout', { credentials: 'include' })
+      .then(() => {
+        setIsAuthenticated(false);
+        setUserInfo(null);
+        setForceLogin(true); // Force login after logout
+        console.log('Logout successful, prompting login');
       })
-        .then((res) => {
-          if (res.headers.get('X-Logout') === 'true') {
-            console.log('Client received logout notification, resetting state');
-            localStorage.setItem('loggedOut', 'true');
-            setIsAuthenticated(false);
-            setUserInfo(null);
-            setShowVoterPopup(false);
-            setForceLogin(true);
-            window.location.href = 'http://localhost:3000/?loggedOut=true&nocache=' + Date.now();
-          } else if (!res.ok) {
-            console.error('Logout failed with status:', res.status);
-          }
-        })
-        .catch((error) => {
-          console.error('Logout failed:', error);
-          setForceLogin(true);
-        });
-    }
-  };
-
-  const redirect = () => {
-    console.log('Redirecting to voter registration...', { partnerId, campaignCode });
+      .catch((error) => {
+        console.error('Logout failed:', error);
+        setForceLogin(true);
+      });
   };
 
   if (!authChecked) {
@@ -202,48 +125,15 @@ const VoteWidget: React.FC<VoteWidgetProps> = ({ provider, authProvider, partner
   }
 
   return (
-    <div className="app-container">
-      <div className="background-page">
-        <h1>Voter Registration Widget</h1>
-        {userInfo && (
-          <div className="user-info">
-            <p>Welcome, {userInfo.email || 'User'}!</p>
-            <button className="logout-button" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        )}
-      </div>
-      {showVoterPopup && (
-        <div className="popup-overlay">
-          <div className="voter-popup-container">
-            <button className="close-button" onClick={() => setShowVoterPopup(false)}>
-              X
-            </button>
-            <div className="voter-widget-header">You can register to vote.</div>
-            <div className="voter-widget-title">
-              <span>OWN YOUR FUTURE</span>
-              <div className="vote-image">
-                <img src="/assets/y.svg" alt="VOTE Icon" />
-              </div>
-            </div>
-            <div className="voter-widget-footer">It only takes two minutes.</div>
-            <div className="voter-button-container">
-              <button
-                className="voter-button voter-button-primary"
-                onClick={redirect}
-                aria-label="Register to vote"
-              >
-                Register to Vote
-              </button>
-            </div>
-            <div className="voter-widget-info">
-              {partnerId && <p>Partner ID: {partnerId}</p>}
-              {campaignCode && <p>Campaign Code: {campaignCode}</p>}
-            </div>
-          </div>
-        </div>
+    <div className="app-container" style={{ backgroundColor: '#f0f0f0', padding: '20px', textAlign: 'center' }}>
+      <h1 style={{ color: 'black' }}>Welcome to <span style={{ color: 'red' }}>MyOrgApp</span></h1>
+      <p style={{ color: 'gray' }}>This is the main content area!</p>
+      {userInfo && (
+        <p style={{ color: 'gray' }}>Welcome, {userInfo.email}!</p>
       )}
+      <button className="logout-button" onClick={handleLogout} style={{ marginTop: '10px' }}>
+        Logout
+      </button>
     </div>
   );
 };

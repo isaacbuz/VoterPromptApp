@@ -63,15 +63,7 @@ const isMsalInstance = (result: any): result is PublicClientApplication =>
 
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div className="app">
-    <nav>
-      <ul>
-        <li><a href="/">Demo</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/locations">Locations</a></li>
-        <li><a href="/contact">Contact Us</a></li>
-      </ul>
-    </nav>
-    <main>{children}</main>
+    <main>{children}</main> {/* Removed the <nav> element */}
   </div>
 );
 
