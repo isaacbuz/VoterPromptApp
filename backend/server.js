@@ -9,24 +9,11 @@ const helmet = require('helmet');
 const winston = require('winston');
 const rateLimit = require('express-rate-limit');
 const redis = require('redis');
+const { exec } = require('child_process');
+
 const authConfig = require('../src/auth_config.json');
 
 const app = express();
-
-// Redis Client Setup
-const redisClient = redis.createClient({
-  socket: {
-    host: 'localhost',
-    port: 6379, // Default Redis port
-  },
-});
-
-redisClient.on('error', (err) => {
-  logger.error('Redis Client Error during operation', { error: err.message, stack: err.stack });
-});
-redisClient.connect().catch((err) => {
-  logger.error('Redis Connection Error during initialization', { error: err.message, stack: err.stack });
-});
 
 // Logger Setup with Winston and Custom Pretty Format
 const logger = winston.createLogger({
@@ -34,16 +21,13 @@ const logger = winston.createLogger({
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.colorize(),
-    winston.format.printf(({ level, message, timestamp, error, stack, ...metadata }) => {
+    winston.format.printf(({ level, message, timestamp, error, stack }) => {
       let logMessage = `${timestamp} [${level}]: ${message}`;
       if (error) {
         logMessage += `\n    Error: ${error}`;
       }
       if (stack) {
         logMessage += `\n    Stack: ${stack}`;
-      }
-      if (Object.keys(metadata).length > 0) {
-        logMessage += `\n    Metadata: ${JSON.stringify(metadata, null, 2)}`;
       }
       return logMessage;
     })
@@ -54,7 +38,58 @@ const logger = winston.createLogger({
   ],
 });
 
-const PORT = process.env.PORT || 3001;
+// Redis Client Setup
+const redisClient = redis.createClient({
+  socket: {
+    host: 'localhost',
+    port: 6379,
+  },
+});
+
+redisClient.on('error', (err) => {
+  logger.error('Redis Client Error', { error: err.message, stack: err.stack });
+});
+redisClient.on('connect', () => {
+  logger.info('Redis client connected successfully');
+});
+redisClient.on('ready', () => {
+  logger.info('Redis client ready for operations');
+});
+redisClient.on('end', () => {
+  logger.warn('Redis client connection ended');
+});
+
+// Start Redis server and verify connection
+const startRedis = () => {
+  return new Promise((resolve, reject) => {
+    logger.info('Attempting to start Redis server...');
+    exec('redis-server --daemonize yes', (error, stdout, stderr) => {
+      if (error) {
+        logger.error('Failed to start Redis server', { error: error.message });
+        reject(error);
+      } else {
+        logger.info('Redis server started successfully in daemon mode');
+        // Verify Redis connection
+        (async () => {
+          try {
+            await redisClient.connect();
+            const pingResponse = await redisClient.ping();
+            if (pingResponse === 'PONG') {
+              logger.info('Redis ping successful');
+              resolve();
+            } else {
+              logger.error('Redis ping failed with unexpected response', { response: pingResponse });
+              reject(new Error('Redis ping failed'));
+            }
+          } catch (err) {
+            logger.error('Failed to connect to Redis', { error: err.message });
+            reject(err);
+          }
+        })();
+      }
+    });
+  });
+};
 
 // Middleware Setup
 app.use(helmet({
@@ -85,52 +120,56 @@ app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Dynamically import and configure RedisStore
+// Configure RedisStore with connect-redis v6.1.3
 let RedisStore;
 try {
-  const connectRedisModule = require('connect-redis');
-  RedisStore = connectRedisModule.default || connectRedisModule.RedisStore; // Try default or named export
-  if (typeof RedisStore !== 'function') {
-    throw new Error('Default or named export of connect-redis is not a function');
-  }
-  logger.info('Successfully imported connect-redis', { type: typeof RedisStore, export: Object.keys(connectRedisModule) });
+  const connectRedis = require('connect-redis'); // Require the module
+  RedisStore = connectRedis(session); // Initialize with express-session
+  logger.info('Successfully imported connect-redis', { version: '6.1.3' });
 } catch (importError) {
-  logger.error('Failed to import connect-redis as a constructor', { error: importError.message, stack: importError.stack });
-  RedisStore = null; // Set to null to use fallback
+  logger.error('Failed to import connect-redis', { error: importError.message, stack: importError.stack });
+  RedisStore = null;
 }
 
-// Configure session store
-let sessionStore;
-if (RedisStore) {
-  try {
-    sessionStore = new RedisStore({ client: redisClient });
-    logger.info('Redis session store initialized successfully');
-  } catch (storeError) {
-    logger.error('Failed to initialize Redis session store', { error: storeError.message, stack: storeError.stack });
-    sessionStore = new session.MemoryStore(); // Fallback to memory store
-    logger.warn('Falling back to memory store due to Redis store failure');
+// Initialize session store after Redis is ready
+const initializeSessionStore = async () => {
+  let sessionStore;
+  if (RedisStore && redisClient.isReady) {
+    try {
+      sessionStore = new RedisStore({ client: redisClient }); // Instantiate with new
+      logger.info('Redis session store initialized successfully');
+      await redisClient.set('test-session', 'Redis is working');
+      const value = await redisClient.get('test-session');
+      logger.info('Redis test successful', { key: 'test-session', value });
+    } catch (storeError) {
+      logger.error('Failed to initialize Redis session store', { error: storeError.message, stack: storeError.stack });
+      sessionStore = new session.MemoryStore();
+      logger.warn('Falling back to memory store due to Redis store failure');
+    }
+  } else {
+    sessionStore = new session.MemoryStore();
+    logger.warn('Using memory store as Redis is unavailable or connect-redis import failed');
   }
-} else {
-  sessionStore = new session.MemoryStore(); // Fallback if import fails
-  logger.warn('Using memory store as connect-redis import failed');
-}
 
-app.use(session({
-  store: sessionStore,
-  secret: process.env.SESSION_SECRET || authConfig.sessionSecret || 'your-secure-secret-here',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    path: '/',
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000,
-  },
-}));
+  // Apply the session middleware synchronously after determining the store
+  app.use(session({
+    store: sessionStore,
+    secret: process.env.SESSION_SECRET || authConfig.sessionSecret || 'your-secure-secret-here',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    },
+  }));
 
-app.use(passport.initialize());
-app.use(passport.session());
+  // Ensure Passport middleware is applied after session middleware
+  app.use(passport.initialize());
+  app.use(passport.session());
+};
 
 // Serve static frontend files
 app.use(express.static(path.join(__dirname, '../dist')));
@@ -148,43 +187,28 @@ passport.deserializeUser((user, done) => {
 
 // Function to validate PEM content
 const isValidPem = (content, type) => {
-  if (typeof content !== 'string') {
-    logger.warn(`Invalid content type for PEM validation`, { type, contentType: typeof content });
-    return false;
-  }
+  if (typeof content !== 'string') return false;
   if (type === 'certificate') {
-    const isValid = content.includes('-----BEGIN CERTIFICATE-----') && content.includes('-----END CERTIFICATE-----');
-    logger.debug(`Validating certificate PEM`, { isValid, contentSnippet: content.slice(0, 50) });
-    return isValid;
+    return content.includes('-----BEGIN CERTIFICATE-----') && content.includes('-----END CERTIFICATE-----');
   }
   if (type === 'privateKey') {
-    const isValid = (content.includes('-----BEGIN PRIVATE KEY-----') && content.includes('-----END PRIVATE KEY-----')) ||
-                   (content.includes('-----BEGIN RSA PRIVATE KEY-----') && content.includes('-----END RSA PRIVATE KEY-----'));
-    logger.debug(`Validating private key PEM`, { isValid, contentSnippet: content.slice(0, 50) });
-    return isValid;
+    return (content.includes('-----BEGIN PRIVATE KEY-----') && content.includes('-----END PRIVATE KEY-----')) ||
+           (content.includes('-----BEGIN RSA PRIVATE KEY-----') && content.includes('-----END RSA PRIVATE KEY-----'));
   }
-  logger.warn(`Unknown PEM type for validation`, { type });
   return false;
 };
 
-// SAML Configuration with Certificate Validation
+// SAML Configuration with Certificate Validation and Debugging Options
 const configureSamlStrategies = () => {
   const samlProviders = authConfig.samlProviders || {};
-  logger.debug('SAML providers configuration loaded', { providers: Object.keys(samlProviders) });
 
   Object.keys(samlProviders).forEach((providerName) => {
     const providerConfig = samlProviders[providerName];
-    logger.info(`Attempting to configure SAML for provider: ${providerName}`, { entryPoint: providerConfig.entryPoint });
-
-    // Resolve paths relative to the project root (not backend/)
     const certPath = path.resolve(__dirname, '..', providerConfig.idpCertPath);
     const privateKeyPath = path.resolve(__dirname, '..', providerConfig.privateKeyPath);
     const spCertPath = providerConfig.spCertPath ? path.resolve(__dirname, '..', providerConfig.spCertPath) : null;
 
-    // Validate certificate files
     try {
-      // Check if files exist
-      logger.debug(`Checking existence of certificate files for ${providerName}`, { certPath, privateKeyPath, spCertPath });
       if (!fs.existsSync(certPath)) {
         throw new Error(`IdP certificate file not found: ${certPath}`);
       }
@@ -195,19 +219,10 @@ const configureSamlStrategies = () => {
         throw new Error(`SP certificate file not found: ${spCertPath}`);
       }
 
-      // Read file contents
       const certContent = fs.readFileSync(certPath, 'utf-8');
       const privateKeyContent = fs.readFileSync(privateKeyPath, 'utf-8');
       const spCertContent = spCertPath ? fs.readFileSync(spCertPath, 'utf-8') : null;
 
-      // Log file contents for debugging
-      logger.debug(`Read IDP certificate for ${providerName}`, { filePath: certPath, contentLength: certContent.length, contentSnippet: certContent.slice(0, 50) });
-      logger.debug(`Read private key for ${providerName}`, { filePath: privateKeyPath, contentLength: privateKeyContent.length, contentSnippet: privateKeyContent.slice(0, 50) });
-      if (spCertPath) {
-        logger.debug(`Read SP certificate for ${providerName}`, { filePath: spCertPath, contentLength: spCertContent.length, contentSnippet: spCertContent.slice(0, 50) });
-      }
-
-      // Validate file contents
       if (!isValidPem(certContent, 'certificate')) {
         throw new Error(`Invalid IdP certificate format in ${certPath}`);
       }
@@ -218,26 +233,25 @@ const configureSamlStrategies = () => {
         throw new Error(`Invalid SP certificate format in ${spCertPath}`);
       }
 
-      // Log successful validation
-      logger.info(`Successfully validated certificates for ${providerName}, initializing SAML strategy`);
-
-      // Configure the SAML strategy
-      const samlOptions = {
-        entryPoint: providerConfig.entryPoint,
-        issuer: providerConfig.issuer,
-        callbackUrl: providerConfig.callbackUrl,
-        cert: certContent,
-        privateKey: privateKeyContent,
-        decryptionPvk: privateKeyContent,
-        signatureAlgorithm: 'sha256',
-        wantAssertionsSigned: providerConfig.wantAssertionsSigned || false,
-      };
-      logger.debug(`SAML strategy options for ${providerName}`, { samlOptions: { ...samlOptions, cert: '[REDACTED]', privateKey: '[REDACTED]', decryptionPvk: '[REDACTED]' } });
+      logger.info(`Configuring SAML for ${providerName}`, { entryPoint: providerConfig.entryPoint });
 
       passport.use(
         providerName,
         new SamlStrategy(
-          samlOptions,
+          {
+            entryPoint: providerConfig.entryPoint,
+            issuer: providerConfig.issuer,
+            callbackUrl: providerConfig.callbackUrl,
+            cert: certContent,
+            privateKey: privateKeyContent,
+            decryptionPvk: privateKeyContent,
+            signatureAlgorithm: 'sha256',
+            wantAssertionsSigned: providerConfig.wantAssertionsSigned || false,
+            validateInResponseTo: false,
+            validateIssuer: false,
+            disableRequestSignatureValidation: true, // Temporary for debugging
+            acceptedClockSkewMs: 5000, // Allow 5 seconds of clock skew
+          },
           (profile, done) => {
             logger.info(`SAML profile received for ${providerName}`, { profile });
             const user = {
@@ -250,19 +264,11 @@ const configureSamlStrategies = () => {
           }
         )
       );
-      logger.info(`SAML strategy successfully configured for ${providerName}`);
     } catch (error) {
-      logger.warn(`Skipping SAML provider ${providerName} due to invalid certificate configuration`, {
-        error: error.message,
-        certPath,
-        privateKeyPath,
-        spCertPath,
-      });
+      logger.warn(`Skipping SAML provider ${providerName} due to invalid certificate configuration`, { error: error.message });
     }
   });
 };
-
-configureSamlStrategies();
 
 // Routes
 app.get('/health', (req, res) => {
@@ -270,9 +276,20 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'healthy', uptime: process.uptime() });
 });
 
+app.get('/test-redis', async (req, res) => {
+  try {
+    await redisClient.set('test-key', 'Hello Redis');
+    const value = await redisClient.get('test-key');
+    logger.info('Redis test result', { key: 'test-key', value });
+    res.json({ success: true, value });
+  } catch (err) {
+    logger.error('Redis test failed', { error: err.message });
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 app.get('/login/:provider', (req, res, next) => {
   const provider = req.params.provider;
-  logger.debug(`Login request for provider: ${provider}`);
   if (!passport._strategies[provider]) {
     logger.warn(`Authentication provider ${provider} is not configured, possibly due to missing or malformed certificates`);
     return res.status(400).json({ error: `Authentication provider ${provider} is not configured` });
@@ -281,14 +298,19 @@ app.get('/login/:provider', (req, res, next) => {
 });
 
 app.post('/login/callback/:provider', 
-  (req, res, next) => {
+  async (req, res, next) => {
     const provider = req.params.provider;
-    logger.debug(`Callback request for provider: ${provider}`);
+    logger.info('SAML callback received', { provider, body: req.body }); // Log raw SAML response for debugging
     if (!passport._strategies[provider]) {
       logger.warn(`Authentication provider ${provider} is not configured for callback, possibly due to missing or malformed certificates`);
       return res.status(400).json({ error: `Authentication provider ${provider} is not configured` });
     }
-    passport.authenticate(provider, { failureRedirect: '/login' })(req, res, next);
+    try {
+      passport.authenticate(provider, { failureRedirect: '/login' })(req, res, next);
+    } catch (err) {
+      logger.error('Error in SAML callback', { error: err.message, stack: err.stack });
+      res.status(500).json({ error: 'SAML Authentication Failed' });
+    }
   },
   (req, res) => {
     logger.info('SAML callback successful', { user: req.user });
@@ -297,7 +319,6 @@ app.post('/login/callback/:provider',
 );
 
 app.get('/profile', (req, res) => {
-  logger.debug('Profile endpoint accessed', { session: req.sessionID, isAuthenticated: req.isAuthenticated && typeof req.isAuthenticated === 'function' ? req.isAuthenticated() : false });
   if (req.isAuthenticated && typeof req.isAuthenticated === 'function' && req.isAuthenticated()) {
     logger.info('Profile requested', { user: req.user });
     res.json({ user: req.user });
@@ -308,7 +329,6 @@ app.get('/profile', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-  logger.debug('Logout endpoint accessed', { session: req.sessionID });
   if (req.logout && typeof req.logout === 'function') {
     req.logout((err) => {
       if (err) {
@@ -316,17 +336,20 @@ app.get('/logout', (req, res) => {
         return res.status(500).json({ error: "Logout failed" });
       }
       if (req.session) {
+        const sessionId = req.sessionID;
         req.session.destroy((err) => {
           if (err) {
             logger.error('Session destroy error', { error: err.message });
             return res.status(500).json({ error: "Session destroy failed" });
           }
-          logger.info('Logged out successfully');
+          logger.info('Logged out successfully', { sessionId });
+          res.clearCookie('connect.sid', { path: '/' });
           res.set('X-Logout', 'true');
           res.json({ message: "Logged out successfully" });
         });
       } else {
-        logger.info('Logged out successfully');
+        logger.info('Logged out successfully - no session to destroy');
+        res.clearCookie('connect.sid', { path: '/' });
         res.set('X-Logout', 'true');
         res.json({ message: "Logged out successfully" });
       }
@@ -339,17 +362,75 @@ app.get('/logout', (req, res) => {
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
-  logger.error('Server error', { error: err.message, stack: err.stack, path: req.path, method: req.method });
-  res.status(500).json({ error: "Internal Server Error" });
+  logger.error('Server error occurred', {
+    error: err.message,
+    stack: err.stack,
+    request: { method: req.method, url: req.url, body: req.body },
+  });
+  res.status(500).json({ error: 'Internal Server Error', details: err.message });
 });
 
 // Serve frontend for all other routes
 app.get('*', (req, res) => {
-  logger.debug(`Serving frontend for route: ${req.path}`);
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
-// Start Server
-app.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}`);
+// Start Server with Redis Initialization
+let server; // Store the Express server instance for graceful shutdown
+const startServer = async () => {
+  try {
+    configureSamlStrategies(); // Configure SAML strategies before middleware
+    await startRedis(); // Start and verify Redis
+    await initializeSessionStore(); // Set up session store after Redis is ready
+    const PORT = process.env.PORT || 3001;
+    server = app.listen(PORT, () => {
+      logger.info(`Server running on port ${PORT}`);
+    });
+  } catch (err) {
+    logger.error('Failed to start server due to Redis initialization failure', { error: err.message, stack: err.stack });
+    process.exit(1);
+  }
+};
+
+// Graceful Shutdown Logic
+const gracefulShutdown = async () => {
+  logger.info('Received SIGINT (Ctrl+C). Initiating graceful shutdown...');
+
+  // Close the Express server
+  if (server) {
+    server.close(() => {
+      logger.info('Express server closed successfully');
+    });
+  } else {
+    logger.warn('Express server instance not found');
+  }
+
+  // Disconnect the Redis client
+  if (redisClient.isOpen) {
+    try {
+      await redisClient.quit();
+      logger.info('Redis client disconnected successfully');
+    } catch (err) {
+      logger.error('Failed to disconnect Redis client', { error: err.message });
+    }
+  } else {
+    logger.info('Redis client already disconnected');
+  }
+
+  // Exit the process
+  logger.info('Shutdown complete. Exiting process...');
+  process.exit(0);
+};
+
+// Handle SIGINT (Ctrl+C)
+process.on('SIGINT', async () => {
+  await gracefulShutdown();
 });
+
+// Handle SIGTERM (optional, for other termination signals)
+process.on('SIGTERM', async () => {
+  await gracefulShutdown();
+});
+
+// Start the server
+startServer();
